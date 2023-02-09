@@ -22,7 +22,11 @@ const options = {
     "Dr. Mohammed Hanif Siddique",
     "Dr. Mohammed Abdur Rauf",
   ],
-  roles: ["Member", "Chairman", "External member"],
+  roles: [
+    "Member",
+    "Chairman",
+    "External member",
+  ],
 };
 
 // const peoples = ["1","2", "3", "4", "5"];
@@ -50,12 +54,9 @@ const FormExamCommittee = () => {
           <div className="grid grid-cols-3 gap-x-8 gap-y-8">
             <div className="col-span-3 md:col-span-1">
               <Inputcmp
-                type="select"
+                type="dropdown"
                 label="Select program"
                 options={programOptions}
-                required="true"
-                name="program"
-                id="program"
               ></Inputcmp>
             </div>
             <div className="col-span-3 md:col-span-1">
