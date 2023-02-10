@@ -4,6 +4,7 @@ import Buttoncmp from "../../UI/Buttoncmp";
 import Inputcmp from "../../UI/Inputcmp";
 import Table from "../../UI/Table";
 import { useState } from "react";
+import Dropdown from "../../UI/Dropdown";
 const options = {
   evaluators: [
     "Dr. Rudra Pratap Devnath",
@@ -49,20 +50,19 @@ const FormExamCommittee = () => {
           </div>
           <div className="grid grid-cols-3 gap-x-8 gap-y-8">
             <div className="col-span-3 md:col-span-1">
-              <Inputcmp
-                type="select"
+              <Dropdown
+                type="dropdown"
                 label="Select program"
-                options={programOptions}
-                required="true"
                 name="program"
                 id="program"
-              ></Inputcmp>
+                options={programOptions}
+              ></Dropdown>
             </div>
             <div className="col-span-3 md:col-span-1">
               <Inputcmp
                 type="text"
                 label="Exam year"
-                required="true"
+                required={true}
                 name="exam-year"
                 id="exam-year"
                 placeholder="e.g. 2020"
@@ -72,7 +72,7 @@ const FormExamCommittee = () => {
               <Inputcmp
                 type="number"
                 label="Semester number"
-                required="true"
+                required={true}
                 name="semester-number"
                 id="semester-number"
                 placeholder="e.g. 2020"
@@ -111,7 +111,7 @@ const FormExamCommittee = () => {
             <MinusCircleIcon></MinusCircleIcon>
           </Buttoncmp>
         </div>
-        <Buttoncmp type="submit" name="Save" variant="stpr"></Buttoncmp>
+        <Buttoncmp type="submit" label="Form committee" variant="stpr"></Buttoncmp>
       </form>
     </div>
   );

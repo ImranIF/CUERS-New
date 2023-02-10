@@ -29,8 +29,8 @@ const buttonstyle = {
     simple: {
       icon: "",
       default: "text-cyan-900 shadow-none active:ring-cyan-800",
-      hover: "hover:bg-cyan-900 hover:text-cyan-100",
-      focus: "focus:bg-slate-300 focus:text-cyan-900 focus:ring-cyan-900",
+      hover: "hover:bg-slate-300",
+      focus: "focus:bg-cyan-900 focus:text-cyan-100 focus:ring-cyan-900",
     },
   },
   dangerous: {
@@ -56,47 +56,42 @@ const buttonstyle = {
 };
 
 const Buttoncmp = (prop) => {
-  const { name, type, variant, icon, size, onClick} = prop;
+  const {label, type, variant, size, onClick } = prop;
   let buttonVariant =
     buttonstyle.initial +
     " " +
     (size && size.localeCompare("full") == 0 ? "w-full" : "w-fit");
-  let iconVariant = buttonstyle.iconInitial + " " + (name ? "mr-1" : "");
+  let iconVariant = buttonstyle.iconInitial + " " + (label? "mr-1" : "");
   let btv;
   if (variant.localeCompare("stpr") == 0) {
     btv = buttonstyle.standard.primary;
-  }
-  else if (variant.localeCompare("stse") == 0) {
-   btv = buttonstyle.standard.secondary;
-  }
-  else if (variant.localeCompare("dapr") == 0) {
+  } else if (variant.localeCompare("stse") == 0) {
+    btv = buttonstyle.standard.secondary;
+  } else if (variant.localeCompare("dapr") == 0) {
     btv = buttonstyle.dangerous.primary;
   } else if (variant.localeCompare("dase") == 0) {
     btv = buttonstyle.dangerous.secondary;
   } else if (variant.localeCompare("stsi") == 0) {
     btv = buttonstyle.standard.simple;
-  }
-  else if(variant.localeCompare("dasi") == 0){
+  } else if (variant.localeCompare("dasi") == 0) {
     btv = buttonstyle.dangerous.simple;
   }
-    iconVariant += " " + btv.icon;
-    buttonVariant +=
-      " " +
-      btv.default +
-      " " +
-      btv.hover +
-      " " +
-      btv.focus;
+  iconVariant += " " + btv.icon;
+  buttonVariant += " " + btv.default + " " + btv.hover + " " + btv.focus;
 
   // console.log(buttonVariant);
   return (
     <div>
-      <button type={type} onClick={(e) => onClick(e)} className={`${buttonVariant}`}>
+      <button
+        type={type}
+        onClick={(e) => {onClick? onClick(e):null}}
+        className={`${buttonVariant}`}
+      >
         <div className="mx-4 flex">
           {prop.children ? (
             <div className={`${iconVariant}`}>{prop.children}</div>
           ) : null}
-          <span className="text-md flex text-left">{name}</span>
+          <span className="text-md flex text-left">{label}</span>
         </div>
       </button>
     </div>

@@ -1,4 +1,11 @@
+import {
+  ArrowDownIcon,
+  ChevronDownIcon,
+  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/solid";
 import React from "react";
+import { useState } from "react";
 const inputStyle =
   "duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-slate-200 active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1 ";
 let list1 = [
@@ -17,8 +24,19 @@ let list1 = [
   "textarea",
 ];
 const Inputcmp = (prop) => {
+
+
   let inputBlock;
-  let { label, type, name, id, placeholder, autocomplete, options, onChange, required, readonly} = prop;
+  let {
+    label,
+    type,
+    name,
+    id,
+    placeholder,
+    autocomplete,
+    onChange,
+    required,
+  } = prop;
   if (list1.includes(type)) {
     inputBlock = (
       <input
@@ -29,12 +47,11 @@ const Inputcmp = (prop) => {
         placeholder={placeholder}
         className={`${inputStyle}`}
         required={required}
-        readOnly={readonly}
       />
     );
-  } else if (type == "select") {
+  } else if (type.localeCompare("select") == 0) {
     inputBlock = (
-      <select id = {id} className={`${inputStyle}`} readOnly={readonly}>
+      <select id={id} className={`${inputStyle}`}>
         {options
           ? options.map((option) => (
               <option value={option} className="">
