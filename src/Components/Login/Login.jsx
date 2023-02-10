@@ -1,6 +1,7 @@
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import Buttoncmp from "../UI/Buttoncmp";
+import Dropdown from "../UI/Dropdown";
 import Inputcmp from "../UI/Inputcmp";
 
 export const Login = (prop) => {
@@ -10,12 +11,13 @@ export const Login = (prop) => {
   const { onLogin } = prop;
   const options = ["Chairman", "Evaluator", "Chairman of Exam Committee"];
   return (
-    <div className="">
+    <div className="h-full w-full flex justify-center items-center">
       <div className="block h-min rounded-2xl  border bg-slate-50 border-slate-300  p-10 max-w-lg mx-8">
         <form
           className="grid sm:grid-cols-2 gap-x-8 gap-y-8"
           onSubmit={(e) => {
             e.preventDefault();
+            // console.log(e);
             onLogin(e);
           }}
         >
@@ -24,21 +26,22 @@ export const Login = (prop) => {
               User Login
             </span>
           </div>
-          <Inputcmp
+          <Dropdown
             label="Choose role"
             type="select"
             name="role"
             id="role"
+            search={false}
             options={options}
-            required=""
-          ></Inputcmp>
+            required={true}
+          ></Dropdown>
           <Inputcmp
             label="Enter EvaluatorID"
             type="text"
             name="evaluatorid"
             id="evaluatorid"
             placeholder="e.g. 123"
-            required=""
+            required={true}
           ></Inputcmp>
           <div className="col-span-2">
             <Inputcmp
@@ -47,11 +50,11 @@ export const Login = (prop) => {
               name="password"
               id="password"
               placeholder="Enter password"
-              required="true"
+              required={true}
             ></Inputcmp>
           </div>
           <div className="mt-4">
-            <Buttoncmp type="submit" name="Login" variant="stpr" size="min">
+            <Buttoncmp type="submit" label="Login" variant="dasi" size="min">
               <ArrowRightOnRectangleIcon></ArrowRightOnRectangleIcon>
             </Buttoncmp>
           </div>

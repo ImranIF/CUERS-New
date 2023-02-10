@@ -19,20 +19,21 @@ function App() {
   const options = ["Evaluator", "Chairman of Exam Committee", "Chairman"];
   let loggedIn = null;
   function onLogin(e) {
-    // const navigate = useNavigate();
-    console.log(e);
+    // console.log(e);
     loggedIn = e.target[0].value;
     console.log(loggedIn);
-    // navigate("/Dashboard");
   }
 
   return (
-    <div className="h-min bg-slate-100">
-      <Navbar></Navbar>
-      <div className="mt-14 ">
-        {/* <Login onLogin={onLogin}></Login> */}
+    <div className="bg-slate-100 flex flex-col h-screen">
+      <div>
+        <Navbar></Navbar>
       </div>
-      <Dashboard></Dashboard>
+        {/* <Login onLogin={onLogin}></Login> */}
+      {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
+        <Dashboard></Dashboard>
+        {/* <div className="p-32 border-2 border-slate-500"></div> */}
+      {/* </div> */}
     </div>
   );
 }
