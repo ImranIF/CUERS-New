@@ -4,39 +4,76 @@ import Buttoncmp from "../../UI/Buttoncmp";
 // import Inputcmp from "../../Inputcmp";
 import Temptable from "../../UI/Temptable";
 
-const activity_type = {
-    activity_type_id: [
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17" 
+const tableData = [
+  { col: "No" },
+  {
+    col: "activity_type_id",
+    type: "dropdown",
+    values: [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
     ],
-    sector: [
-        "Honours/Masters",
-        "M.Phil",
-        "PhD",
-        "BSc, MSc",
-        "Terminal",
-        "Tutorial",
-        "Lab",
-        "Scrutiny",
-        "MSc (Project/thesis)",
-        "Lab notebook",
-        "Industrial tour",
-        "BSc (1st year to 3rd year)",
-        "BSc (4th year)"
+  },
+  {
+    col: "sector",
+    type: "dropdown",
+    values: [
+      "Honours/Masters",
+      "M.Phil",
+      "PhD",
+      "BSc, MSc",
+      "Terminal",
+      "Tutorial",
+      "Lab",
+      "Scrutiny",
+      "MSc (Project/thesis)",
+      "Lab notebook",
+      "Industrial tour",
+      "BSc (1st year to 3rd year)",
+      "BSc (4th year)",
     ],
-    category: [
-        "Course_activity",
-        "Semester_activity"
+  },
+  {
+    col: "category",
+    type: "dropdown",
+    values: ["Course_activity", "Semester_activity"],
+  },
+  {
+    col: "factor",
+    type: "dropdown",
+    values: [
+      "Hours",
+      "No of questions",
+      "No of members in Exam Committee",
+      "No of students",
+      "No of exams",
+      "Course",
+      "Bill for question setting",
     ],
-    factor: [
-        "Hours",
-        "No of questions",
-        "No of members in Exam Committee",
-        "No of students",
-        "No of exams",
-        "Course",
-        "Bill for question setting"
-    ],
-}
+  },
+  {
+    col: "Initial quantity",
+    type: "number",
+  },
+  { col: "Final quantity", type: "number" },
+  { col: "Minbill", type: "number" },
+  { col: "Bill", type: "number" },
+];
 
 const FillActivityBill = () =>{
 
@@ -54,7 +91,7 @@ const FillActivityBill = () =>{
 
 
     return (
-        <div className="flex h-auto w-auto justify-center">
+        <div className="flex h-full w-full justify-center overflow-auto">
             <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
                 <hr className="border border-slate-300 mt-12"></hr>
                 <div className="mb-8 mt-8">
@@ -88,7 +125,7 @@ const FillActivityBill = () =>{
                 <Buttoncmp type="submit" label="Save" variant="stpr"></Buttoncmp>
                 <hr className="border border-slate-300 mt-12"></hr>
             </form>
-            
+
         </div>
     )
 };

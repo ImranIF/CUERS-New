@@ -5,39 +5,39 @@ import Inputcmp from "../../UI/Inputcmp";
 import Table from "../../UI/Table";
 import { useState } from "react";
 import Dropdown from "../../UI/Dropdown";
-const options = {
-  evaluators: [
-    "Dr. Rudra Pratap Devnath",
-    "Dr. Anwarul Azim",
-    "Dr. Abu Nowshad Chowdhury",
-    ,
-    "Mr. Nihad Karim Chowdhury",
-    "Dr. Mohammad Osiur Rahman",
-    "Dr. Rashed Mustafa",
-    "Dr. Mohammad Khairul Islam",
-    "Dr. Kazi Ashrafuzzaman",
-    "Mr. Mohammad Rokan UddinFaruque",
-    "Mrs. Nasrin Sultana",
-    "Dr. Asaduzzaman",
-    "Mr. H.S. Faruq Alam",
-    "Dr. Mohammed Hanif Siddique",
-    "Dr. Mohammed Abdur Rauf",
-  ],
-  roles: ["Member", "Chairman", "External member"],
-};
+import Tablenew from "../../UI/Tablenew";
+const tableData = [
+  { col: "No", type: "row" },
+  {
+    col: "Evaluator",
+    type: "dropdown",
+    values: [
+      "Dr. Rudra Pratap Devnath",
+      "Dr. Anwarul Azim",
+      "Dr. Abu Nowshad Chowdhury",
+      ,
+      "Mr. Nihad Karim Chowdhury",
+      "Dr. Mohammad Osiur Rahman",
+      "Dr. Rashed Mustafa",
+      "Dr. Mohammad Khairul Islam",
+      "Dr. Kazi Ashrafuzzaman",
+      "Mr. Mohammad Rokan UddinFaruque",
+      "Mrs. Nasrin Sultana",
+      "Dr. Asaduzzaman",
+      "Mr. H.S. Faruq Alam",
+      "Dr. Mohammed Hanif Siddique",
+      "Dr. Mohammed Abdur Rauf",
+    ],
+  },
+  {
+    col: "Role",
+    type: "dropdown",
+    values: ["Member", "Chairman", "External member"],
+  },
+];
 
 // const peoples = ["1","2", "3", "4", "5"];
 const FormExamCommittee = () => {
-  const [peoples, setPeoples] = useState([1, 2]);
-  function addnewpeople(e) {
-    let len = peoples.length + 1;
-    setPeoples([...peoples, len]);
-  }
-  function removepeople(e) {
-    let peoples2 = peoples.slice(0, -1);
-    // console.log(e);
-    setPeoples([...peoples2]);
-  }
   const programOptions = ["BSc", "MSc"];
   return (
     <div className="flex h-full w-full justify-center">
@@ -89,29 +89,17 @@ const FormExamCommittee = () => {
               Committee information
             </span>
           </div>
-          <div className="mt-8">
-            <Table options={options} peoples={peoples}></Table>
-          </div>
         </div>
-        <div className="w-full mb-8 flex gap-4">
-          <Buttoncmp
-            onClick={addnewpeople}
-            variant="stse"
-            size="min"
-            type="button"
-          >
-            <PlusCircleIcon></PlusCircleIcon>
-          </Buttoncmp>
-          <Buttoncmp
-            onClick={removepeople}
-            variant="stse"
-            size="min"
-            type="button"
-          >
-            <MinusCircleIcon></MinusCircleIcon>
-          </Buttoncmp>
+        <div>
+          <Tablenew tableData={tableData}></Tablenew>
         </div>
-        <Buttoncmp type="submit" label="Form committee" variant="stpr"></Buttoncmp>
+        <div className="mt-16">
+        <Buttoncmp
+          type="submit"
+          label="Form committee"
+          variant="stpr"
+        ></Buttoncmp>
+        </div>
       </form>
     </div>
   );

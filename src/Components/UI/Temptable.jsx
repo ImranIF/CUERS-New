@@ -5,7 +5,7 @@ import Inputcmp from "./Inputcmp";
 const Temptable = (prop) => {
     const {activity_type, activities} = prop;
     return (
-      <div className="">
+      <div className="w-fit">
         <div className="flex-col">
         {activities.map((activity, key) => (
             <div id={activity} className="w-full grid grid-cols-9 gap-2 mb-1 p-1">

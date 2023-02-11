@@ -24,19 +24,9 @@ let list1 = [
   "textarea",
 ];
 const Inputcmp = (prop) => {
-
-
   let inputBlock;
-  let {
-    label,
-    type,
-    name,
-    id,
-    placeholder,
-    autocomplete,
-    onChange,
-    required,
-  } = prop;
+  let { label, type, name, id, placeholder, autocomplete, onChange, required } =
+    prop;
   if (list1.includes(type)) {
     inputBlock = (
       <input
@@ -47,21 +37,23 @@ const Inputcmp = (prop) => {
         placeholder={placeholder}
         className={`${inputStyle}`}
         required={required}
+        onClick={(e)=> e.stopPropagation()}
       />
     );
-  } else if (type.localeCompare("select") == 0) {
-    inputBlock = (
-      <select id={id} className={`${inputStyle}`}>
-        {options
-          ? options.map((option) => (
-              <option value={option} className="">
-                {option}
-              </option>
-            ))
-          : null}
-      </select>
-    );
   }
+  // else if (type.localeCompare("select") == 0) {
+  //   inputBlock = (
+  //     <select id={id} className={`${inputStyle}`}>
+  //       {options
+  //         ? options.map((option) => (
+  //             <option value={option} className="">
+  //               {option}
+  //             </option>
+  //           ))
+  //         : null}
+  //     </select>
+  //   );
+  // }
   return (
     <label htmlFor={id} className="block text-base">
       <span className="flex min-w-fit">{label}</span>
