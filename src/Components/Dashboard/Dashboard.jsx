@@ -14,7 +14,7 @@ import Tablenew from "../UI/Tablenew";
 const menus = [
   {
     person: "chairman",
-    activity: ["Manage evaluators", "Exam committee info"],
+    activity: ["Manage evaluators", "Exam committee info",],
   },
 ];
 const Dashboard = () => {
@@ -49,7 +49,7 @@ const Dashboard = () => {
           {/* <FillActivityBill></FillActivityBill> */}
           {/* <Tablenew></Tablenew> */}
           <Chairman></Chairman>
-
+          {/* <CEC></CEC> */}
         </div>
       </div>
     </div>
