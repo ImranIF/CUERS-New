@@ -19,6 +19,7 @@ const Tablenew = (prop) => {
   function addnewRow(e) {
     let maxID = rows.length > 0 ? rows[rows.length - 1].id : 0;
     let newrows = [...rows, { id: maxID + 1, value: maxID + 1 }];
+    console.log(newrows);
     setRows([...newrows]);
   }
   const [activeCell, setActiveCell] = useState("");
@@ -27,7 +28,6 @@ const Tablenew = (prop) => {
     const updatedRows = rows.filter(({ id, value }) => id !== row.id);
     let temp = row.value;
     console.log(temp);
-    console.log(updatedRows);
     for (let i = temp - 1; i < updatedRows.length; i++) {
       updatedRows[i].value = temp;
       console.log(i);
