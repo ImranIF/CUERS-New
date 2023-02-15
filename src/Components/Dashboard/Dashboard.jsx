@@ -13,17 +13,38 @@ import FillActivityBill from "./CEC/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
 const menus = [
   {
-    person: "chairman",
-    activity: ["Manage evaluators", "Exam committee info"],
+    person: "Chairman",
+    activity: [
+      "Manage evaluators",
+      "Exam committee info",
+      "Manage activity bill",
+    ],
   },
+  {
+    person: "Chairman of exam committee",
+    activity: [
+      "Manage course activity",
+      "Manage semester activity",
+      "Manage edit requests",
+    ],
+  },
+  {
+    person: "Evaluator",
+    activity:[
+      "View Bill forms",
+    ]
+  }
 ];
-const Dashboard = () => {
+const Dashboard = (prop) => {
+  const { userInfo } = prop;
+  const Cactivity = menus.filter((menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase());
+  console.log(userInfo);
   return (
     <div className="flex w-full h-full justify-start ">
       <div className="flex-none">
         <div className="bg-slate-200 w-72 h-full flex-col px-4 py-4 border-r-2 z-30 border-slate-300">
           <div className="flex-col">
-            {menus.map((person) => {
+            {Cactivity.map((person) => {
               let activity = person.activity;
               // console.log(activity);
               return activity.map((temp) => {
@@ -49,7 +70,6 @@ const Dashboard = () => {
           {/* <FillActivityBill></FillActivityBill> */}
           {/* <Tablenew></Tablenew> */}
           <Chairman></Chairman>
-
         </div>
       </div>
     </div>

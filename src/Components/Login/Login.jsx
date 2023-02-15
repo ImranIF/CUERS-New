@@ -52,7 +52,7 @@ export const Login = (prop) => {
             ></Inputcmp>
           </div>
           <div className="mt-4">
-            <Buttoncmp type="submit" label="Login" variant="dasi" size="min">
+            <Buttoncmp type="submit" label="Login" variant="stpr" size="min">
               <ArrowRightOnRectangleIcon></ArrowRightOnRectangleIcon>
             </Buttoncmp>
           </div>

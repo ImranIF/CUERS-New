@@ -1,13 +1,9 @@
+import { Outlet, Navigate } from "react-router-dom";
+import Dashboard from "../Dashboard/Dashboard";
 
-import { Outlet, Navigate } from 'react-router-dom'
+const PrivateRoutes = (prop) => {
+  const { isAuthenticated } = prop;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+};
 
-const PrivateRoutes = ({isAuthenticated}) => {
-    let auth = isAuthenticated;
-    
-    console.log('asdfasdfs');
-    return (
-        auth ? <Outlet to="/dashboard"/> : <Navigate to="/dashboard" />
-    )
-}
-
-export default PrivateRoutes
+export default PrivateRoutes;
