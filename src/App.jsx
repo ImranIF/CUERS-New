@@ -40,9 +40,9 @@ function App() {
       <div>
         <Navbar></Navbar>
       </div>
-      <Login onLogin={useonLogin}></Login>
+      {/* <Login onLogin={useonLogin}></Login> */}
       {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
-      {/* <Dashboard></Dashboard> */}
+      <Dashboard></Dashboard>
       {/* <div className="p-32 border-2 border-slate-500"></div> */}
       {/* </div> */}
       {message && (

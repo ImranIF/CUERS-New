@@ -24,17 +24,17 @@ const Tablenew = (prop) => {
   }
   const [activeCell, setActiveCell] = useState("");
   function handleDelete(e, row) {
-    e.stopPropagation();
-    const updatedRows = rows.filter(({ id, value }) => id !== row.id);
-    let temp = row.value;
-    console.log(temp);
-    for (let i = temp - 1; i < updatedRows.length; i++) {
-      updatedRows[i].value = temp;
-      console.log(i);
-      temp++;
-    }
-    console.log(updatedRows);
-    setRows(updatedRows);
+    // e.stopPropagation();
+    // const updatedRows = rows.filter(({ id, value }) => id !== row.id);
+    // let temp = row.value;
+    // console.log(temp);
+    // for (let i = temp - 1; i < updatedRows.length; i++) {
+    //   updatedRows[i].value = temp;
+    //   console.log(i);
+    //   temp++;
+    // }
+    // console.log(updatedRows);
+    // setRows(updatedRows);
   }
   return (
     <div className="mt-0">
@@ -82,7 +82,7 @@ const Tablenew = (prop) => {
                     onActive={(e) => {
                       setActiveCell(data.type + row.value + data.col);
                       e.stopPropagation();
-                      console.log(e);
+                      // console.log(e);
                     }}
                     onDelete={handleDelete}
                   ></TableCell>
