@@ -17,7 +17,6 @@ export const Login = (prop) => {
           className="grid sm:grid-cols-2 gap-x-8 gap-y-8"
           onSubmit={(e) => {
             e.preventDefault();
-            // console.log(e);
             onLogin(e);
           }}
         >
@@ -54,7 +53,7 @@ export const Login = (prop) => {
             ></Inputcmp>
           </div>
           <div className="mt-4">
-            <Buttoncmp type="submit" label="Login" variant="dasi" size="min">
+            <Buttoncmp type="submit" label="Login" variant="stpr" size="min">
               <ArrowRightOnRectangleIcon></ArrowRightOnRectangleIcon>
             </Buttoncmp>
           </div>
