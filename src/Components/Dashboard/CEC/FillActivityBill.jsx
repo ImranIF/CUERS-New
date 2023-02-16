@@ -1,8 +1,9 @@
 import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import React, {useState} from "react";
 import Buttoncmp from "../../UI/Buttoncmp";
+import Tablenew from "../../UI/Tablenew";
 // import Inputcmp from "../../Inputcmp";
-import Temptable from "../../UI/Temptable";
+// import Temptable from "../../UI/Temptable";
 
 const tableData = [
   { col: "No" },
@@ -101,26 +102,8 @@ const FillActivityBill = () =>{
                         </span>
                     </div>
                     <div className="mt-8">
-                        <Temptable activity_type={activity_type} activities = {activities}></Temptable>
+                      <Tablenew tableData={tableData}></Tablenew>
                     </div>
-                </div>
-                <div className="w-full mb-8 flex gap-4">
-                    <Buttoncmp
-                        onClick={addactivities}
-                        variant="stse"
-                        size="min"
-                        type="button"
-                    >
-                        <PlusCircleIcon></PlusCircleIcon>
-                    </Buttoncmp>
-                    <Buttoncmp
-                        onClick={removeactivities}
-                        variant="stse"
-                        size="min"
-                        type="button"
-                    >
-                        <MinusCircleIcon></MinusCircleIcon>
-                    </Buttoncmp>
                 </div>
                 <Buttoncmp type="submit" label="Save" variant="stpr"></Buttoncmp>
                 <hr className="border border-slate-300 mt-12"></hr>
