@@ -1,10 +1,13 @@
 import React from "react";
-import FillActivityBill from "./FillActivityBill";
-
+import EvaluatesCourseActivity from "./EvaluatesCourseActivity";
+import ManageEditRequests from "./ManageEditRequests";
+import ManageSemesterActivity from "./ManageSemesterActivity";
 const CEC = () => {
   return (
     <div className="w-full h-full">
-      <FillActivityBill></FillActivityBill>
+      {/* <ManageSemesterActivity /> */}
+       {/* <EvaluatesCourseActivity /> */}
+       <ManageEditRequests />
     </div>
   );
 };
