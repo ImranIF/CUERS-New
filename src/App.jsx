@@ -16,8 +16,9 @@ import Table from "./Components/UI/Table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PrivateRoutes from "./Components/Login/PrivateRoutes";
+import Chairman from "./Components/Dashboard/Chairman/Chairman";
 function App() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [isAuthenticated, setAuthenticated] = useState(false);
   const logInfoRef = useRef({
     role: "",
@@ -42,7 +43,7 @@ function App() {
       .then((data) => {
         if (data.msg === "Correct Password") {
           setAuthenticated(true);
-          console.log("Things are good");
+          navigate("/dashboard");
         } else {
           let error = data.msg;
           alert(error);
@@ -71,11 +72,21 @@ function App() {
           <Route element={<Login onLogin={onLogin} />} path="/" />
         </Routes> */}
       {/* </Router> */}
-      {!isAuthenticated ? (
-        <Login onLogin={onLogin}></Login>
-      ) : (
-        <Dashboard userInfo={logInfoRef.current}></Dashboard>
-      )}
+      <Routes>
+        <Route
+          element={<Login onLogin={onLogin}></Login>}
+          path="/login"
+        ></Route>
+        <Route
+          element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+          path="/dashboard"
+        ></Route>
+        <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
+        <Route
+          element={<Login onLogin={onLogin}></Login>}
+          path="/login"
+        ></Route>
+      </Routes>
       {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
       {/* <Dashboard></Dashboard> */}
       {/* <div className="p-32 border-2 border-slate-500"></div> */}

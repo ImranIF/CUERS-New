@@ -11,6 +11,8 @@ import Table from "../UI/Table";
 import CEC from "./CEC/CEC";
 import FillActivityBill from "./Chairman/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
+import ManageEvaluators from "./Chairman/ManageEvaluators";
+import { Route, Routes, useNavigate } from "react-router";
 const menus = [
   {
     person: "Chairman",
@@ -30,14 +32,20 @@ const menus = [
   },
   {
     person: "Evaluator",
-    activity:[
-      "View Bill forms",
-    ]
-  }
+    activity: ["View Bill forms"],
+  },
 ];
 const Dashboard = (prop) => {
+  const navigate = useNavigate();
   const { userInfo } = prop;
-  const Cactivity = menus.filter((menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase());
+  if (userInfo.role == "Chairman") {
+    navigate("/dashboard/chairman");
+  } else if (userInfo.role == "Chairman of Exam Committee") {
+    navigate("/dashboard/cec");
+  }
+  const Cactivity = menus.filter(
+    (menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase()
+  );
   console.log(userInfo);
   return (
     <div className="flex w-full h-full justify-start ">
@@ -67,15 +75,13 @@ const Dashboard = (prop) => {
       </div>
       <div className="flex-1 px-16 w-full h-full overflow-auto">
         <div className="">
-          {/* <FillActivityBill></FillActivityBill> */}
-          {/* <Tablenew></Tablenew> */}
-          {
-            userInfo.role === "Chairman" && <Chairman></Chairman>
-          }
-          {
-            userInfo.role === "Chairman of Exam Committee" && <CEC></CEC>
-          }
-          
+          <Routes>
+            <Route
+              element={<Chairman></Chairman>}
+              path="/dashboard/chairman"
+            ></Route>
+            <Route element={<CEC></CEC>} path="/dashboard/cec"></Route>
+          </Routes>
         </div>
       </div>
     </div>
