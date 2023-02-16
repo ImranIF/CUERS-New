@@ -13,7 +13,7 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 import Inputcmp from "./Components/UI/Inputcmp";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Table from "./Components/UI/Table";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PrivateRoutes from "./Components/Login/PrivateRoutes";
 function App() {
@@ -71,11 +71,22 @@ function App() {
           <Route element={<Login onLogin={onLogin} />} path="/" />
         </Routes> */}
       {/* </Router> */}
+      {/* <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Login onLogin={onLogin} />} ></Route>
+
+          <Route path='/dashboard' element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}></Route>
+        </Routes>
+      </BrowserRouter> */}
+
+
       {!isAuthenticated ? (
         <Login onLogin={onLogin}></Login>
       ) : (
         <Dashboard userInfo={logInfoRef.current}></Dashboard>
+
       )}
+
       {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
       {/* <Dashboard></Dashboard> */}
       {/* <div className="p-32 border-2 border-slate-500"></div> */}
