@@ -21,7 +21,7 @@ function App() {
 
   const options = ["Evaluator", "Chairman of Exam Committee", "Chairman"];
   let loggedIn = null;
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isAuthenticated, setisAuthenticated] = useState(false);
 
 
 
@@ -49,7 +49,8 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         if (data.msg === "Correct Password") {
-          setAuthenticated(true);
+          setisAuthenticated(true);
+          console.log(setisAuthenticated);
           alert(data.msg);
         }
         else {
@@ -72,6 +73,7 @@ function App() {
         <Routes>
           <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
             {/* <Route element={<Login />} path="/" exact /> */}
+            
             <Route element={<Dashboard />} path="/dashboard" />
           </Route>
           <Route element={<Login onLogin={onLogin} />} path="/" />
