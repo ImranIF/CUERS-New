@@ -84,9 +84,8 @@ function App() {
         <Login onLogin={onLogin}></Login>
       ) : (
         <Dashboard userInfo={logInfoRef.current}></Dashboard>
-
       )}
-
+      
       {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
       {/* <Dashboard></Dashboard> */}
       {/* <div className="p-32 border-2 border-slate-500"></div> */}
