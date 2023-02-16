@@ -5,9 +5,7 @@ import Dropdown from "../UI/Dropdown";
 import Inputcmp from "../UI/Inputcmp";
 
 export const Login = (prop) => {
-  // 1. Dom element reading & storing
-  // 2. Passing this information to dashboard, switching page(login -> dashboard)
-  // 3. Conditional rendering
+
   const { onLogin } = prop;
   const options = ["Chairman", "Evaluator", "Chairman of Exam Committee"];
   return (
@@ -54,7 +52,7 @@ export const Login = (prop) => {
             ></Inputcmp>
           </div>
           <div className="mt-4">
-            <Buttoncmp type="submit" label="Login" variant="dasi" size="min">
+            <Buttoncmp type="submit" label="Login" variant="stpr" size="min">
               <ArrowRightOnRectangleIcon></ArrowRightOnRectangleIcon>
             </Buttoncmp>
           </div>

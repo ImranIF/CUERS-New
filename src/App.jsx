@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Navbar from "./Components/UI/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,13 +15,42 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Table from "./Components/UI/Table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import PrivateRoutes from "./Components/Login/PrivateRoutes";
 function App() {
-  const options = ["Evaluator", "Chairman of Exam Committee", "Chairman"];
-  let loggedIn = null;
+  // const navigate = useNavigate();
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const logInfoRef = useRef({
+    role: "",
+    evaluator_id: "",
+    password: "",
+  });
   function onLogin(e) {
     // console.log(e);
-    loggedIn = e.target[0].value;
-    console.log(loggedIn);
+
+    logInfoRef.current.role = e.target[0].value;
+    logInfoRef.current.evaluator_id = e.target[1].value;
+    logInfoRef.current.password = e.target[2].value;
+
+    fetch("http://localhost:3000/users/authenticatelogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(logInfoRef.current),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.msg === "Correct Password") {
+          setAuthenticated(true);
+          console.log("Things are good");
+        } else {
+          let error = data.msg;
+          alert(error);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
@@ -29,10 +58,27 @@ function App() {
       <div>
         <Navbar></Navbar>
       </div>
-        {/* <Login onLogin={onLogin}></Login> */}
+      {/* <Router> */}
+      {/* <Routes>
+          <Route
+            element={
+              <PrivateRoutes isAuthenticated={isAuthenticated}></PrivateRoutes>
+            }
+          >
+            <Route element={<Dashboard></Dashboard>} path="/dashboard" />
+          </Route>
+          <Route element={<Login onLogin={onLogin} />} path="/login" />
+          <Route element={<Login onLogin={onLogin} />} path="/" />
+        </Routes> */}
+      {/* </Router> */}
+      {!isAuthenticated ? (
+        <Login onLogin={onLogin}></Login>
+      ) : (
+        <Dashboard userInfo={logInfoRef.current}></Dashboard>
+      )}
       {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
-        <Dashboard></Dashboard>
-        {/* <div className="p-32 border-2 border-slate-500"></div> */}
+      {/* <Dashboard></Dashboard> */}
+      {/* <div className="p-32 border-2 border-slate-500"></div> */}
       {/* </div> */}
     </div>
   );

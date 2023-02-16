@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Buttoncmp from "./Buttoncmp";
 import Dropdown from "./Dropdown";
 import Inputcmp from "./Inputcmp";
 
@@ -28,7 +29,7 @@ const TableCell = (prop) => {
   }
   return (
     <div
-      className={`duration-200 relative cursor-pointer table-cell border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-slate-500 focus:bg-white focus:outline-none  focus:ring-1 p-2`}
+      className={`duration-200 relative cursor-pointer table-cell ${data.type === "button" && "align-center text-center"} border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-slate-500 focus:bg-white focus:outline-none  focus:ring-1 p-2`}
       id={data.type + row + data.col}
       onClick={(e) => {
         showInput(!input);
@@ -47,6 +48,7 @@ const TableCell = (prop) => {
         </div>
       )}
       {data.col == "No" && row}
+      {data.type == "button" && <Buttoncmp label={data.label? data.label: "null"} variant="dase"></Buttoncmp>}
     </div>
   );
 };
