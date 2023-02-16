@@ -9,7 +9,7 @@ import Buttoncmp from "../UI/Buttoncmp";
 import Chairman from "./Chairman/Chairman";
 import Table from "../UI/Table";
 import CEC from "./CEC/CEC";
-import FillActivityBill from "./CEC/FillActivityBill";
+import FillActivityBill from "./Chairman/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
 const menus = [
   {
@@ -69,7 +69,13 @@ const Dashboard = (prop) => {
         <div className="">
           {/* <FillActivityBill></FillActivityBill> */}
           {/* <Tablenew></Tablenew> */}
-          <Chairman></Chairman>
+          {
+            userInfo.role === "Chairman" && <Chairman></Chairman>
+          }
+          {
+            userInfo.role === "Chairman of Exam Committee" && <CEC></CEC>
+          }
+          
         </div>
       </div>
     </div>
