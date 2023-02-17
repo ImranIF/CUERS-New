@@ -50,11 +50,13 @@ const tableData = [
     type: "tel",
   },
 ];
+console.log('afasdf')
 const ManageEvaluators = () => {
   return (
     <div className="flex h-full w-full justify-center ">
       <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
         <Tablenew tableData={tableData}></Tablenew>
+
       </form>
     </div>
   );

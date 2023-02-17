@@ -4,7 +4,7 @@ import {
   ClipboardIcon,
   HashtagIcon,
 } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useState } from "react";
 import Buttoncmp from "../UI/Buttoncmp";
 import Chairman from "./Chairman/Chairman";
 import Table from "../UI/Table";
@@ -13,6 +13,9 @@ import FillActivityBill from "./Chairman/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
 import ManageEvaluators from "./Chairman/ManageEvaluators";
 import { Route, Routes, useNavigate } from "react-router";
+import FormExamCommittee from "./Chairman/FormExamCommittee";
+
+
 const menus = [
   {
     person: "Chairman",
@@ -35,17 +38,31 @@ const menus = [
     activity: ["View Bill forms"],
   },
 ];
+
 const Dashboard = (prop) => {
+
   const navigate = useNavigate();
   const { userInfo } = prop;
-  if (userInfo.role == "Chairman") {
-    navigate("/dashboard/chairman");
-  } else if (userInfo.role == "Chairman of Exam Committee") {
-    navigate("/dashboard/cec");
-  }
+  // if (userInfo.role == "Chairman") {
+  //   navigate("/dashboard/chairman");
+  // } else if (userInfo.role == "Chairman of Exam Committee") {
+  //   navigate("/dashboard/cec");
+  // }
   const Cactivity = menus.filter(
     (menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase()
   );
+
+  const clickme = (e) => {
+    console.log(e.target.innerText);
+    let x = e.target.innerText;
+    // setPressedMenuItem(x);
+    if (x == "Manage evaluators") {
+      navigate('/dashboard/chairman/manage-evaluators');
+    }
+    else if(x === ""){
+      
+    }
+  }
   console.log(userInfo);
   return (
     <div className="flex w-full h-full justify-start ">
@@ -58,7 +75,7 @@ const Dashboard = (prop) => {
               return activity.map((temp) => {
                 return (
                   <div className="mb-3">
-                    <Buttoncmp label={temp} variant="stsi" size="full">
+                    <Buttoncmp label={temp} onClick={clickme} variant="stsi" size="full">
                       <HashtagIcon></HashtagIcon>
                     </Buttoncmp>
                   </div>
@@ -77,14 +94,19 @@ const Dashboard = (prop) => {
         <div className="">
           <Routes>
             <Route
-              element={<Chairman></Chairman>}
-              path="/dashboard/chairman"
-            ></Route>
-            <Route element={<CEC></CEC>} path="/dashboard/cec"></Route>
+              element={<Chaigrman ></Chairman>}
+              path="chairman"
+            >
+              <Route element={<ManageEvaluators />} path="manage-evaluators"></Route>
+              <Route element={<FormExamCommittee />} path="form-exam-committee"></Route>
+              <Route element={<FillActivityBill />} path="fill-activity-bill"></Route>
+
+            </Route>
+            <Route element={<CEC ></CEC>} path="cec"></Route>
           </Routes>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

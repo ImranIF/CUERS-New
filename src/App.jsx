@@ -17,6 +17,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PrivateRoutes from "./Components/Login/PrivateRoutes";
 import Chairman from "./Components/Dashboard/Chairman/Chairman";
+import CEC from "./Components/Dashboard/CEC/CEC";
 function App() {
   const navigate = useNavigate();
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -43,7 +44,14 @@ function App() {
       .then((data) => {
         if (data.msg === "Correct Password") {
           setAuthenticated(true);
-          navigate("/dashboard");
+          console.log(logInfoRef.current.role);
+           navigate('dashboard');
+          // if (logInfoRef.current.role == "Chairman") {
+
+          //   navigate("/dashboard/chairman");
+          // } else if (logInfoRef.current.role == "Chairman of Exam Committee") {
+          //   //navigate("/dashboard/cec");
+          // }
         } else {
           let error = data.msg;
           alert(error);
@@ -59,39 +67,32 @@ function App() {
       <div>
         <Navbar></Navbar>
       </div>
-      {/* <Router> */}
-      {/* <Routes>
-          <Route
-            element={
-              <PrivateRoutes isAuthenticated={isAuthenticated}></PrivateRoutes>
-            }
-          >
-            <Route element={<Dashboard></Dashboard>} path="/dashboard" />
-          </Route>
-          <Route element={<Login onLogin={onLogin} />} path="/login" />
-          <Route element={<Login onLogin={onLogin} />} path="/" />
-        </Routes> */}
-      {/* </Router> */}
       <Routes>
         <Route
           element={<Login onLogin={onLogin}></Login>}
-          path="/login"
-        ></Route>
+          path="/"></Route>
         <Route
           element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-          path="/dashboard"
-        ></Route>
-        <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
+          path="dashboard"
+        >
+          {/* <Route element={<CEC />} path="cec"></Route>
+          <Route
+            element={<Chairman />}
+            path="chairman"
+          ></Route> */}
+        </Route>
         <Route
           element={<Login onLogin={onLogin}></Login>}
           path="/login"
         ></Route>
       </Routes>
+
+
       {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
       {/* <Dashboard></Dashboard> */}
       {/* <div className="p-32 border-2 border-slate-500"></div> */}
       {/* </div> */}
-    </div>
+    </div >
   );
 }
 
