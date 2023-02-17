@@ -33,7 +33,7 @@ const TableCell = (prop) => {
       className={`duration-200 relative cursor-pointer table-cell ${
         data.type === "button" && "align-center text-center"
       } border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-slate-500 focus:bg-white focus:outline-none  focus:ring-1 p-2`}
-      id={data.type + row + data.col}
+      id={data.type + row.value + data.col}
       onClick={(e) => {
         showInput(!input);
         e.stopPropagation();
@@ -52,7 +52,7 @@ const TableCell = (prop) => {
           {!input && value}
         </div>
       )}
-      {data.col == "No" && row}
+      {data.col == "No" && row.value}
       {data.type == "button" && (
         <Buttoncmp
           label={data.label ? data.label : "null"}

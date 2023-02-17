@@ -16,12 +16,13 @@ import Table from "./Components/UI/Table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PrivateRoutes from "./Components/Login/PrivateRoutes";
-import { useState, useEffect } from "react";
 import Status from "./Components/UI/Status";
+import { useEffect } from "react";
 function App() {
   // const navigate = useNavigate();
   let loggedIn = null;
   // status message
+  const [message, setMessage] = useState(null);
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
@@ -30,8 +31,10 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, [message]);
+  const setStatus = (message) => {
+    setMessage(message);
+  };
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const [message, setMessage] = useState(null);
   const logInfoRef = useRef({
     role: "",
     evaluator_id: "",
@@ -55,10 +58,10 @@ function App() {
       .then((data) => {
         if (data.msg === "Correct Password") {
           setAuthenticated(true);
-          console.log("Things are good");
+          setStatus(["s", "User Authenticated!"]);
         } else {
           let error = data.msg;
-          alert(error);
+          setStatus(["d", error + ". Try again!"]);
         }
       })
       .catch((error) => {
@@ -93,9 +96,9 @@ function App() {
       {/* <div className="p-32 border-2 border-slate-500"></div> */}
       {/* </div> */}
       {message && (
-        <div className="absolute bottom-4 left-4">
-          <Status variant="d" onClick={(e) => setMessage(null)}>
-            {message}
+        <div className="absolute bottom-4 right-4">
+          <Status variant={message[0]} onClick={(e) => setMessage(null)}>
+            {message[1]}
           </Status>
         </div>
       )}

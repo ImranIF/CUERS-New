@@ -65,14 +65,14 @@ const Dashboard = (prop) => {
           </div>
         </div>
       </div>
-      <div className="flex-1 px-16 w-full h-full overflow-auto">
-        <div className="">
-          {/* <FillActivityBill></FillActivityBill> */}
-          {/* <Tablenew></Tablenew> */}
-          {userInfo.role === "Chairman" && <Chairman></Chairman>}
-          {userInfo.role === "Chairman of Exam Committee" && <CEC></CEC>}
-        </div>
+      {/* <div className="flex-1 px-16 w-full h-full overflow-auto"> */}
+      <div className="flex h-full w-full justify-center overflow-auto">
+        {/* <FillActivityBill></FillActivityBill> */}
+        {/* <Tablenew></Tablenew> */}
+        {userInfo.role === "Chairman" && <Chairman></Chairman>}
+        {userInfo.role === "Chairman of Exam Committee" && <CEC></CEC>}
       </div>
+      {/* </div> */}
     </div>
   );
 };
