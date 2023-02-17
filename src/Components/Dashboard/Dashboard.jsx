@@ -30,14 +30,14 @@ const menus = [
   },
   {
     person: "Evaluator",
-    activity:[
-      "View Bill forms",
-    ]
-  }
+    activity: ["View Bill forms"],
+  },
 ];
 const Dashboard = (prop) => {
   const { userInfo } = prop;
-  const Cactivity = menus.filter((menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase());
+  const Cactivity = menus.filter(
+    (menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase()
+  );
   console.log(userInfo);
   return (
     <div className="flex w-full h-full justify-start ">
@@ -69,13 +69,8 @@ const Dashboard = (prop) => {
         <div className="">
           {/* <FillActivityBill></FillActivityBill> */}
           {/* <Tablenew></Tablenew> */}
-          {
-            userInfo.role === "Chairman" && <Chairman></Chairman>
-          }
-          {
-            userInfo.role === "Chairman of Exam Committee" && <CEC></CEC>
-          }
-          
+          {userInfo.role === "Chairman" && <Chairman></Chairman>}
+          {userInfo.role === "Chairman of Exam Committee" && <CEC></CEC>}
         </div>
       </div>
     </div>

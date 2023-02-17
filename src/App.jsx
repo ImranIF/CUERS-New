@@ -16,9 +16,22 @@ import Table from "./Components/UI/Table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PrivateRoutes from "./Components/Login/PrivateRoutes";
+import { useState, useEffect } from "react";
+import Status from "./Components/UI/Status";
 function App() {
   // const navigate = useNavigate();
+  let loggedIn = null;
+  // status message
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [message, setMessage] = useState(null);
   const logInfoRef = useRef({
     role: "",
     evaluator_id: "",
@@ -52,9 +65,8 @@ function App() {
         console.error(error);
       });
   }
-
   return (
-    <div className="bg-slate-100 flex flex-col h-screen">
+    <div className="bg-slate-100 flex flex-col h-screen relative">
       <div>
         <Navbar></Navbar>
       </div>
@@ -80,6 +92,13 @@ function App() {
       {/* <Dashboard></Dashboard> */}
       {/* <div className="p-32 border-2 border-slate-500"></div> */}
       {/* </div> */}
+      {message && (
+        <div className="absolute bottom-4 left-4">
+          <Status variant="d" onClick={(e) => setMessage(null)}>
+            {message}
+          </Status>
+        </div>
+      )}
     </div>
   );
 }
