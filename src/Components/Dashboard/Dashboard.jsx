@@ -12,7 +12,9 @@ import CEC from "./CEC/CEC";
 import FillActivityBill from "./Chairman/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
 import ManageEvaluators from "./Chairman/ManageEvaluators";
-import { Route, Routes, useNavigate } from "react-router";
+import { Route, Routes, useNavigate} from "react-router";
+import { useState } from "react";
+import { Outlet } from "react-router";
 const menus = [
   {
     person: "Chairman",
@@ -35,14 +37,59 @@ const menus = [
     activity: ["View Bill forms"],
   },
 ];
+
 const Dashboard = (prop) => {
+  // const [pressedMenuItem, setPressedMenuItem] = useState('')
+  // const changeRoute = (e) => {
+    // e.preventDefault();
+    // setPressedMenuItem('kasi')
+    // console.log(e.innerText);
+  // }
+  const clickme = (e) =>{
+    // console.log(e.target.innerText)
+    let activity = e.target.innerText
+    console.log(activity, window.location.pathname)
+    // console.log(activity)
+    // setPressedMenuItem(activity)
+    // console.log(pressedMenuItem)
+    if(window.location.pathname.includes("cec")){
+      if(activity == "Manage semester activity"){
+        // console.log(activity)
+        navigate("/dashboard/cec/manage-semester-activity")
+      }
+      else if(activity == "Manage course activity"){
+        // console.log(activity)
+        navigate("/dashboard/cec/evaluates-course-activity")
+      }
+      else if(activity == "Manage edit requests"){
+        // console.log(activity)
+        navigate("/dashboard/cec/manage-edit-requests")
+      }
+    }
+    else if(window.location.pathname.includes("chairman")){
+      if(activity == "Manage activity bill"){
+        // console.log(activity)
+        navigate("/dashboard/chairman/fill-activity-bill")
+      }
+      else if(activity == "Exam committee info"){
+        // console.log(activity)
+        navigate("/dashboard/chairman/form-exam-committee")
+      }
+      else if(activity == "Manage evaluators"){
+        // console.log(activity)
+        navigate("/dashboard/chairman/manage-evaluators")
+      }
+    }
+  }
+
   const navigate = useNavigate();
   const { userInfo } = prop;
-  if (userInfo.role == "Chairman") {
-    navigate("/dashboard/chairman");
-  } else if (userInfo.role == "Chairman of Exam Committee") {
-    navigate("/dashboard/cec");
-  }
+  // if (userInfo.role == "Chairman") {
+  //   navigate("/dashboard/chairman");
+  // } else if (userInfo.role == "Chairman of Exam Committee") {
+  //   navigate("/dashboard/cec");
+  //   console.log(userInfo.role)
+  // }
   const Cactivity = menus.filter(
     (menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase()
   );
@@ -58,7 +105,7 @@ const Dashboard = (prop) => {
               return activity.map((temp) => {
                 return (
                   <div className="mb-3">
-                    <Buttoncmp label={temp} variant="stsi" size="full">
+                    <Buttoncmp label={temp} variant="stsi" size="full" value ={temp} onClick = {clickme} >
                       <HashtagIcon></HashtagIcon>
                     </Buttoncmp>
                   </div>
@@ -74,7 +121,11 @@ const Dashboard = (prop) => {
         </div>
       </div>
       <div className="flex-1 px-16 w-full h-full overflow-auto">
-        <div className="">
+      <div>
+        {" "}
+        <Outlet></Outlet>
+      </div>
+        {/* <div className="">
           <Routes>
             <Route
               element={<Chairman></Chairman>}
@@ -82,7 +133,7 @@ const Dashboard = (prop) => {
             ></Route>
             <Route element={<CEC></CEC>} path="/dashboard/cec"></Route>
           </Routes>
-        </div>
+        </div> */}
       </div>
     </div>
   );
