@@ -4,7 +4,7 @@ import {
   ClipboardIcon,
   HashtagIcon,
 } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useState } from "react";
 import Buttoncmp from "../UI/Buttoncmp";
 import Chairman from "./Chairman/Chairman";
 import Table from "../UI/Table";
@@ -129,10 +129,15 @@ const Dashboard = (prop) => {
         {/* <div className="">
           <Routes>
             <Route
-              element={<Chairman></Chairman>}
-              path="/dashboard/chairman"
-            ></Route>
-            <Route element={<CEC></CEC>} path="/dashboard/cec"></Route>
+              element={<Chaigrman ></Chairman>}
+              path="chairman"
+            >
+              <Route element={<ManageEvaluators />} path="manage-evaluators"></Route>
+              <Route element={<FormExamCommittee />} path="form-exam-committee"></Route>
+              <Route element={<FillActivityBill />} path="fill-activity-bill"></Route>
+
+            </Route>
+            <Route element={<CEC ></CEC>} path="cec"></Route>
           </Routes>
         </div> */}
       </div>

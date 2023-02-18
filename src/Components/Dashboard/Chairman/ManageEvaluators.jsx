@@ -52,7 +52,6 @@ const tablecols = [
     type: "tel",
   },
 ];
-
 const ManageEvaluators = () => {
   // const [toFetch, setToFetch] = useState(true);
 
@@ -63,10 +62,7 @@ const ManageEvaluators = () => {
   return (
     <div className="flex h-full w-full justify-center ">
       <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-        <Tablenew
-          tableCols={tablecols}
-          toFetch="get_evaluators"
-        ></Tablenew>
+        <Tablenew tableCols={tablecols} toFetch="get_evaluators"></Tablenew>
         <Buttoncmp
           type="submit"
           label="Submit"
