@@ -56,12 +56,12 @@ const buttonstyle = {
 };
 
 const Buttoncmp = (prop) => {
-  const {label, type, variant, size, onClick } = prop;
+  const { label, type, variant, size, onClick } = prop;
   let buttonVariant =
     buttonstyle.initial +
     " " +
     (size && size.localeCompare("full") == 0 ? "w-full" : "w-fit");
-  let iconVariant = buttonstyle.iconInitial + " " + (label? "mr-1" : "");
+  let iconVariant = buttonstyle.iconInitial + " " + (label ? "mr-1" : "");
   let btv;
   if (variant.localeCompare("stpr") == 0) {
     btv = buttonstyle.standard.primary;
@@ -84,7 +84,9 @@ const Buttoncmp = (prop) => {
     <div>
       <button
         type={type}
-        onClick={(e) => {onClick? onClick(e):null}}
+        onClick={(e) => {
+          onClick ? onClick(e) : null;
+        }}
         className={`${buttonVariant}`}
       >
         <div className="mx-4 flex">
