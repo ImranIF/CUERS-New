@@ -6,8 +6,8 @@ const CEC = () => {
   return (
     <div className="w-full h-full">
       {/* <ManageSemesterActivity /> */}
-       {/* <EvaluatesCourseActivity /> */}
-       <ManageEditRequests />
+       <EvaluatesCourseActivity />
+       {/* <ManageEditRequests /> */}
     </div>
   );
 };

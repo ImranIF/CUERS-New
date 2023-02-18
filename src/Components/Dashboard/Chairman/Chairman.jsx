@@ -8,10 +8,8 @@ import ManageEvaluators from "./ManageEvaluators";
 const Chairman = () => {
   return <div className="w-full h-full">
     {/* <ManageEvaluators></ManageEvaluators> */}
-    {/* <FormExamCommittee></FormExamCommittee> */}
-   
+    <FormExamCommittee></FormExamCommittee>
     {/* <FillActivityBill /> */}
-    <Outlet/>
   </div>;
 };
 
