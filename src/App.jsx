@@ -30,7 +30,7 @@ import { useEffect } from "react";
 import PrivateOutlet from "./Components/Login/PrivateOutlet";
 function App() {
   const navigate = useNavigate();
-  // status message
+
   const [message, setMessage] = useState(null);
   const [tologin, setToLogin] = useState(false);
   useEffect(() => {
@@ -46,6 +46,7 @@ function App() {
   };
 
   const [isAuthenticated, setAuthenticated] = useState(false);
+
   const [isLoading, setLoading] = useState(true);
   const logInfoRef = useRef({
     role: "",
@@ -66,10 +67,11 @@ function App() {
           if (data.msg === "Correct Password") {
             console.log(isAuthenticated);
             setAuthenticated(true);
+            sessionStorage.setItem("previouslyLogin", true);
             setToLogin(false);
             setLoading(false);
             setStatus(["s", "User Authenticated!"]);
-            // navigate("/dashboard");
+
             if (logInfoRef.current.role == "Chairman") {
               navigate("/dashboard/chairman");
             } else if (logInfoRef.current.role == "Chairman of Exam Committee") {
@@ -77,7 +79,7 @@ function App() {
             }
           } else {
             let error = data.msg;
-            // setToLogin(true);
+
             setStatus(["d", error + ". Try again!"]);
           }
         })
@@ -88,15 +90,22 @@ function App() {
     }
   }, [tologin]);
   function onLogin(e) {
-    // console.log(e);
 
-    logInfoRef.current.role = e.target[0].value;
-    logInfoRef.current.evaluator_id = e.target[1].value;
-    logInfoRef.current.password = e.target[2].value;
+    setAuthenticated(sessionStorage.getItem("previouslyLogin"));
+    console.log(sessionStorage.getItem("previouslyLogin"));
+    sessionStorage.setItem("role", e.target[0].value);
+    sessionStorage.setItem("evaluator_id", e.target[1].value);
+    sessionStorage.setItem("password", e.target[2].value);
+    console.log(sessionStorage.getItem("role"));
+    console.log(sessionStorage.getItem("evaluator_id"));
+    console.log(sessionStorage.getItem("password"));
+    logInfoRef.current.role = sessionStorage.getItem("role");
+    logInfoRef.current.evaluator_id = sessionStorage.getItem("evaluator_id");
+    logInfoRef.current.password = sessionStorage.getItem("password");
     setToLogin(true);
 
   }
-  //if(isLoading) return <h1>Loading</h1>
+
   return (
     <div className="bg-slate-100 flex flex-col h-screen relative">
       <div>
@@ -147,14 +156,6 @@ function App() {
         <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
 
       </Routes>
-      {/* <div>
-        {" "}
-        <Outlet></Outlet>
-      </div> */}
-      {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
-      {/* <Dashboard></Dashboard> */}
-      {/* <div className="p-32 border-2 border-slate-500"></div> */}
-      {/* </div> */}
       {
         message && (
           <div className="absolute bottom-4 right-4">

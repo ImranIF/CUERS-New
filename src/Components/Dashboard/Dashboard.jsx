@@ -13,7 +13,6 @@ import FillActivityBill from "./Chairman/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
 import ManageEvaluators from "./Chairman/ManageEvaluators";
 import { Route, Routes, useNavigate } from "react-router";
-import { useState } from "react";
 import { Outlet } from "react-router";
 const menus = [
   {
@@ -39,68 +38,59 @@ const menus = [
 ];
 
 const Dashboard = (prop) => {
-  // const [pressedMenuItem, setPressedMenuItem] = useState('')
-  // const changeRoute = (e) => {
-  // e.preventDefault();
-  // setPressedMenuItem('kasi')
-  // console.log(e.innerText);
-  // }
+
+  const onLogOut = () => {
+
+    sessionStorage.clear(); //Delete Login Data from session. So that, user need to verify after logout.
+    navigate("/login");
+
+  }
+
+
+  //Button added for Sidebar when you clicked the sidebar button. And Check the user. 
   const clickme = (e) => {
-    // console.log(e.target.innerText)
+
     let activity = e.target.innerText;
     console.log(activity, window.location.pathname);
-    // console.log(activity)
-    // setPressedMenuItem(activity)
-    // console.log(pressedMenuItem)
+    // CEC
     if (window.location.pathname.includes("cec")) {
       if (activity == "Manage semester activity") {
-        // console.log(activity)
+
         navigate("/dashboard/cec/manage-semester-activity");
       } else if (activity == "Manage course activity") {
-        // console.log(activity)
+
         navigate("/dashboard/cec/evaluates-course-activity");
       } else if (activity == "Manage edit requests") {
-        // console.log(activity)
+
         navigate("/dashboard/cec/manage-edit-requests");
       }
+
     } else if (window.location.pathname.includes("chairman")) {
       if (activity == "Manage activity bill") {
-        // console.log(activity)
+
         navigate("/dashboard/chairman/fill-activity-bill");
       } else if (activity == "Exam committee info") {
-        // console.log(activity)
+
         navigate("/dashboard/chairman/form-exam-committee");
       } else if (activity == "Manage evaluators") {
-        // console.log(activity)
+
         navigate("/dashboard/chairman/manage-evaluators");
       }
+
     }
   };
 
   const navigate = useNavigate();
   const { userInfo } = prop;
-  // if (userInfo.role == "Chairman") {
-  //   navigate("/dashboard/chairman");
-  // } else if (userInfo.role == "Chairman of Exam Committee") {
-  //   navigate("/dashboard/cec");
-  //   console.log(userInfo.role)
-  // }
+
   const Cactivity = menus.filter(
-    (menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase()
+    (menu) => menu.person.toLowerCase() === sessionStorage.role.toLowerCase()
   );
 
-  // const clickme = (e) => {
-  //   console.log(e.target.innerText);
-  //   let x = e.target.innerText;
-  //   // setPressedMenuItem(x);
-  //   if (x == "Manage evaluators") {
-  //     navigate('/dashboard/chairman/manage-evaluators');
-  //   }
-  //   else if(x === ""){
-      
-  //   }
-  // }
-  console.log(userInfo);
+  //checking purpose 
+  console.log(sessionStorage.getItem("role"));
+  console.log(sessionStorage.getItem("evaluator_id"));
+  console.log(sessionStorage.getItem("password"));
   return (
     <div className="flex w-full h-full justify-start ">
       <div className="flex-none">
@@ -108,7 +98,7 @@ const Dashboard = (prop) => {
           <div className="flex-col">
             {Cactivity.map((person) => {
               let activity = person.activity;
-              // console.log(activity);
+
               return activity.map((temp) => {
                 return (
                   <div className="mb-3">
@@ -127,7 +117,7 @@ const Dashboard = (prop) => {
             })}
           </div>
           <div>
-            <Buttoncmp label="Log out" variant="dasi" size="full">
+            <Buttoncmp label="Log out" onClick={onLogOut} variant="dasi" size="full">
               <ArrowLeftOnRectangleIcon></ArrowLeftOnRectangleIcon>
             </Buttoncmp>
           </div>
@@ -138,22 +128,9 @@ const Dashboard = (prop) => {
           {" "}
           <Outlet></Outlet>
         </div>
-        {/* <div className="">
-          <Routes>
-            <Route
-              element={<Chaigrman ></Chairman>}
-              path="chairman"
-            >
-              <Route element={<ManageEvaluators />} path="manage-evaluators"></Route>
-              <Route element={<FormExamCommittee />} path="form-exam-committee"></Route>
-              <Route element={<FillActivityBill />} path="fill-activity-bill"></Route>
 
-            </Route>
-            <Route element={<CEC ></CEC>} path="cec"></Route>
-          </Routes>
-        </div> */}
       </div>
-      {/* </div> */}
+
     </div>
   );
 };
