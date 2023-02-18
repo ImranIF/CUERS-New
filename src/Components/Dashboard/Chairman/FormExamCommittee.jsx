@@ -6,7 +6,7 @@ import Table from "../../UI/Table";
 import { useState } from "react";
 import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
-const tableData = [
+const tableCols= [
   { col: "No", type: "row" },
   {
     col: "Evaluator",
@@ -91,7 +91,7 @@ const FormExamCommittee = () => {
           </div>
         </div>
         <div>
-          <Tablenew tableData={tableData}></Tablenew>
+          <Tablenew tableCols={tableCols}></Tablenew>
         </div>
         <div className="mt-16">
         <Buttoncmp

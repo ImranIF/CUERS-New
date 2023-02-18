@@ -88,7 +88,7 @@ const Dashboard = (prop) => {
   const Cactivity = menus.filter(
     (menu) => menu.person.toLowerCase() === userInfo.role.toLowerCase()
   );
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <div className="flex w-full h-full justify-start ">
       <div className="flex-none">

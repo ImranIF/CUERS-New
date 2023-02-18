@@ -5,8 +5,8 @@ import Dropdown from "./Dropdown";
 import Inputcmp from "./Inputcmp";
 
 const TableCell = (prop) => {
-  const { data, row, isActive, onActive, onDelete, key } = prop;
-  const [value, setValue] = useState("");
+  const { data, row, isActive, onActive, onDelete, id, pvalue } = prop;
+  const [value, setValue] = useState(pvalue ? pvalue : "");
   const [input, showInput] = useState(false);
   let editable = false;
   let inputBlock;
@@ -35,7 +35,7 @@ const TableCell = (prop) => {
       } border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-slate-500 focus:bg-white focus:outline-none  focus:ring-1 p-2`}
       id={data.type + row.value + data.col}
       onClick={(e) => {
-        showInput(!input);
+        if(data.type == "dropdown")showInput(!input);
         e.stopPropagation();
         onActive(e);
       }}
@@ -49,10 +49,11 @@ const TableCell = (prop) => {
               {inputBlock}
             </div>
           }
-          {!input && value}
+          {/* {!input && value} */}
         </div>
       )}
       {data.col == "No" && row.value}
+      {!input && value}
       {data.type == "button" && (
         <Buttoncmp
           label={data.label ? data.label : "null"}

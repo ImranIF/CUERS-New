@@ -6,22 +6,42 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useRef } from "react";
 import Buttoncmp from "./Buttoncmp";
 import Dropdown from "./Dropdown";
 import Inputcmp from "./Inputcmp";
+import Spin from "./Spin";
 import Table from "./Table";
 import TableCell from "./TableCell";
 
 const Tablenew = (prop) => {
-  const { tableData } = prop;
+  const { toFetch, tableCols } = prop;
   const [rows, setRows] = useState([]);
-  function addnewRow(e) {
-    let maxID = rows.length > 0 ? rows[rows.length - 1].id : 0;
-    let newrows = [...rows, { id: maxID + 1, value: maxID + 1 }];
-    console.log(newrows);
-    setRows([...newrows]);
-  }
+  const [tableData, setTableData] = useState([]);
+  const addRow = () => {
+    setTableData((prev) => [...prev, {}]);
+    console.log(tableData);
+  };
+  const updateCell = (col, value) => {};
+  useEffect(() => {
+    let fetched = true;
+    // console.log();
+    if (fetched) {
+      console.log("I'm fetching again");
+      fetch(`http://localhost:3000/users/${toFetch}`)
+        .then((data) => {
+          return data.json();
+        })
+        .then((jsonData) => {
+          setTableData(jsonData);
+        });
+    }
+    return () => {
+      fetched = false;
+    };
+  }, []);
+  // console.log(tableData);
   const [activeCell, setActiveCell] = useState("");
   function handleDelete(e, row) {
     // e.stopPropagation();
@@ -36,12 +56,15 @@ const Tablenew = (prop) => {
     // console.log(updatedRows);
     // setRows(updatedRows);
   }
+  if (tableData === undefined || tableData.length == 0) {
+    return <Spin></Spin>;
+  }
   return (
     <div className="mt-0">
       <div className="table w-full border-2">
         <div className="table-header-group bg-slate-200">
           <div className="table-row border-red-400">
-            {tableData.map((data) => {
+            {tableCols.map((data) => {
               let icon;
               if (data.type == "dropdown") {
                 icon = (
@@ -70,20 +93,21 @@ const Tablenew = (prop) => {
           </div>
         </div>
         <div className="table-row-group">
-          {rows?.map((row) => (
+          {tableData?.map((row) => (
             <div key={row.id} className="table-row text-slate-700">
-              {tableData.map((data) => {
+              {tableCols.map((data) => {
                 return (
                   <TableCell
-                    key={data.type + row.value + data.col}
+                    id={data.type + row.value + data.col}
                     row={row}
+                    pvalue={row[data.col]}
                     data={data}
                     isActive={activeCell == data.type + row.value + data.col}
                     onActive={(e) => {
                       setActiveCell(data.type + row.value + data.col);
                       e.stopPropagation();
-                      // console.log(e);
                     }}
+                    onUpdate={(e) => updateCell}
                     onDelete={handleDelete}
                   ></TableCell>
                 );
@@ -97,7 +121,7 @@ const Tablenew = (prop) => {
         variant="stsi"
         size="full"
         label="New"
-        onClick={(e) => addnewRow(e)}
+        onClick={(e) => addRow()}
       >
         <PlusIcon></PlusIcon>
       </Buttoncmp>

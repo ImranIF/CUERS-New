@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRef } from "react";
+import Buttoncmp from "../../UI/Buttoncmp";
 import Tablenew from "../../UI/Tablenew";
 
-const tableData = [
+const tablecols = [
   {
     col: "No",
   },
@@ -50,11 +52,27 @@ const tableData = [
     type: "tel",
   },
 ];
+
 const ManageEvaluators = () => {
+  // const [toFetch, setToFetch] = useState(true);
+
+  const dosomething = (e) => {
+    e.preventDefault();
+    // console.log(e);
+  };
   return (
     <div className="flex h-full w-full justify-center ">
       <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-        <Tablenew tableData={tableData}></Tablenew>
+        <Tablenew
+          tableCols={tablecols}
+          toFetch="get_evaluators"
+        ></Tablenew>
+        <Buttoncmp
+          type="submit"
+          label="Submit"
+          variant="stpr"
+          onClick={dosomething}
+        ></Buttoncmp>
       </form>
     </div>
   );
