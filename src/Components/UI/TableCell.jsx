@@ -35,7 +35,7 @@ const TableCell = (prop) => {
       } border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-slate-500 focus:bg-white focus:outline-none  focus:ring-1 p-2`}
       id={data.type + row.value + data.col}
       onClick={(e) => {
-        if(data.type == "dropdown")showInput(!input);
+        if (data.type == "dropdown") showInput(!input);
         e.stopPropagation();
         onActive(e);
       }}
@@ -52,12 +52,20 @@ const TableCell = (prop) => {
           {/* {!input && value} */}
         </div>
       )}
-      {data.col == "No" && row.value}
+      {/* {data.col == "No" && pvalue} */}
       {!input && value}
       {data.type == "button" && (
         <Buttoncmp
           label={data.label ? data.label : "null"}
-          variant="dase"
+          variant={data.variant ? data.variant : "dasi"}
+          type="button"
+          onClick={
+            data.label == "Delete"
+              ? onDelete
+              : data.label == "View"
+              ? onView
+              : null
+          }
         ></Buttoncmp>
       )}
     </div>

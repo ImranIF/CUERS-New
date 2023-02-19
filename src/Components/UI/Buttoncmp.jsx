@@ -48,7 +48,7 @@ const buttonstyle = {
     },
     simple: {
       icon: "",
-      default: "text-cyan-900 shadow-none active:ring-red-800",
+      default: "text-red-900 shadow-none active:ring-red-800",
       hover: "hover:bg-red-900 hover:text-red-100",
       focus: "focus:bg-red-900 focus:text-red-100",
     },

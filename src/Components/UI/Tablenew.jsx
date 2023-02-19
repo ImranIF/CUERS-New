@@ -16,17 +16,44 @@ import Table from "./Table";
 import TableCell from "./TableCell";
 
 const Tablenew = (prop) => {
-  const { toFetch, tableCols } = prop;
-  const [rows, setRows] = useState([]);
-  const [tableData, setTableData] = useState([]);
+  const { toFetch, tableCols } = prop; // toFetch : route to fetch from
+  const [tableData, setTableData] = useState([]); // to set the data after fetching
+  const [indexi, setIndexi] = useState(1);
+
+  // ------------------------
+  // Handling indexes is done through secondary parameter of map
+  // ------------------------
+  // ------------------------
+  // To add a new row on the table
   const addRow = () => {
+    // Row will be handled realtime
+    // Create a new object for each row and fill it up as the user fills up
+    // Whenever he finishes and blur the last cell of the row, make a request to
+    // insert this row into the database
     setTableData((prev) => [...prev, {}]);
     console.log(tableData);
   };
+  // ------------------------
+
+  // ------------------------
+  // What happens whenever user update a cell's data
+  // We get the previous state from the action and {col, updated value} and make
+  // a request to edit the particular col in the database
   const updateCell = (col, value) => {};
+  // ------------------------
+
+  // ------------------------
+  // What happens whenever user delete a row
+  // We get the current state of the row and make a request to delete the row
+  // from the database
+  const handleDelete = (index) => {
+    setTableData(tableData.filter((item) => item.key !== index));
+    setIndexi(indexi - 1);
+    console.log(tableData[index]);
+  };
+  // ------------------------
   useEffect(() => {
     let fetched = true;
-    // console.log();
     if (fetched) {
       console.log("I'm fetching again");
       fetch(`http://localhost:3000/users/${toFetch}`)
@@ -34,7 +61,8 @@ const Tablenew = (prop) => {
           return data.json();
         })
         .then((jsonData) => {
-          setTableData(jsonData);
+          const newData = jsonData.map((item, i) => ({ ...item, key: i }));
+          setTableData(newData);
         });
     }
     return () => {
@@ -43,19 +71,7 @@ const Tablenew = (prop) => {
   }, []);
   // console.log(tableData);
   const [activeCell, setActiveCell] = useState("");
-  function handleDelete(e, row) {
-    // e.stopPropagation();
-    // const updatedRows = rows.filter(({ id, value }) => id !== row.id);
-    // let temp = row.value;
-    // console.log(temp);
-    // for (let i = temp - 1; i < updatedRows.length; i++) {
-    //   updatedRows[i].value = temp;
-    //   console.log(i);
-    //   temp++;
-    // }
-    // console.log(updatedRows);
-    // setRows(updatedRows);
-  }
+
   if (tableData === undefined || tableData.length == 0) {
     return <Spin></Spin>;
   }
@@ -75,7 +91,9 @@ const Tablenew = (prop) => {
                   <ListBulletIcon className="w-5 h-5 border text-slate-400"></ListBulletIcon>
                 );
               } else if (data.col == "Delete") {
-                icon = <TrashIcon className="w-5 h-5"></TrashIcon>;
+                icon = (
+                  <TrashIcon className="w-5 h-5 text-slate-400"></TrashIcon>
+                );
               } else {
                 icon = (
                   <PencilSquareIcon className="w-5 h-5l border text-slate-400"></PencilSquareIcon>
@@ -93,22 +111,22 @@ const Tablenew = (prop) => {
           </div>
         </div>
         <div className="table-row-group">
-          {tableData?.map((row) => (
-            <div key={row.id} className="table-row text-slate-700">
-              {tableCols.map((data) => {
+          {tableData?.map((row, RowIndex) => (
+            <div key={row.key} className="table-row text-slate-700">
+              {tableCols.map((col, colIndex) => {
                 return (
                   <TableCell
-                    id={data.type + row.value + data.col}
+                    key={colIndex + row.key}
                     row={row}
-                    pvalue={row[data.col]}
-                    data={data}
-                    isActive={activeCell == data.type + row.value + data.col}
+                    pvalue={col.col != "No" && row[col.col]}
+                    data={col}
+                    isActive={activeCell == col.type + row.value + col.col}
                     onActive={(e) => {
-                      setActiveCell(data.type + row.value + data.col);
+                      setActiveCell(col.type + row.value + col.col);
                       e.stopPropagation();
                     }}
                     onUpdate={(e) => updateCell}
-                    onDelete={handleDelete}
+                    onDelete={(e) => handleDelete(row.key)}
                   ></TableCell>
                 );
               })}

@@ -13,7 +13,6 @@ import FillActivityBill from "./Chairman/FillActivityBill";
 import Tablenew from "../UI/Tablenew";
 import ManageEvaluators from "./Chairman/ManageEvaluators";
 import { Route, Routes, useNavigate } from "react-router";
-import { useState } from "react";
 import { Outlet } from "react-router";
 const menus = [
   {
@@ -97,9 +96,9 @@ const Dashboard = (prop) => {
             {Cactivity.map((person) => {
               let activity = person.activity;
               // console.log(activity);
-              return activity.map((temp) => {
+              return activity.map((temp, index) => {
                 return (
-                  <div className="mb-3">
+                  <div className="mb-3" key={index}>
                     <Buttoncmp
                       label={temp}
                       variant="stsi"

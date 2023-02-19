@@ -5,9 +5,6 @@ import Tablenew from "../../UI/Tablenew";
 
 const tablecols = [
   {
-    col: "No",
-  },
-  {
     col: "evaluator_id",
     type: "number",
   },
@@ -51,6 +48,12 @@ const tablecols = [
     col: "phone_no",
     type: "tel",
   },
+  {
+    col:"Delete",
+    type: "button",
+    label: "Delete",
+    variant: "dasi"
+  }
 ];
 const ManageEvaluators = () => {
   // const [toFetch, setToFetch] = useState(true);

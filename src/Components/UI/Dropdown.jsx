@@ -12,7 +12,7 @@ import { useEffect } from "react";
 const Dropdown = (prop) => {
   // to close if user clicks outside of the dropdown
 
-  const { options, name, id, label, search, onSelect, opened}= prop;
+  const { options, name, id, label, search, onSelect, opened } = prop;
   const [open, setOpen] = useState(opened);
   const [selected, setSelected] = useState("Select " + name);
   useEffect(() => {
@@ -86,8 +86,9 @@ const Dropdown = (prop) => {
         )}
 
         <ul className="">
-          {options.map((option) => (
+          {options.map((option, index) => (
             <li
+              key={index}
               tabIndex={0}
               className={`flex-auto w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
               ${option.toLowerCase().match(inputValue) ? "block" : "hidden"} ${
