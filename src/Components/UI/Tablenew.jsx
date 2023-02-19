@@ -1,3 +1,4 @@
+import { StopIcon, TrashIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   ListBulletIcon,
@@ -9,16 +10,32 @@ import { useRef } from "react";
 import Buttoncmp from "./Buttoncmp";
 import Dropdown from "./Dropdown";
 import Inputcmp from "./Inputcmp";
+import Table from "./Table";
 import TableCell from "./TableCell";
 
 const Tablenew = (prop) => {
   const { tableData } = prop;
   const [rows, setRows] = useState([]);
   function addnewRow(e) {
-    let length = rows.length;
-    setRows([...rows, length + 1]);
+    let maxID = rows.length > 0 ? rows[rows.length - 1].id : 0;
+    let newrows = [...rows, { id: maxID + 1, value: maxID + 1 }];
+    console.log(newrows);
+    setRows([...newrows]);
   }
   const [activeCell, setActiveCell] = useState("");
+  function handleDelete(e, row) {
+    // e.stopPropagation();
+    // const updatedRows = rows.filter(({ id, value }) => id !== row.id);
+    // let temp = row.value;
+    // console.log(temp);
+    // for (let i = temp - 1; i < updatedRows.length; i++) {
+    //   updatedRows[i].value = temp;
+    //   console.log(i);
+    //   temp++;
+    // }
+    // console.log(updatedRows);
+    // setRows(updatedRows);
+  }
   return (
     <div className="mt-0">
       <div className="table w-full border-2">
@@ -32,8 +49,10 @@ const Tablenew = (prop) => {
                 );
               } else if (data.col == "No") {
                 icon = (
-                  <ListBulletIcon className="w-5 h-5l border text-slate-400"></ListBulletIcon>
+                  <ListBulletIcon className="w-5 h-5 border text-slate-400"></ListBulletIcon>
                 );
+              } else if (data.col == "Delete") {
+                icon = <TrashIcon className="w-5 h-5"></TrashIcon>;
               } else {
                 icon = (
                   <PencilSquareIcon className="w-5 h-5l border text-slate-400"></PencilSquareIcon>
@@ -52,17 +71,20 @@ const Tablenew = (prop) => {
         </div>
         <div className="table-row-group">
           {rows?.map((row) => (
-            <div className="table-row text-slate-700">
+            <div key={row.id} className="table-row text-slate-700">
               {tableData.map((data) => {
                 return (
                   <TableCell
+                    key={data.type + row.value + data.col}
                     row={row}
                     data={data}
-                    isActive={activeCell == data.type + row + data.col}
+                    isActive={activeCell == data.type + row.value + data.col}
                     onActive={(e) => {
-                      setActiveCell(data.type + row + data.col);
-                      console.log(data.type + row + data.col);
+                      setActiveCell(data.type + row.value + data.col);
+                      e.stopPropagation();
+                      // console.log(e);
                     }}
+                    onDelete={handleDelete}
                   ></TableCell>
                 );
               })}
@@ -71,7 +93,7 @@ const Tablenew = (prop) => {
         </div>
       </div>
       <Buttoncmp
-      type="button"
+        type="button"
         variant="stsi"
         size="full"
         label="New"
