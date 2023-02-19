@@ -14,44 +14,92 @@ import Inputcmp from "./Inputcmp";
 import Spin from "./Spin";
 import Table from "./Table";
 import TableCell from "./TableCell";
+import { useContext } from "react";
+import { StatusContext } from "./StatusContext";
 
 const Tablenew = (prop) => {
   const { toFetch, tableCols } = prop; // toFetch : route to fetch from
   const [tableData, setTableData] = useState([]); // to set the data after fetching
   const [indexi, setIndexi] = useState(1);
+  const rowStatus = [0, 0];
+  const [newRow, setNewRow] = useState(rowStatus);
+  const { message, setStatus } = useContext(StatusContext);
 
-  // ------------------------
-  // Handling indexes is done through secondary parameter of map
-  // ------------------------
-  // ------------------------
-  // To add a new row on the table
+  const createNewObject = (key) => {
+    const tempRow = {};
+    for (let i = 0; i < tableCols.length; i++) {
+      if (tableCols[i].required == true) {
+        tempRow[tableCols[i].col] = "";
+      }
+    }
+    tempRow["key"] = key;
+    return tempRow;
+  };
+
+  const checkIfFilled = (index) => {
+    for (const prop in tableData[index]) {
+      if (tableData[index][prop] != "") {
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  };
   const addRow = () => {
-    // Row will be handled realtime
-    // Create a new object for each row and fill it up as the user fills up
-    // Whenever he finishes and blur the last cell of the row, make a request to
-    // insert this row into the database
-    setTableData((prev) => [...prev, {}]);
+    const key = tableData[tableData.length - 1].key + 1;
+    const tempRow = createNewObject(key);
+    console.log(newRow[0], newRow[1]);
+    if (tableData.length === 0) {
+      setTableData([tempRow]);
+      setNewRow([1, 0]);
+    } else if (newRow[0] === 0 && newRow[1] === 0) {
+      setTableData((prev) => [...prev, tempRow]);
+      setNewRow([1, 0]);
+    } else {
+      const fillStatus = checkIfFilled(tableData.length - 1);
+      if (fillStatus) {
+        // upload to the database
+        // after uploading
+        setNewRow([0, 0]);
+      } else {
+        setStatus(["d", "Fill the unfilled row first!"]);
+      }
+    }
     console.log(tableData);
   };
-  // ------------------------
 
-  // ------------------------
-  // What happens whenever user update a cell's data
-  // We get the previous state from the action and {col, updated value} and make
-  // a request to edit the particular col in the database
-  const updateCell = (col, value) => {};
-  // ------------------------
+  const processDB = (rowIndex, operation, updated) => {};
 
-  // ------------------------
-  // What happens whenever user delete a row
-  // We get the current state of the row and make a request to delete the row
-  // from the database
-  const handleDelete = (index) => {
-    setTableData(tableData.filter((item) => item.key !== index));
-    setIndexi(indexi - 1);
-    console.log(tableData[index]);
+  const updateCell = (value, rowIndex, colType) => {
+    // console.log(value, rowIndex, colType);
+    let newTableData = Object.assign([], tableData);
+    newTableData[rowIndex][colType] = value;
+    setTableData(newTableData);
+
+    // Editing realtime except the last index(if it is not uploaded yet [0, 0] or [1,0])
+    if (rowIndex != tableData.length - 1 && newRow[1] !== 1) {
+      processDB(rowIndex, "update", { colType, value });
+    }
+
+    // Uploading a new row to the database when [1,0], added, not yet uploaded
+    if (rowIndex == tableData.length - 1) {
+      const fillStatus = checkIfFilled(rowIndex);
+      if (fillStatus && newRow[0] === 1 && newRow[1] === 0) {
+        processDB(rowIndex, "insert");
+        setStatus(["s", "New row saved!"]);
+        setNewRow([0, 0]);
+      }
+    }
   };
-  // ------------------------
+
+  const handleDelete = (key, RowIndex) => {
+    setTableData(tableData.filter((item) => item.key !== key));
+    setIndexi(indexi - 1);
+    processDB(RowIndex, "deletion");
+    setStatus(["d", "1 row deleted!"]);
+  };
+
   useEffect(() => {
     let fetched = true;
     if (fetched) {
@@ -61,7 +109,10 @@ const Tablenew = (prop) => {
           return data.json();
         })
         .then((jsonData) => {
-          const newData = jsonData.map((item, i) => ({ ...item, key: i }));
+          const newData = jsonData.map((item, i) => ({
+            ...item,
+            key: i,
+          }));
           setTableData(newData);
         });
     }
@@ -69,7 +120,6 @@ const Tablenew = (prop) => {
       fetched = false;
     };
   }, []);
-  // console.log(tableData);
   const [activeCell, setActiveCell] = useState("");
 
   if (tableData === undefined || tableData.length == 0) {
@@ -78,7 +128,7 @@ const Tablenew = (prop) => {
   return (
     <div className="mt-0">
       <div className="table w-full border-2">
-        <div className="table-header-group bg-slate-200">
+        <div className="table-header-group bg-slate-200 sticky top-0 z-20">
           <div className="table-row border-red-400">
             {tableCols.map((data) => {
               let icon;
@@ -111,22 +161,22 @@ const Tablenew = (prop) => {
           </div>
         </div>
         <div className="table-row-group">
-          {tableData?.map((row, RowIndex) => (
-            <div key={row.key} className="table-row text-slate-700">
+          {tableData?.map((row, rowIndex) => (
+            <div key={row.key} className={`table-row text-slate-700`}>
               {tableCols.map((col, colIndex) => {
                 return (
                   <TableCell
                     key={colIndex + row.key}
                     row={row}
                     pvalue={col.col != "No" && row[col.col]}
-                    data={col}
+                    col={col}
                     isActive={activeCell == col.type + row.value + col.col}
                     onActive={(e) => {
                       setActiveCell(col.type + row.value + col.col);
                       e.stopPropagation();
                     }}
-                    onUpdate={(e) => updateCell}
-                    onDelete={(e) => handleDelete(row.key)}
+                    onUpdate={(value) => updateCell(value, rowIndex, col.col)}
+                    onDelete={(e) => handleDelete(row.key, rowIndex)}
                   ></TableCell>
                 );
               })}

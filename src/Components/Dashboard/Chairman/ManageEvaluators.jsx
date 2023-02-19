@@ -7,10 +7,12 @@ const tablecols = [
   {
     col: "evaluator_id",
     type: "number",
+    required: true,
   },
   {
     col: "evaluator_name",
     type: "text",
+    required: true,
   },
   {
     col: "designation",
@@ -21,6 +23,7 @@ const tablecols = [
       "Associate professor",
       "lecturer",
     ],
+    required: true,
   },
   {
     col: "university_name",
@@ -30,6 +33,7 @@ const tablecols = [
       "University of Dhaka",
       "University of Khulna",
     ],
+    required: true,
   },
   {
     col: "dept_name",
@@ -43,24 +47,24 @@ const tablecols = [
       "Dept of Mathematics",
       "Dept of Economics",
     ],
+    required: true,
   },
   {
     col: "phone_no",
     type: "tel",
+    required: true,
   },
   {
-    col:"Delete",
+    col: "Delete",
     type: "button",
     label: "Delete",
-    variant: "dasi"
-  }
+    variant: "dasi",
+  },
 ];
-const ManageEvaluators = () => {
-  // const [toFetch, setToFetch] = useState(true);
+const ManageEvaluators = (prop) => {
 
   const dosomething = (e) => {
     e.preventDefault();
-    // console.log(e);
   };
   return (
     <div className="flex h-full w-full justify-center ">

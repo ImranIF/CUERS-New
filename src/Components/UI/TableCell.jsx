@@ -1,68 +1,73 @@
 import { TrashIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
+import { useContext } from "react";
 import Buttoncmp from "./Buttoncmp";
 import Dropdown from "./Dropdown";
 import Inputcmp from "./Inputcmp";
+import { StatusContext } from "./StatusContext";
 
 const TableCell = (prop) => {
-  const { data, row, isActive, onActive, onDelete, id, pvalue } = prop;
+  const { col, row, isActive, onActive, onDelete, id, pvalue, onUpdate } = prop;
+  const { message, setStatus } = useContext(StatusContext);
   const [value, setValue] = useState(pvalue ? pvalue : "");
   const [input, showInput] = useState(false);
   let editable = false;
   let inputBlock;
   function handleSelect(value) {
+    onUpdate(value);
     setValue(value);
     showInput(false);
   }
-  if (data.type == "dropdown") {
+  if (col.type == "dropdown") {
     inputBlock = (
       <Dropdown
-        options={data.values}
-        id={data.type + row.id + data.col + "d"}
+        options={col.values}
         search={true}
-        name={data.col}
+        name={col.col}
         onSelect={handleSelect}
         opened={true}
+        preSelect={value}
       ></Dropdown>
     );
-  } else if (data.col != "No" && data.type != "button") {
+  } else if (col.col != "No" && col.type != "button") {
     editable = true;
   }
   return (
     <div
       className={`duration-200 relative cursor-pointer table-cell ${
-        data.type === "button" && "align-center text-center"
-      } border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-slate-500 focus:bg-white focus:outline-none  focus:ring-1 p-2`}
-      id={data.type + row.value + data.col}
+        col.type === "button" && "align-center text-center"
+      } border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-cyan-700 focus:bg-slate-50 focus:outline-none  focus:ring-2 p-2 hover:bg-blue-100`}
       onClick={(e) => {
-        if (data.type == "dropdown") showInput(!input);
+        if (col.type == "dropdown") showInput(!input);
         e.stopPropagation();
         onActive(e);
+      }}
+      onBlur={(e) => {
+        onUpdate(e.target.innerText);
       }}
       contentEditable={editable}
       suppressContentEditableWarning={true}
     >
-      {data.type == "dropdown" && (
+      {col.type == "dropdown" && (
         <div className="flex items-center ">
           {
             <div className={`${input && isActive ? "block" : "hidden"}`}>
               {inputBlock}
             </div>
           }
-          {/* {!input && value} */}
         </div>
       )}
       {/* {data.col == "No" && pvalue} */}
       {!input && value}
-      {data.type == "button" && (
+      {col.type == "button" && (
         <Buttoncmp
-          label={data.label ? data.label : "null"}
-          variant={data.variant ? data.variant : "dasi"}
+          label={col.label ? col.label : "null"}
+          variant={col.variant ? col.variant : "dasi"}
           type="button"
           onClick={
-            data.label == "Delete"
+            col.label == "Delete"
               ? onDelete
-              : data.label == "View"
+              : col.label == "View"
               ? onView
               : null
           }

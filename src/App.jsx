@@ -28,9 +28,10 @@ import ManageEvaluators from "./Components/Dashboard/Chairman/ManageEvaluators";
 import Status from "./Components/UI/Status";
 import { useEffect } from "react";
 import PrivateOutlet from "./Components/Login/PrivateOutlet";
+import { StatusContext } from "./Components/UI/StatusContext";
 function App() {
   const navigate = useNavigate();
-  // status message
+
   const [message, setMessage] = useState(null);
   const [tologin, setToLogin] = useState(false);
   useEffect(() => {
@@ -46,6 +47,7 @@ function App() {
   };
 
   const [isAuthenticated, setAuthenticated] = useState(false);
+
   const [isLoading, setLoading] = useState(true);
   const logInfoRef = useRef({
     role: "",
@@ -66,18 +68,21 @@ function App() {
           if (data.msg === "Correct Password") {
             console.log(isAuthenticated);
             setAuthenticated(true);
+            sessionStorage.setItem("previouslyLogin", true);
             setToLogin(false);
             setLoading(false);
             setStatus(["s", "User Authenticated!"]);
-            // navigate("/dashboard");
+
             if (logInfoRef.current.role == "Chairman") {
               navigate("/dashboard/chairman");
-            } else if (logInfoRef.current.role == "Chairman of Exam Committee") {
+            } else if (
+              logInfoRef.current.role == "Chairman of Exam Committee"
+            ) {
               navigate("/dashboard/cec");
             }
           } else {
             let error = data.msg;
-            // setToLogin(true);
+
             setStatus(["d", error + ". Try again!"]);
           }
         })
@@ -88,83 +93,82 @@ function App() {
     }
   }, [tologin]);
   function onLogin(e) {
-    // console.log(e);
-
-    logInfoRef.current.role = e.target[0].value;
-    logInfoRef.current.evaluator_id = e.target[1].value;
-    logInfoRef.current.password = e.target[2].value;
+    setAuthenticated(sessionStorage.getItem("previouslyLogin"));
+    console.log(sessionStorage.getItem("previouslyLogin"));
+    sessionStorage.setItem("role", e.target[0].value);
+    sessionStorage.setItem("evaluator_id", e.target[1].value);
+    sessionStorage.setItem("password", e.target[2].value);
+    console.log(sessionStorage.getItem("role"));
+    console.log(sessionStorage.getItem("evaluator_id"));
+    console.log(sessionStorage.getItem("password"));
+    logInfoRef.current.role = sessionStorage.getItem("role");
+    logInfoRef.current.evaluator_id = sessionStorage.getItem("evaluator_id");
+    logInfoRef.current.password = sessionStorage.getItem("password");
     setToLogin(true);
-
   }
-  //if(isLoading) return <h1>Loading</h1>
+
   return (
-    <div className="bg-slate-100 flex flex-col h-screen relative">
-      <div>
-        <Navbar></Navbar>
-      </div>
-      <Routes>
-        <Route
-          element={<Login onLogin={onLogin}></Login>}
-          path="/login"
-        ></Route>
-        <Route path="/*" element={<PrivateOutlet isAuthenticated={isAuthenticated} />}>
+    <div className="bg-slate-100 flex flex-col h-screen relative overflow-hidden">
+      <StatusContext.Provider value={{message: message, setStatus: setStatus}}>
+        <div>
+          <Navbar></Navbar>
+        </div>
+        <Routes>
           <Route
-            element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-            path="dashboard/chairman"
+            element={<Login onLogin={onLogin}></Login>}
+            path="/login"
+          ></Route>
+          <Route
+            path="/*"
+            element={<PrivateOutlet isAuthenticated={isAuthenticated} />}
           >
             <Route
-              element={<FillActivityBill></FillActivityBill>}
-              path="fill-activity-bill"
-            ></Route>
+              element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+              path="dashboard/chairman"
+            >
+              <Route
+                element={<FillActivityBill></FillActivityBill>}
+                path="fill-activity-bill"
+              ></Route>
+              <Route
+                element={<FormExamCommittee></FormExamCommittee>}
+                path="form-exam-committee"
+              ></Route>
+              <Route
+                element={<ManageEvaluators></ManageEvaluators>}
+                path="manage-evaluators"
+              ></Route>
+            </Route>
             <Route
-              element={<FormExamCommittee></FormExamCommittee>}
-              path="form-exam-committee"
-            ></Route>
-            <Route
-              element={<ManageEvaluators></ManageEvaluators>}
-              path="manage-evaluators"
-            ></Route>
+              element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+              path="dashboard/cec"
+            >
+              <Route
+                element={<EvaluatesCourseActivity></EvaluatesCourseActivity>}
+                path="evaluates-course-activity"
+              ></Route>
+              <Route
+                element={<ManageSemesterActivity></ManageSemesterActivity>}
+                path="manage-semester-activity"
+              ></Route>
+              <Route
+                element={<ManageEditRequests></ManageEditRequests>}
+                path="manage-edit-requests"
+              ></Route>
+            </Route>
           </Route>
-          <Route
-            element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-            path="dashboard/cec"
-          >
-            <Route
-              element={<EvaluatesCourseActivity></EvaluatesCourseActivity>}
-              path="evaluates-course-activity"
-            ></Route>
-            <Route
-              element={<ManageSemesterActivity></ManageSemesterActivity>}
-              path="manage-semester-activity"
-            ></Route>
-            <Route
-              element={<ManageEditRequests></ManageEditRequests>}
-              path="manage-edit-requests"
-            ></Route>
-          </Route>
-        </Route>
 
-        <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
-
-      </Routes>
-      {/* <div>
-        {" "}
-        <Outlet></Outlet>
-      </div> */}
-      {/* <div className="h-full w-full flex justify-center items-center overflow-auto"> */}
-      {/* <Dashboard></Dashboard> */}
-      {/* <div className="p-32 border-2 border-slate-500"></div> */}
-      {/* </div> */}
-      {
-        message && (
+          <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
+        </Routes>
+        {message && (
           <div className="absolute bottom-4 right-4">
             <Status variant={message[0]} onClick={(e) => setMessage(null)}>
               {message[1]}
             </Status>
           </div>
-        )
-      }
-    </div >
+        )}
+      </StatusContext.Provider>
+    </div>
   );
 }
 

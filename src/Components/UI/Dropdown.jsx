@@ -12,9 +12,12 @@ import { useEffect } from "react";
 const Dropdown = (prop) => {
   // to close if user clicks outside of the dropdown
 
-  const { options, name, id, label, search, onSelect, opened } = prop;
+  const { options, name, id, label, search, onSelect, opened, preSelect } =
+    prop;
   const [open, setOpen] = useState(opened);
-  const [selected, setSelected] = useState("Select " + name);
+  const [selected, setSelected] = useState(
+    !preSelect ? "Select " + name : preSelect
+  );
   useEffect(() => {
     const closeDropdown = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
@@ -32,7 +35,7 @@ const Dropdown = (prop) => {
   const [inputValue, setInputValue] = useState("");
   let inputBlock = (
     <div
-      className={`relative flex w-full duration-200 ${open && "z-20"}`}
+      className={`relative flex w-full duration-200 ${open && "z-10"}`}
       ref={dropdownRef}
       onClick={(e) => {
         e.stopPropagation();
