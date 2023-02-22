@@ -27,6 +27,7 @@ const TableCell = (prop) => {
         onSelect={handleSelect}
         opened={true}
         preSelect={value}
+        variant="table"
       ></Dropdown>
     );
   } else if (col.col != "No" && col.type != "button") {
@@ -34,7 +35,7 @@ const TableCell = (prop) => {
   }
   return (
     <div
-      className={`duration-200 relative cursor-pointer table-cell ${
+      className={`duration-200 relative cursor-pointer table-cell align ${
         col.type === "button" && "align-center text-center"
       } border-r border-b border-slate-300 last-of-type:border-r-0 focus:ring-cyan-700 focus:bg-slate-50 focus:outline-none  focus:ring-2 p-2 hover:bg-blue-100`}
       onClick={(e) => {
@@ -44,6 +45,7 @@ const TableCell = (prop) => {
       }}
       onBlur={(e) => {
         onUpdate(e.target.innerText);
+        onActive(e, false);
       }}
       contentEditable={editable}
       suppressContentEditableWarning={true}
