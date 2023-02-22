@@ -7,7 +7,7 @@ import { useState } from "react";
 import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
 const tableCols = [
-  { col: "No", type: "row" },
+  // { col: "No", type: "row", required: true, },
   {
     col: "Evaluator",
     type: "dropdown",
@@ -28,11 +28,13 @@ const tableCols = [
       "Dr. Mohammed Hanif Siddique",
       "Dr. Mohammed Abdur Rauf",
     ],
+    required: true,
   },
   {
     col: "Role",
     type: "dropdown",
     values: ["Member", "Chairman", "External member"],
+    required: true,
   },
 ];
 

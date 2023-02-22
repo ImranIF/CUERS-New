@@ -2,27 +2,17 @@ import React from "react";
 import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
 
-const tableData = [
-
+const tablecols = [
     {
-        col: "No",
-    },
-    {
-        col: "activity type",
+        col: "activity_type_id",
         type: "dropdown",
         values: [
-            "Question setting",
-            "Question translating",
-            "Answer script Examining",
-            "Practical Examining",
-            "Examiner",
-            "These guide/Supervision",
-            "Invigilation(per tutorial)",
-            "Invigilation(per hour)",
+            3, 6, 9, 10, 11, 12, 13, 14, 15,
         ],
+        required: true,
     },
     {
-        col: "sector/program",
+        col: "sector_or_program",
         type: "dropdown",
         values: [
             "BSc",
@@ -32,10 +22,20 @@ const tableData = [
             "By computer",
             "By hand",
         ],
+        required: true,
     },
     {
-        col: "evaluator id",
+        col: "evaluator_id",
         type: "number",
+        required: true,
+    },
+    {
+        col: "semester_number",
+        type: "dropdown",
+        values: [
+            1, 2, 3, 4, 5, 6, 7, 8,
+        ],
+        required: true,
     },
     {
         col: "factor",
@@ -44,25 +44,20 @@ const tableData = [
             "No of members",
             "No of students",
         ],
+        required: true,
     },
     {
         col: "quantity",
         type: "number",
+        required: true,
     },
     {
-        col: "semester number",
-        type: "dropdown",
-        values: [
-            "1st",
-            "2nd",
-            "3rd",
-            "4th",
-            "5th",
-            "6th",
-            "7th",
-            "8th",
-        ],
-    }
+        col: "Delete",
+        type: "button",
+        label: "Delete",
+        variant: "dasi",
+    },
+
 ]
 
 const ManageSemesterActivity = () => {
@@ -75,7 +70,7 @@ const ManageSemesterActivity = () => {
         </div>
         <div className = "flex h-full w-full justify-center">
             <form action ="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-                <Tablenew tableData={tableData}></Tablenew>
+                <Tablenew tableCols={tablecols} tableName= "Processes_Semester_Activity"></Tablenew>
             </form>
         </div>
     </div>

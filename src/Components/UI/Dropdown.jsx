@@ -103,8 +103,8 @@ const Dropdown = (prop) => {
               key={index}
               tabIndex={0}
               className={`flex-auto w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
-              ${option.toLowerCase().match(inputValue) ? "block" : "hidden"} ${
-                typeof selected !== "number" && selected.toLowerCase().localeCompare(option.toLowerCase()) ==
+              ${String(option).toLowerCase().match(inputValue) ? "block" : "hidden"} ${
+               String(selected).toLowerCase().localeCompare(String(option).toLowerCase()) ==
                   0 && "bg-blue-200"
               }
               `}

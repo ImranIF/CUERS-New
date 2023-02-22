@@ -78,6 +78,12 @@ const tableCols = [
   { col: "quantity_final", type: "number", required: true },
   { col: "min_bill", type: "number", required: true },
   { col: "bill", type: "number", required: true },
+  {
+    col: "Delete",
+    type: "button",
+    label: "Delete",
+    variant: "dasi",
+},
 ];
 
 const FillActivityBill = () => {

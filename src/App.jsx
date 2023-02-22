@@ -55,6 +55,7 @@ function App() {
     "Course",
     "Course_in_Semester_Exam",
     "Evaluates_Course_Activity",
+    "Processes_Semester_Activity",
     "Exam_Committee",
     "Login_Info",
   ];
