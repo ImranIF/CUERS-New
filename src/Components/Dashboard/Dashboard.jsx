@@ -14,6 +14,18 @@ import Tablenew from "../UI/Tablenew";
 import ManageEvaluators from "./Chairman/ManageEvaluators";
 import { Route, Routes, useNavigate } from "react-router";
 import { Outlet } from "react-router";
+
+const tableNames = [
+  "Evaluator",
+  "Activity",
+  "Activity_Type",
+  "Course",
+  "Course_in_Semester_Exam",
+  "Evaluates_Course_Activity",
+  "Exam_Committee",
+  "Login_Info",
+];
+
 const menus = [
   {
     person: "Chairman",
@@ -42,7 +54,23 @@ const menus = [
     activity: [{ menuText: "View Bill forms", route: "" }],
   },
 ];
-
+async function loadTableInfo() {
+  if (sessionStorage.getItem("tableInfo") === null) {
+    let response = await fetch("http://localhost:3000/users/loadTableInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tableNames }),
+    })
+    let data = await response.json();
+    if(data){
+      let tableInfo = JSON.stringify(data);
+      console.log(data);
+      sessionStorage.setItem("tableInfo", tableInfo);
+    }
+  }
+}
 const Dashboard = (prop) => {
   const { userInfo, showStatus } = prop;
   const onLogOut = () => {
@@ -56,25 +84,15 @@ const Dashboard = (prop) => {
     // CEC
     if (window.location.pathname.includes("cec")) {
       navigate(`/dashboard/cec/${activity.route}`);
-      // if (activity.menuText == "Manage semester activity") {
-      //   navigate("/dashboard/cec/manage-semester-activity");
-      // } else if (activity.menuText == "Manage course activity") {
-      //   navigate("/dashboard/cec/evaluates-course-activity");
-      // } else if (activity.menuText == "Manage edit requests") {
-      //   navigate("/dashboard/cec/manage-edit-requests");
-      // }
+
     } else if (window.location.pathname.includes("chairman")) {
       navigate(`/dashboard/chairman/${activity.route}`);
-      // if (activity.menuText == "Manage activity bill") {
-      //   navigate("/dashboard/chairman/fill-activity-bill");
-      // } else if (activity.menuText == "Exam committee info") {
-      //   navigate("/dashboard/chairman/form-exam-committee");
-      // } else if (activity.menuText == "Manage evaluators") {
-      //   navigate("/dashboard/chairman/manage-evaluators");
-      // }
+
     }
   };
-
+  if (sessionStorage.getItem("tableInfo") === null) {
+    loadTableInfo();
+  }
   const navigate = useNavigate();
 
   const Cactivity = menus.filter(

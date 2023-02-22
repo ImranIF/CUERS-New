@@ -5,8 +5,7 @@ import Tablenew from "../../UI/Tablenew";
 // import Inputcmp from "../../Inputcmp";
 // import Temptable from "../../UI/Temptable";
 
-const tableData = [
-  { col: "No" },
+const tablecols = [
   {
     col: "activity_type_id",
     type: "dropdown",
@@ -31,7 +30,7 @@ const tableData = [
     ],
   },
   {
-    col: "sector",
+    col: "sector/program",
     type: "dropdown",
     values: [
       "Honours/Masters",
@@ -100,7 +99,7 @@ const FillActivityBill = () => {
             </span>
           </div>
           <div className="mt-8">
-            <Tablenew tableData={tableData}></Tablenew>
+            <Tablenew tableCols={tablecols} tableName="Activity"></Tablenew>
           </div>
         </div>
         <Buttoncmp type="submit" label="Save" variant="stpr"></Buttoncmp>

@@ -48,6 +48,16 @@ function App() {
 
   const [isAuthenticated, setAuthenticated] = useState(false);
 
+  const tableNames = [
+    "Evaluator",
+    "Activity",
+    "Activity_Type",
+    "Course",
+    "Course_in_Semester_Exam",
+    "Evaluates_Course_Activity",
+    "Exam_Committee",
+    "Login_Info",
+  ];
   const [isLoading, setLoading] = useState(true);
   const logInfoRef = useRef({
     role: "",
@@ -55,6 +65,20 @@ function App() {
     password: "",
   });
   useEffect(() => {
+    async function loadTableInfo() {
+      const response = await fetch(
+        "http://localhost:3000/users/loadTableInfo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tableNames }),
+        }
+      );
+      const data = await response.json();
+      return data;
+    }
     if (tologin) {
       fetch("http://localhost:3000/users/authenticatelogin", {
         method: "POST",
@@ -66,6 +90,7 @@ function App() {
         .then((response) => response.json())
         .then((data) => {
           if (data.msg === "Correct Password") {
+            // sessionStorage.clear();
             console.log(isAuthenticated);
             setAuthenticated(true);
             sessionStorage.setItem("previouslyLogin", true);
@@ -73,7 +98,21 @@ function App() {
             setLoading(false);
             setStatus(["s", "User Authenticated!"]);
 
+            // fetching tableInfo
+            (async () => {
+              let tableInfo = await loadTableInfo();
+              // while (Object.keys(tableInfo).length !== 1) {
+              // tableInfo = await loadTableInfo();
+              console.log("still accumulating tableInfo");
+              console.log(tableInfo);
+              sessionStorage.setItem("tableInfo", JSON.stringify(tableInfo));
+            })();
+            // } else {
+            //   console.log("TableInfo is already in sessionStorage.");
+            // }
+
             if (logInfoRef.current.role == "Chairman") {
+              console.log("Here: ", sessionStorage.getItem("tableInfo"));
               navigate("/dashboard/chairman");
             } else if (
               logInfoRef.current.role == "Chairman of Exam Committee"
@@ -109,7 +148,9 @@ function App() {
 
   return (
     <div className="bg-slate-100 flex flex-col h-screen relative overflow-hidden">
-      <StatusContext.Provider value={{message: message, setStatus: setStatus}}>
+      <StatusContext.Provider
+        value={{ message: message, setStatus: setStatus }}
+      >
         <div>
           <Navbar></Navbar>
         </div>
