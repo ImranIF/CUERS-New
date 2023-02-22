@@ -9,44 +9,75 @@ import Tablenew from "../../UI/Tablenew";
 const tableCols = [
   // { col: "No", type: "row", required: true, },
   {
-    col: "Evaluator",
-    type: "dropdown",
-    values: [
-      "Dr. Rudra Pratap Devnath",
-      "Dr. Anwarul Azim",
-      "Dr. Abu Nowshad Chowdhury",
-      ,
-      "Mr. Nihad Karim Chowdhury",
-      "Dr. Mohammad Osiur Rahman",
-      "Dr. Rashed Mustafa",
-      "Dr. Mohammad Khairul Islam",
-      "Dr. Kazi Ashrafuzzaman",
-      "Mr. Mohammad Rokan UddinFaruque",
-      "Mrs. Nasrin Sultana",
-      "Dr. Asaduzzaman",
-      "Mr. H.S. Faruq Alam",
-      "Dr. Mohammed Hanif Siddique",
-      "Dr. Mohammed Abdur Rauf",
-    ],
+    col: "evaluator_id",
+    type: "number",
     required: true,
+    // type: "dropdown",
+    // values: [
+    //   "Dr. Rudra Pratap Devnath",
+    //   "Dr. Anwarul Azim",
+    //   "Dr. Abu Nowshad Chowdhury",
+    //   ,
+    //   "Mr. Nihad Karim Chowdhury",
+    //   "Dr. Mohammad Osiur Rahman",
+    //   "Dr. Rashed Mustafa",
+    //   "Dr. Mohammad Khairul Islam",
+    //   "Dr. Kazi Ashrafuzzaman",
+    //   "Mr. Mohammad Rokan UddinFaruque",
+    //   "Mrs. Nasrin Sultana",
+    //   "Dr. Asaduzzaman",
+    //   "Mr. H.S. Faruq Alam",
+    //   "Dr. Mohammed Hanif Siddique",
+    //   "Dr. Mohammed Abdur Rauf",
+    // ],
   },
   {
-    col: "Role",
+    col: "role",
     type: "dropdown",
     values: ["Member", "Chairman", "External member"],
     required: true,
   },
+  {
+    col: "program",
+    type: "dropdown",
+    values: [
+      "BSc",
+      "MSc",
+      "M.Phil",
+      "PhD",
+    ],
+    required: true,
+  },
+  {
+    col: "semester_number",
+    type: "dropdown",
+    values: [
+      1, 2, 3, 4, 5, 6, 7, 8,
+    ],
+    required: true,
+  },
+  {
+    col: "year",
+    type: "number",
+    required: true,
+  },
+  {
+    col: "Delete",
+    type: "button",
+    label: "Delete",
+    variant: "dasi",
+},
 ];
 
 // const peoples = ["1","2", "3", "4", "5"];
 const FormExamCommittee = () => {
   const programOptions = ["BSc", "MSc"];
   return (
-    <div className="flex h-full w-full justify-center">
+    <div className="flex h-full w-full justify-center text-center">
       <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-        <div className="">
+        {/* <div className="">
           {" "}
-          {/* exam information*/}
+          exam information
           <div className="mb-8">
             <span className="text-xl sm:text-2xl">Exam information</span>
           </div>
@@ -81,8 +112,8 @@ const FormExamCommittee = () => {
               ></Inputcmp>
             </div>
           </div>
-        </div>
-        <hr className="border border-slate-300 mt-12"></hr>
+        </div> */}
+        {/* <hr className="border border-slate-300 mt-12"></hr> */}
         <div className="mb-8   mt-8">
           {" "}
           {/* committee information*/}
@@ -98,13 +129,13 @@ const FormExamCommittee = () => {
             tableName={"Exam_Committee"}
           ></Tablenew>
         </div>
-        <div className="mt-16">
+        {/* <div className="mt-16">
           <Buttoncmp
             type="submit"
             label="Form committee"
             variant="stpr"
           ></Buttoncmp>
-        </div>
+        </div> */}
       </form>
     </div>
   );
