@@ -49,10 +49,12 @@ const Tablenew = (prop) => {
         .then((data) => {
           // console.log("At front: ", data);
           if (changes.operation === "load") {
+            // when loading, setting a new key
             const withKey = data.map((item, i) => ({ ...item, key: i }));
-            console.log("here", withKey);
             setTableData(withKey);
           } else if (changes.operation === "update") {
+            // setting the localcopy of the tableData if successfully updated
+            // in the remote database
             const updatedTable = [...tableData];
             const ucol = changes.updatedData.colType;
             const uValue = changes.updatedData.value;
@@ -61,6 +63,7 @@ const Tablenew = (prop) => {
             setStatus(["s", "One cell updated"]);
           } else if (changes.operation === "insert") {
             setStatus(["s", data.msg]);
+            // setting status to [0, 0], so that user can add new row
             setNewRow([0, 0]);
           } else if (changes.operation === "delete") {
             setStatus(["d", "One Row deleted"]);
@@ -69,27 +72,29 @@ const Tablenew = (prop) => {
       // .catch((error) => {
       //   console.log(error);
       // });
-
-      // now update tableData if we're doing an update after getting positive response
-      // from database(true or false)
     }
     processDB();
   }, [changes]);
 
+  // creating new object for each new row
   const createNewObject = (key) => {
     const tempRow = {};
     for (let i = 0; i < tableCols.length; i++) {
-      if (tableCols[i].required == true) {
+      // Checking if the property is required passed from tableCols
+      if (tableCols[i].required === true) {
         tempRow[tableCols[i].col] = "";
       }
     }
+    // adding a new key property to uniquely identify row
     tempRow["key"] = key;
     return tempRow;
   };
 
+  // checking if the user has filled the new row
   const checkIfFilled = (index) => {
     for (const prop in tableData[index]) {
-      if (tableData[index][prop] != "") {
+      // we don't need to check for key property, so skipping it
+      if (tableData[index][prop] != "" || prop === "key") {
         continue;
       } else {
         return false;
@@ -98,9 +103,10 @@ const Tablenew = (prop) => {
     return true;
   };
   const addRow = () => {
-    const key = tableData[tableData.length - 1].key + 1;
+    // generating key, if the table is empty already, key would be 0
+    const key =
+      tableData.length === 0 ? 0 : tableData[tableData.length - 1].key + 1;
     const tempRow = createNewObject(key);
-    // console.log(newRow[0], newRow[1]);
     if (tableData.length === 0) {
       setTableData([tempRow]);
       setNewRow([1, 0]);
@@ -118,16 +124,15 @@ const Tablenew = (prop) => {
   };
 
   const updateCell = (value, rowIndex, colType) => {
-    console.log(value, rowIndex, colType);
-
     // Editing realtime except the last index(if it is not uploaded yet [0, 0] or [1,0])
+    // console.log("TableLength while editing: ", tableData.length);
     if (
       (rowIndex === tableData.length - 1 &&
         newRow[0] === 0 &&
         newRow[1] === 0) ||
       rowIndex !== tableData.length - 1
     ) {
-      console.log("value is", value, "and ", tableData[rowIndex][colType]);
+      // console.log("value is", value, "and ", tableData[rowIndex][colType]);
       if (String(value) !== String(tableData[rowIndex][colType])) {
         const editedRow = { ...tableData[rowIndex] };
         delete editedRow.key;
@@ -144,13 +149,6 @@ const Tablenew = (prop) => {
       }
     }
 
-    // Here we'll capture the status and update the local copy of the tableData if the database is updated
-    // if (updatedStatus) {
-    //   let newTableData = Object.assign([], tableData);
-    //   newTableData[rowIndex][colType] = value;
-    //   setTableData(newTableData);
-    // }
-
     // Uploading a new row to the database when [1,0], added, not yet uploaded
     // we're doing it when the user edits the last column of the new row
     else if (
@@ -159,15 +157,18 @@ const Tablenew = (prop) => {
       newRow[1] === 0
     ) {
       // updating the lastRow as the user edits it
+      console.log(tableData[rowIndex]);
       let newTableData = Object.assign([], tableData);
       newTableData[rowIndex][colType] = value;
       setTableData(newTableData);
       // --------------
       // Checking if the whole row is completely filled
       const fillStatus = checkIfFilled(rowIndex);
+      console.log("Fillstatus and newRow:", fillStatus, newRow);
       if (fillStatus && newRow[0] === 1 && newRow[1] === 0) {
         // we're just passing the row index, processDB should return a status of the adding
         const toUploadRow = { ...tableData[rowIndex] };
+        console.log("TouploadRow: ", toUploadRow);
         delete toUploadRow.key;
         setChanges({
           tableName: tableName,

@@ -5,8 +5,7 @@ import Tablenew from "../../UI/Tablenew";
 // import Inputcmp from "../../Inputcmp";
 // import Temptable from "../../UI/Temptable";
 
-const tableData = [
-  { col: "No" },
+const tableCols = [
   {
     col: "activity_type_id",
     type: "dropdown",
@@ -29,9 +28,10 @@ const tableData = [
       "16",
       "17",
     ],
+    required: true,
   },
   {
-    col: "sector",
+    col: "sector/program",
     type: "dropdown",
     values: [
       "Honours/Masters",
@@ -48,11 +48,13 @@ const tableData = [
       "BSc (1st year to 3rd year)",
       "BSc (4th year)",
     ],
+    required: true,
   },
   {
     col: "category",
     type: "dropdown",
     values: ["Course_activity", "Semester_activity"],
+    required: true,
   },
   {
     col: "factor",
@@ -66,28 +68,20 @@ const tableData = [
       "Course",
       "Bill for question setting",
     ],
+    required: true,
   },
   {
-    col: "Initial quantity",
+    col: "quantity_initial",
     type: "number",
+    required: true,
   },
-  { col: "Final quantity", type: "number" },
-  { col: "Minbill", type: "number" },
-  { col: "Bill", type: "number" },
+  { col: "quantity_final", type: "number", required: true },
+  { col: "min_bill", type: "number", required: true },
+  { col: "bill", type: "number", required: true },
 ];
 
 const FillActivityBill = () => {
-  const [activities, setActivities] = useState([1, 2]);
-
-  function addactivities(e) {
-    console.log(e);
-    setActivities([...activities, activities.length + 1]);
-  }
-  function removeactivities(e) {
-    console.log(e);
-    let activity = activities.slice(0, -1);
-    setActivities([...activity]);
-  }
+  // const [activities, setActivities] = useState([1, 2]);
 
   return (
     <div className="flex h-full w-full justify-center overflow-auto">
@@ -100,7 +94,7 @@ const FillActivityBill = () => {
             </span>
           </div>
           <div className="mt-8">
-            <Tablenew tableData={tableData}></Tablenew>
+            <Tablenew tableCols={tableCols} tableName="Activity"></Tablenew>
           </div>
         </div>
         <Buttoncmp type="submit" label="Save" variant="stpr"></Buttoncmp>
