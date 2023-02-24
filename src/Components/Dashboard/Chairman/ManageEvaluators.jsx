@@ -53,6 +53,7 @@ const tablecols = [
   {
     col: "phone_no",
     type: "tel",
+    // [0-9]
     required: true,
   },
   {

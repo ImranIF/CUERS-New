@@ -34,12 +34,13 @@ const menus = [
         menuText: "Manage semester activity",
         route: "manage-semester-activity",
       },
+      { menuText: "Course in Semester Exam", route: "course-in-semester-exam" },
       { menuText: "Manage edit requests", route: "manage-edit-requests" },
     ],
   },
   {
     person: "Evaluator",
-    activity: [{ menuText: "View Bill forms", route: "" }],
+    activity: [{ menuText: "View bill forms", route: "view-bill-form" }],
   },
 ];
 
@@ -126,7 +127,7 @@ const Dashboard = (prop) => {
         <div className="">
           {" "}
           <Outlet></Outlet>
-          <div className="p-24"></div>
+          <div className="p-52"></div>
         </div>
       </div>
     </div>

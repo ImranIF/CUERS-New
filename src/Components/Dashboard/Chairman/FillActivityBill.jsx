@@ -31,7 +31,7 @@ const tableCols = [
     required: true,
   },
   {
-    col: "sector/program",
+    col: "sector_or_program",
     type: "dropdown",
     values: [
       "Honours/Masters",

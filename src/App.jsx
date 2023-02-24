@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 import Chairman from "./Components/Dashboard/Chairman/Chairman";
 import CEC from "./Components/Dashboard/CEC/CEC";
+import Evaluator from "./Components/Dashboard/Evaluator/Evaluator";
 import EvaluatesCourseActivity from "./Components/Dashboard/CEC/EvaluatesCourseActivity";
 import ManageSemesterActivity from "./Components/Dashboard/CEC/ManageSemesterActivity";
 import ManageEditRequests from "./Components/Dashboard/CEC/ManageEditRequests";
@@ -29,6 +30,8 @@ import Status from "./Components/UI/Status";
 import { useEffect } from "react";
 import PrivateOutlet from "./Components/Login/PrivateOutlet";
 import { StatusContext } from "./Components/UI/StatusContext";
+import ViewBillForm from "./Components/Dashboard/Evaluator/ViewBillForm";
+import CourseInSemesterExam from "./Components/Dashboard/CEC/CourseInSemesterExam";
 function App() {
   const navigate = useNavigate();
 
@@ -119,8 +122,13 @@ function App() {
               logInfoRef.current.role == "Chairman of Exam Committee"
             ) {
               navigate("/dashboard/cec");
+            } else if(
+              logInfoRef.current.role == "Evaluator"
+            ){
+              navigate("/dashboard/evaluator")
             }
           } else {
+            Evaluator
             let error = data.msg;
 
             setStatus(["d", error + ". Try again!"]);
@@ -190,6 +198,10 @@ function App() {
                 path="evaluates-course-activity"
               ></Route>
               <Route
+                element={<CourseInSemesterExam></CourseInSemesterExam>}
+                path="course-in-semester-exam"
+              ></Route>
+              <Route
                 element={<ManageSemesterActivity></ManageSemesterActivity>}
                 path="manage-semester-activity"
               ></Route>
@@ -197,6 +209,15 @@ function App() {
                 element={<ManageEditRequests></ManageEditRequests>}
                 path="manage-edit-requests"
               ></Route>
+            </Route>
+            <Route
+              element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+              path="dashboard/evaluator"
+            >
+              <Route 
+              element = {<ViewBillForm></ViewBillForm>} 
+              path="view-bill-form">
+              </Route>
             </Route>
           </Route>
 

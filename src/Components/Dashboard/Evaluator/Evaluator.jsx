@@ -2,10 +2,8 @@ import React from "react";
 import { Outlet, useNavigate } from "react-router";
 import Table from "../../UI/Table";
 import Dashboard from "../Dashboard";
-import FillActivityBill from "./FillActivityBill";
-import FormExamCommittee from "./FormExamCommittee";
-import ManageEvaluators from "./ManageEvaluators";
-const Chairman = () => {
+import ViewBillForm from "./ViewBillForm";
+const Evaluator = () => {
   return <div className="w-full h-full">
     
     {/* Somehow bad happens it works */}
@@ -13,4 +11,4 @@ const Chairman = () => {
   </div>;
 };
 
-export default Chairman;
+export default Evaluator;
