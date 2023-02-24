@@ -114,7 +114,7 @@ const FormExamCommittee = () => {
           </div>
         </div> */}
         {/* <hr className="border border-slate-300 mt-12"></hr> */}
-        <div className="mb-8   mt-8">
+        <div className="mb-8 mt-8">
           {" "}
           {/* committee information*/}
           <div>

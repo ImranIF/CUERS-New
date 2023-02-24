@@ -74,6 +74,9 @@ const Dashboard = (prop) => {
       //   navigate("/dashboard/chairman/manage-evaluators");
       // }
     }
+    else if(window.location.pathname.includes("evaluator")){
+      navigate(`/dashboard/evaluator/${activity.route}`)
+    }
   };
 
   const navigate = useNavigate();
