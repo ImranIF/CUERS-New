@@ -39,6 +39,7 @@ const tablecols = [
     {
         col: "course_id",
         type: "dropdown",
+        //need to be dynamic
         values: [
             "CSE 810",
             "CSE 811",
@@ -92,20 +93,21 @@ const tablecols = [
         variant: "dasi",
     },
 ]
-const EvaluatesCourseActivity =() =>{
-    return(
-    <div >
-        <div className="mb-8 mt-8">
-        <span className="text-xl sm:text-2xl block text-center">
-            Manage Course Activity
-        </span>
-    </div>
-    <div className="flex h-full w-full justify-center ">
-        <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-          <Tablenew tableCols={tablecols} tableName="Evaluates_Course_Activity"></Tablenew>
-        </form>
-      </div>
-    </div>
+const EvaluatesCourseActivity = () => {
+    const semester_no = sessionStorage.getItem("semester_no");
+    return (
+        <div >
+            <div className="mb-8 mt-8">
+                <span className="text-xl sm:text-2xl block text-center">
+                    Manage Course Activity
+                </span>
+            </div>
+            <div className="flex h-full w-full justify-center ">
+                <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
+                    <Tablenew tableCols={tablecols} loadCondition={[{semester_no: `${semester_no}`}]} tableName="Evaluates_Course_Activity"></Tablenew>
+            </form>
+        </div>
+    </div >
       
     )
 }

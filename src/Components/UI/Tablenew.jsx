@@ -19,25 +19,60 @@ import { StatusContext } from "./StatusContext";
 import { faTableTennisPaddleBall } from "@fortawesome/free-solid-svg-icons";
 
 const Tablenew = (prop) => {
-  const { tableName, tableCols } = prop; // tableName
+  const { tableName, tableCols, loadCondition } = prop; // tableName
   const [tableData, setTableData] = useState([]); // to set the data after fetching
   // const [indexi, setIndexi] = useState(1);
   const rowStatus = [0, 0];
   const [newRow, setNewRow] = useState(rowStatus);
   const { message, setStatus } = useContext(StatusContext);
   // the initial state will load the table
+
+
+  const [loaded, setLoaded] = useState(false);
   const [changes, setChanges] = useState({
     tableName: tableName,
     operation: "load",
   });
 
   useEffect(() => {
+    const getTableInfo = JSON.parse(sessionStorage.getItem("tableInfo"));
+    // processDB();
+    let val = "";
+    if (loadCondition) {
+
+      let dataTypes = getTableInfo[tableName]["dataTypes"];
+      console.log("Data types: ", dataTypes);
+      for (let i = 0; i < loadCondition.length; i++) {
+        console.log("Load condition: ", Object.keys(loadCondition[i])[0]);
+        let key = Object.keys(loadCondition[i])[0];
+        console.log("dataTypes[key]: ", dataTypes[key]);
+        if (dataTypes[key].localeCompare("int(11)") == 0)
+          val += `${key} = ${loadCondition[i][key]}`;
+        else
+          val += `${key} = "${loadCondition[i][key]}"`;
+        if (loadCondition.length - 1 != i) val += " and ";
+      }
+
+      console.log("Val: ", val);
+
+
+      setChanges(prevChanges => ({
+        ...prevChanges,
+        conditionCheck: val,
+      }));
+    }
+  }, [loadCondition, tableName]);
+
+  useEffect(() => {
     function processDB() {
       //obtain all table structures from session storage and parse into json
+
+      console.log("laodcondition: ", loadCondition);
       const getTableInfo = JSON.parse(sessionStorage.getItem("tableInfo"));
       const combinedTableInfo = { changes, getTableInfo };
       // console.log(getTableInfo[tableName])
       console.log("Requesting");
+
       fetch("http://localhost:3000/users/processData", {
         method: "POST",
         headers: {
@@ -47,7 +82,7 @@ const Tablenew = (prop) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log("At front: ", data);
+          console.log("At front: ", data);
           if (changes.operation === "load") {
             // when loading, setting a new key
             const withKey = data.map((item, i) => ({ ...item, key: i }));
@@ -69,11 +104,22 @@ const Tablenew = (prop) => {
             setStatus(["d", "One Row deleted"]);
           }
         });
+
+      //setLoaded(true);
       // .catch((error) => {
       //   console.log(error);
       // });
+
+
     }
-    processDB();
+    if (loadCondition.length > 0) {
+      if (changes.conditionCheck)
+        processDB();
+    }
+    else {
+      processDB();
+    }
+
   }, [changes]);
 
   // creating new object for each new row
@@ -206,6 +252,10 @@ const Tablenew = (prop) => {
   if (tableData === undefined) {
     return <Spin></Spin>;
   }
+  // useEffect(() => {
+  //   
+  // }, []);
+
   return (
     <div className="mt-0">
       <div className="table w-full border-2">
