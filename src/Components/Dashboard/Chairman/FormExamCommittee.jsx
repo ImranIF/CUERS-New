@@ -41,15 +41,15 @@ const tableCols = [
     col: "program",
     type: "dropdown",
     values: [
-      "BSc",
-      "MSc",
+      "Honours",
+      "Masters",
       "M.Phil",
       "PhD",
     ],
     required: true,
   },
   {
-    col: "semester_number",
+    col: "semester_no",
     type: "dropdown",
     values: [
       1, 2, 3, 4, 5, 6, 7, 8,

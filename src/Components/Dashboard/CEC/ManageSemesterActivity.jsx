@@ -7,7 +7,7 @@ const tablecols = [
         col: "activity_type_id",
         type: "dropdown",
         values: [
-            3, 6, 9, 10, 11, 12, 13, 14, 15,
+            "3", "6", "9", "10", "11", "12", "13", "14", "15",
         ],
         required: true,
     },
@@ -19,11 +19,11 @@ const tablecols = [
             "Masters",
             "Tutorial",
             "Lab",
-            "Terminal",
-            "Presentation",
-            "Scrutiny",
+            "Honours (1st year to 3rd year)",
+            "Honours (4th year)",
             "By computer",
             "By hand",
+            "All programs",
             "Others",
         ],
         required: true,
@@ -34,7 +34,7 @@ const tablecols = [
         required: true,
     },
     {
-        col: "semester_number",
+        col: "semester_no",
         type: "dropdown",
         values: [
             1, 2, 3, 4, 5, 6, 7, 8,
@@ -47,6 +47,7 @@ const tablecols = [
         values: [
             "No of members",
             "No of students",
+            "No of pages",
         ],
         required: true,
     },
