@@ -37,6 +37,7 @@ const menus = [
       },
       { menuText: "Course in Semester Exam", route: "course-in-semester-exam" },
       { menuText: "Manage edit requests", route: "manage-edit-requests" },
+      { menuText: "Generate activity PDF", route: "generate-activity-pdf" },
     ],
   },
   {
@@ -64,9 +65,8 @@ const Dashboard = (prop) => {
       navigate(`/dashboard/chairman/${activity.route}`);
     } else if (window.location.pathname.includes("evaluator")) {
       navigate(`/dashboard/evaluator/${activity.route}`);
-    }
-    else if(window.location.pathname.includes("evaluator")){
-      navigate(`/dashboard/evaluator/${activity.route}`)
+    } else if (window.location.pathname.includes("evaluator")) {
+      navigate(`/dashboard/evaluator/${activity.route}`);
     }
   };
 
@@ -118,13 +118,13 @@ const Dashboard = (prop) => {
           </div>
         </div>
       </div>
-      <div className="flex-1 px-16 h-full overflow-auto border-2">
-        <div className="w-full">
+      <div className="flex-1 px-16 h-full overflow-auto">
+        <div className="w-full h-full">
           {" "}
           <DashboardContent>
             <Outlet></Outlet>
+            <div className="p-52"></div>
           </DashboardContent>
-          <div className="p-52"></div>
         </div>
       </div>
     </div>

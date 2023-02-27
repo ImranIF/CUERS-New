@@ -33,6 +33,7 @@ import { StatusContext } from "./Components/UI/StatusContext";
 import ViewBillForm from "./Components/Dashboard/Evaluator/ViewBillForm";
 import CourseInSemesterExam from "./Components/Dashboard/CEC/CourseInSemesterExam";
 import Spin from "./Components/UI/Spin";
+import { GenerateActivityPDF } from "../../../../../../home/rohit/Doings/Web/CUERS-New/src/Components/Dashboard/CEC/GenerateActivityPDF";
 function App() {
   const navigate = useNavigate();
 
@@ -148,9 +149,10 @@ function App() {
                     colName,
                     colValue
                   );
-                  const { semester_no } = semesterInfo[0];
+                  const { semester_no, year } = semesterInfo[0];
                   //  console.log(semester_no);
                   sessionStorage.setItem("semester_no", semester_no);
+                  sessionStorage.setItem("year", year);
                 })();
                 navigate("/dashboard/cec");
                 setToLogin(false);
@@ -250,6 +252,10 @@ function App() {
               <Route
                 element={<ManageEditRequests></ManageEditRequests>}
                 path="manage-edit-requests"
+              ></Route>
+              <Route
+                element={<GenerateActivityPDF></GenerateActivityPDF>}
+                path="generate-activity-pdf"
               ></Route>
             </Route>
             <Route
