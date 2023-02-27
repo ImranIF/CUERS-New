@@ -110,7 +110,7 @@ const FillActivityBill = () => {
             </span>
           </div>
           <div className="mt-8">
-            <Tablenew tableCols={tableCols} tableName="Activity"></Tablenew>
+            <Tablenew tableCols={tableCols} tableName="Activity" loadCondition={[]}></Tablenew>
           </div>
         </div>
         {/* <Buttoncmp type="submit" label="Save" variant="stpr"></Buttoncmp> */}

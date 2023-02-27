@@ -89,19 +89,16 @@ function App() {
       const changes = {
         tableName: `${tableName}`,
         conditionCheck: `${colName} = ${colValue}`,
-        operation: "load"
-      }
+        operation: "load",
+      };
       console.log(changes);
-      const response = await fetch(
-        "http://localhost:3000/users/processData",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ changes }),
-        }
-      );
+      const response = await fetch("http://localhost:3000/users/processData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ changes }),
+      });
       const data = await response.json();
       return data;
     }
@@ -121,7 +118,6 @@ function App() {
             console.log(isAuthenticated);
             setAuthenticated(true);
             sessionStorage.setItem("previouslyLogin", true);
-            setToLogin(false);
             setLoading(false);
             setStatus(["s", "User Authenticated!"]);
 
@@ -133,7 +129,8 @@ function App() {
               console.log("still accumulating tableInfo");
               console.log(tableInfo);
               sessionStorage.setItem("tableInfo", JSON.stringify(tableInfo));
-            })
+              setToLogin(false);
+            })();
             // } else {
             //   console.log("TableInfo is already in sessionStorage.");
             // }
@@ -144,22 +141,23 @@ function App() {
             } else if (
               logInfoRef.current.role == "Chairman of Exam Committee"
             ) {
-
               (async () => {
                 let tableName = "Exam_Committee";
                 let colName = "evaluator_id";
                 let colValue = logInfoRef.current.evaluator_id;
 
-                let semesterInfo = await loadSemesterInfo(tableName, colName, colValue);
+                let semesterInfo = await loadSemesterInfo(
+                  tableName,
+                  colName,
+                  colValue
+                );
                 const { semester_no } = semesterInfo[0];
                 //  console.log(semester_no);
-                sessionStorage.setItem("semester_no", (semester_no));
-              })
+                sessionStorage.setItem("semester_no", semester_no);
+              })();
               navigate("/dashboard/cec");
-            } else if (
-              logInfoRef.current.role == "Evaluator"
-            ) {
-              navigate("/dashboard/evaluator")
+            } else if (logInfoRef.current.role == "Evaluator") {
+              navigate("/dashboard/evaluator");
             }
           } else {
             let error = data.msg;
@@ -248,8 +246,8 @@ function App() {
             >
               <Route
                 element={<ViewBillForm></ViewBillForm>}
-                path="view-bill-form">
-              </Route>
+                path="view-bill-form"
+              ></Route>
             </Route>
           </Route>
 

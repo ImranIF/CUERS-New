@@ -27,19 +27,11 @@ const Tablenew = (prop) => {
   const { message, setStatus } = useContext(StatusContext);
   // the initial state will load the table
 
-
   const [loaded, setLoaded] = useState(false);
-  const [changes, setChanges] = useState({
-    tableName: tableName,
-    operation: "load",
-  });
-
-  useEffect(() => {
-    const getTableInfo = JSON.parse(sessionStorage.getItem("tableInfo"));
-    // processDB();
-    let val = "";
-    if (loadCondition) {
-
+  const [changes, setChanges] = useState(() => {
+    if (loadCondition.length > 0) {
+      let val = "";
+      const getTableInfo = JSON.parse(sessionStorage.getItem("tableInfo"));
       let dataTypes = getTableInfo[tableName]["dataTypes"];
       console.log("Data types: ", dataTypes);
       for (let i = 0; i < loadCondition.length; i++) {
@@ -48,29 +40,20 @@ const Tablenew = (prop) => {
         console.log("dataTypes[key]: ", dataTypes[key]);
         if (dataTypes[key].localeCompare("int(11)") == 0)
           val += `${key} = ${loadCondition[i][key]}`;
-        else
-          val += `${key} = "${loadCondition[i][key]}"`;
+        else val += `${key} = "${loadCondition[i][key]}"`;
         if (loadCondition.length - 1 != i) val += " and ";
       }
-
-      console.log("Val: ", val);
-
-
-      setChanges(prevChanges => ({
-        ...prevChanges,
-        conditionCheck: val,
-      }));
+      return { tableName: tableName, operation: "load", conditionCheck: val };
+    } else {
+      return { tableName: tableName, operation: "load" };
     }
-  }, [loadCondition, tableName]);
+  });
 
   useEffect(() => {
     function processDB() {
       //obtain all table structures from session storage and parse into json
-
-      console.log("laodcondition: ", loadCondition);
       const getTableInfo = JSON.parse(sessionStorage.getItem("tableInfo"));
       const combinedTableInfo = { changes, getTableInfo };
-      // console.log(getTableInfo[tableName])
       console.log("Requesting");
 
       fetch("http://localhost:3000/users/processData", {
@@ -104,22 +87,8 @@ const Tablenew = (prop) => {
             setStatus(["d", "One Row deleted"]);
           }
         });
-
-      //setLoaded(true);
-      // .catch((error) => {
-      //   console.log(error);
-      // });
-
-
     }
-    if (loadCondition.length > 0) {
-      if (changes.conditionCheck)
-        processDB();
-    }
-    else {
-      processDB();
-    }
-
+    processDB();
   }, [changes]);
 
   // creating new object for each new row
@@ -253,7 +222,7 @@ const Tablenew = (prop) => {
     return <Spin></Spin>;
   }
   // useEffect(() => {
-  //   
+  //
   // }, []);
 
   return (
