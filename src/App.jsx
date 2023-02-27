@@ -133,7 +133,7 @@ function App() {
               console.log("still accumulating tableInfo");
               console.log(tableInfo);
               sessionStorage.setItem("tableInfo", JSON.stringify(tableInfo));
-            })();
+            })
             // } else {
             //   console.log("TableInfo is already in sessionStorage.");
             // }
@@ -154,7 +154,7 @@ function App() {
                 const { semester_no } = semesterInfo[0];
                 //  console.log(semester_no);
                 sessionStorage.setItem("semester_no", (semester_no));
-              })();
+              })
               navigate("/dashboard/cec");
             } else if (
               logInfoRef.current.role == "Evaluator"
@@ -162,9 +162,7 @@ function App() {
               navigate("/dashboard/evaluator")
             }
           } else {
-            Evaluator
             let error = data.msg;
-
             setStatus(["d", error + ". Try again!"]);
           }
         })

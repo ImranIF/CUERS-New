@@ -76,7 +76,7 @@ const ManageEvaluators = (prop) => {
             Manage Evaluators
           </span>
         </div>
-        <Tablenew tableCols={tablecols} tableName="Evaluator"></Tablenew>
+        <Tablenew tableCols={tablecols} loadCondition={[]} tableName="Evaluator"></Tablenew>
         {/* <Buttoncmp
           type="submit"
           label="Submit"

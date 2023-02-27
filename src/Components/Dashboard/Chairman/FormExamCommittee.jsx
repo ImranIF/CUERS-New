@@ -127,6 +127,7 @@ const FormExamCommittee = () => {
           <Tablenew
             tableCols={tableCols}
             tableName={"Exam_Committee"}
+            loadCondition={[]}
           ></Tablenew>
         </div>
         {/* <div className="mt-16">
