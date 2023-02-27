@@ -5,8 +5,7 @@ import Tablenew from "../../UI/Tablenew";
 // import Inputcmp from "../../Inputcmp";
 // import Temptable from "../../UI/Temptable";
 
-const tableData = [
-  { col: "No" },
+const tableCols = [
   {
     col: "activity_type_id",
     type: "dropdown",
@@ -28,31 +27,43 @@ const tableData = [
       "15",
       "16",
       "17",
+      "18",
     ],
+    required: true,
   },
   {
-    col: "sector",
+    col: "sector_or_program",
     type: "dropdown",
     values: [
       "Honours/Masters",
       "M.Phil",
       "PhD",
-      "BSc, MSc",
       "Terminal",
+      "Certificate course",
+      "M.Phil thesis",
+      "Masters thesis",
+      "PhD thesis",
       "Tutorial",
       "Lab",
       "Scrutiny",
-      "MSc (Project/thesis)",
+      "Masters (Project/thesis)",
       "Lab notebook",
       "Industrial tour",
-      "BSc (1st year to 3rd year)",
-      "BSc (4th year)",
+      "Honours (1st year to 3rd year)",
+      "Honours (4th year)",
+      "Masters",
+      "By hand",
+      "By computer",
+      "All programs",
+      "Others",
     ],
+    required: true,
   },
   {
     col: "category",
     type: "dropdown",
     values: ["Course_activity", "Semester_activity"],
+    required: true,
   },
   {
     col: "factor",
@@ -60,52 +71,68 @@ const tableData = [
     values: [
       "Hours",
       "No of questions",
-      "No of members in Exam Committee",
+      "No of pages",
+      "No of members",
       "No of students",
       "No of exams",
       "Course",
       "Bill for question setting",
     ],
+    required: true,
   },
   {
-    col: "Initial quantity",
+    col: "quantity_initial",
     type: "number",
+    regex: "^\\d+(\\.\\d+)?$",
+    regexMessage: "e.g. 2 or 2.5",
+    required: true,
   },
-  { col: "Final quantity", type: "number" },
-  { col: "Minbill", type: "number" },
-  { col: "Bill", type: "number" },
+  {
+    col: "quantity_final",
+    type: "number",
+    regex: "^\\d+(\\.\\d+)?$",
+    regexMessage: "e.g. 2 or 2.5",
+    required: true,
+  },
+  {
+    col: "min_bill",
+    type: "number",
+    regex: "^\\d+(\\.\\d+)?$",
+    regexMessage: "e.g. 1200",
+    required: true,
+  },
+  {
+    col: "bill",
+    type: "number",
+    regex: "^\\d+(\\.\\d+)?$",
+    regexMessage: "e.g. 1200",
+    required: true,
+  },
+  {
+    col: "Delete",
+    type: "button",
+    label: "Delete",
+    variant: "dasi",
+  },
 ];
 
 const FillActivityBill = () => {
-  const [activities, setActivities] = useState([1, 2]);
-
-  function addactivities(e) {
-    console.log(e);
-    setActivities([...activities, activities.length + 1]);
-  }
-  function removeactivities(e) {
-    console.log(e);
-    let activity = activities.slice(0, -1);
-    setActivities([...activity]);
-  }
+  // const [activities, setActivities] = useState([1, 2]);
 
   return (
-    <div className="flex h-full w-full justify-center overflow-auto">
-      <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-        <hr className="border border-slate-300 mt-12"></hr>
-        <div className="mb-8 mt-8">
-          <div>
-            <span className="text-xl sm:text-2xl block">
-              Activity Bill information
-            </span>
-          </div>
-          <div className="mt-8">
-            <Tablenew tableData={tableData}></Tablenew>
-          </div>
-        </div>
-        <Buttoncmp type="submit" label="Save" variant="stpr"></Buttoncmp>
-        <hr className="border border-slate-300 mt-12"></hr>
-      </form>
+    <div className="mb-8 mt-8">
+      <div>
+        <span className="text-xl sm:text-2xl block">
+          Activity Bill information
+        </span>
+      </div>
+      <div className="mt-8">
+        <Tablenew
+          tableCols={tableCols}
+          tableName="Activity"
+          loadCondition={[]}
+        ></Tablenew>
+      </div>
     </div>
   );
 };

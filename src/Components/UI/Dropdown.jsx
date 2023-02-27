@@ -12,9 +12,16 @@ import { useEffect } from "react";
 const Dropdown = (prop) => {
   // to close if user clicks outside of the dropdown
 
-  const { options, name, id, label, search, onSelect, opened}= prop;
+  const { options, name, id, label, search, onSelect, opened, preSelect, variant } =
+    prop;
+
+    // state for options
   const [open, setOpen] = useState(opened);
-  const [selected, setSelected] = useState("Select " + name);
+  // state for selected option, initially the preSelect value will be set if passed
+  const [selected, setSelected] = useState(
+    !preSelect ? "Select " + name : preSelect
+  );
+  // while options are open, clicking outside will close the option list
   useEffect(() => {
     const closeDropdown = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
@@ -24,6 +31,7 @@ const Dropdown = (prop) => {
     document.body.addEventListener("click", closeDropdown);
     return () => document.body.removeEventListener("click", closeDropdown);
   }, []);
+
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
   const inputStyle =
@@ -32,8 +40,9 @@ const Dropdown = (prop) => {
   const [inputValue, setInputValue] = useState("");
   let inputBlock = (
     <div
-      className={`relative flex w-full duration-200 ${open && "z-20"}`}
+      className={`relative flex w-full duration-200 ${open && "z-10"}`}
       ref={dropdownRef}
+      // if clicked, option list will display
       onClick={(e) => {
         e.stopPropagation();
         setOpen(!open);
@@ -47,6 +56,7 @@ const Dropdown = (prop) => {
         } flex justify-between cursor-pointer p-2 pl-3 pr-3 h-full items-center
           duration-200 border-0 ring-0 ring-transparent w-full rounded-md bg-slate-200`}
       >
+        {/* A input box that will contain the value of the dropdown */}
         <input
           type="text"
           name={name}
@@ -66,6 +76,7 @@ const Dropdown = (prop) => {
           !search && "py-2"
         } pb-2 rounded-lg border border-slate-300 overflow-y-auto`}
       >
+        {/* The search box feature */}
         {search == true && (
           <div
             className={`p-2 pt-3 rounded-md flex justify-between items-center gap-2 sticky top-0 bg-white`}
@@ -77,6 +88,7 @@ const Dropdown = (prop) => {
               id="searchbox"
               value={inputValue}
               onClick={(e) => e.stopPropagation()}
+              // when clicked we're searching by the state(onchange)
               onChange={(e) => {
                 setInputValue(e.target.value.toLowerCase());
               }}
@@ -86,12 +98,13 @@ const Dropdown = (prop) => {
         )}
 
         <ul className="">
-          {options.map((option) => (
+          {options.map((option, index) => (
             <li
+              key={index}
               tabIndex={0}
               className={`flex-auto w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
-              ${option.toLowerCase().match(inputValue) ? "block" : "hidden"} ${
-                selected.toLowerCase().localeCompare(option.toLowerCase()) ==
+              ${String(option).toLowerCase().match(inputValue) ? "block" : "hidden"} ${
+               String(selected).toLowerCase().localeCompare(String(option).toLowerCase()) ==
                   0 && "bg-blue-200"
               }
               `}

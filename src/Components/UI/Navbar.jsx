@@ -6,12 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AtSymbolIcon } from "@heroicons/react/24/solid";
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className=" border-gray-700 p-3 bg-cyan-900 text-cyan-100  w-full z-10">
       <div className="flex flex-row justify-between pl-4">
-        <a href="index.html">
+        <a href="" onClick={() => window.location.reload()}>
           <div className="flex gap-1 justify-center content-center  border-gray-700">
             <AtSymbolIcon className="h-8 w-8 text-cyan-400"></AtSymbolIcon>
             <span className="text-2xl font-bold text-slate-200">CUERS</span>

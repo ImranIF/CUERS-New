@@ -2,103 +2,122 @@ import React from "react";
 import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
 
-const tableData = [
-    {
-        col: "No",
-    },
-    {
-        col: "activity type",
-        type: "dropdown",
-        values: [
-            "Question setting",
-            "Question translating",
-            "Answer script Examining",
-            "Practical Examining",
-            "Examiner",
-            "These guide/Supervision",
-            "Invigilation(per tutorial)",
-            "Invigilation(per hour)",
-        ],
-    },
-    {
-        col: "sector/program",
-        type: "dropdown",
-        values: [
-            "BSc",
-            "MSc",
-            "Tutorial",
-            "Lab",
-            "By computer",
-            "By hand",
-        ],
+const tablecols = [
+  {
+    col: "activity_type_id",
+    type: "dropdown",
+    values: [1, 2, 4, 5, 7, 8, 16, 17],
+    required: true,
+  },
+  {
+    col: "sector_or_program",
+    type: "dropdown",
+    values: [
+      "Honours",
+      "Masters",
+      "Tutorial",
+      "Terminal",
+      "Certificate course",
+      "Lab",
+      "Presentation",
+      "Scrutiny",
+      "Lab notebook",
+      "Masters thesis",
+      "M.Phil thesis",
+      "PhD thesis",
+      "Industrial tour",
+      "By computer",
+      "By hand",
+      "All programs",
+    ],
+    required: true,
+  },
+  {
+    col: "evaluator_id",
+    type: "number",
+    regex: "^\\d{4}$",
+    regexMessage: "e.g. 1013",
 
-    },
-    {
-        col: "evaluator id",
-        type: "number",
-    },
-    {
-        col: "course id",
-        type: "dropdown",
-        values: [
-            "CSE 810",
-            "CSE 811",
-            "CSE 812",
-            "CSE 813",
-            "CSE 815",
-            "CSE 817",
-            "CSE 819",
-            "CSE 821",
-            "CSE 823"
-        ],
-    },
-    {
-        col: "semester no",
-        type: "dropdown",
-        values: [
-            "1st",
-            "2nd",
-            "3rd",
-            "4th",
-            "5th",
-            "6th",
-            "7th",
-            "8th",
-        ],
-    },
-    {
-        col: "factor",
-        type: "dropdown",
-        values: [
-            "Hours",
-            "Days",
-            "Half/Full part",
-            "No of students",
-            "No of tutorial",
-            "No of pages",
-        ],
-    },
-    {
-        col: "quantity",
-        type: "number",
-    },
-]
-const EvaluatesCourseActivity =() =>{
-    return(
+    required: true,
+  },
+  {
+    col: "course_id",
+    type: "dropdown",
+    //need to be dynamic
+    values: [
+      "CSE311",
+      "CSE312",
+      "CSE321",
+      "CSE322",
+      "CSE331",
+      "STA351",
+      "ECO381",
+      "CSE811",
+      "CSE812",
+      "CSE813",
+      "CSE814",
+      "CSE815",
+      "CSE816",
+      "CSE817",
+      "CSE818",
+      "CSE819",
+      "CSE821",
+      "CSE823",
+    ],
+    required: true,
+  },
+  {
+    col: "semester_no",
+    type: "dropdown",
+    values: [1, 2, 3, 4, 5, 6, 7, 8],
+    required: true,
+  },
+  {
+    col: "factor",
+    type: "dropdown",
+    values: [
+      "Hours",
+      "Days",
+      "Half/Full part",
+      "No of students",
+      "No of exams",
+      "No of pages",
+      "No of questions",
+    ],
+    required: true,
+  },
+  {
+    col: "quantity",
+    type: "number",
+    required: true,
+    regex: "^\\d+(\\.\\d+)?$",
+    regexMessage: "e.g. 12",
+  },
+  {
+    col: "Delete",
+    type: "button",
+    label: "Delete",
+    variant: "dasi",
+  },
+];
+const EvaluatesCourseActivity = () => {
+  const semester_no = sessionStorage.getItem("semester_no");
+  console.log("at course: ", semester_no);
+  return (
     <div>
-        <div>
+      <div className="mb-8 mt-8">
         <span className="text-xl sm:text-2xl block text-center">
-            Manage Course Activity
+          Manage Course Activity
         </span>
-    </div>
-    <div className="flex h-full w-full justify-center ">
-        <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-          <Tablenew tableData={tableData}></Tablenew>
-        </form>
       </div>
+
+      <Tablenew
+        tableCols={tablecols}
+        loadCondition={[{ semester_no: `${semester_no}` }]}
+        tableName="Evaluates_Course_Activity"
+      ></Tablenew>
     </div>
-      
-    )
-}
+  );
+};
 
 export default EvaluatesCourseActivity;
