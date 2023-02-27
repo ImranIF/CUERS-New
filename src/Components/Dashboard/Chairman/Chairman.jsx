@@ -7,7 +7,7 @@ import FormExamCommittee from "./FormExamCommittee";
 import ManageEvaluators from "./ManageEvaluators";
 const Chairman = () => {
   return <div className="w-full h-full">
-    
+
     {/* Somehow bad happens it works */}
     {/* <FillActivityBill /> */}
   </div>;

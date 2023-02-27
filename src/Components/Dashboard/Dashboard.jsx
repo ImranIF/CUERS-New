@@ -14,6 +14,7 @@ import Tablenew from "../UI/Tablenew";
 import ManageEvaluators from "./Chairman/ManageEvaluators";
 import { Route, Routes, useNavigate } from "react-router";
 import { Outlet } from "react-router";
+import { DashboardContent } from "../Dashboard/DashboardContent";
 const menus = [
   {
     person: "Chairman",
@@ -40,12 +41,13 @@ const menus = [
   },
   {
     person: "Evaluator",
-    activity: [{ menuText: "View bill forms", route: "view-bill-form" }],
+    activity: [{ menuText: "View Bill forms", route: "view-bill-form" }],
   },
 ];
 
 const Dashboard = (prop) => {
   const { userInfo, showStatus } = prop;
+  const [active, setActive] = useState("");
   const onLogOut = () => {
     sessionStorage.clear(); //Delete Login Data from session. So that, user need to verify after logout.
     navigate("/login");
@@ -55,24 +57,13 @@ const Dashboard = (prop) => {
   const clickme = (activity, e) => {
     console.log(activity, window.location.pathname);
     // CEC
+    setActive(`${activity.route}`);
     if (window.location.pathname.includes("cec")) {
       navigate(`/dashboard/cec/${activity.route}`);
-      // if (activity.menuText == "Manage semester activity") {
-      //   navigate("/dashboard/cec/manage-semester-activity");
-      // } else if (activity.menuText == "Manage course activity") {
-      //   navigate("/dashboard/cec/evaluates-course-activity");
-      // } else if (activity.menuText == "Manage edit requests") {
-      //   navigate("/dashboard/cec/manage-edit-requests");
-      // }
     } else if (window.location.pathname.includes("chairman")) {
       navigate(`/dashboard/chairman/${activity.route}`);
-      // if (activity.menuText == "Manage activity bill") {
-      //   navigate("/dashboard/chairman/fill-activity-bill");
-      // } else if (activity.menuText == "Exam committee info") {
-      //   navigate("/dashboard/chairman/form-exam-committee");
-      // } else if (activity.menuText == "Manage evaluators") {
-      //   navigate("/dashboard/chairman/manage-evaluators");
-      // }
+    } else if (window.location.pathname.includes("evaluator")) {
+      navigate(`/dashboard/evaluator/${activity.route}`);
     }
     else if(window.location.pathname.includes("evaluator")){
       navigate(`/dashboard/evaluator/${activity.route}`)
@@ -90,7 +81,7 @@ const Dashboard = (prop) => {
   console.log(sessionStorage.getItem("evaluator_id"));
   console.log(sessionStorage.getItem("password"));
   return (
-    <div className="flex w-full h-full justify-start ">
+    <div className="flex w-full h-full justify-start">
       <div className="flex-none">
         <div className="bg-slate-200 w-72 h-full flex-col px-4 py-4 border-r-2 z-30 border-slate-300">
           <div className="flex-col">
@@ -106,6 +97,7 @@ const Dashboard = (prop) => {
                       size="full"
                       value={option.menuText}
                       onClick={() => clickme(option)}
+                      isActive={active === option.route}
                     >
                       <HashtagIcon></HashtagIcon>
                     </Buttoncmp>
@@ -126,10 +118,12 @@ const Dashboard = (prop) => {
           </div>
         </div>
       </div>
-      <div className="flex-1 px-16 w-full h-full overflow-auto">
-        <div className="">
+      <div className="flex-1 px-16 h-full overflow-auto border-2">
+        <div className="w-full">
           {" "}
-          <Outlet></Outlet>
+          <DashboardContent>
+            <Outlet></Outlet>
+          </DashboardContent>
           <div className="p-52"></div>
         </div>
       </div>

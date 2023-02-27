@@ -32,6 +32,7 @@ import PrivateOutlet from "./Components/Login/PrivateOutlet";
 import { StatusContext } from "./Components/UI/StatusContext";
 import ViewBillForm from "./Components/Dashboard/Evaluator/ViewBillForm";
 import CourseInSemesterExam from "./Components/Dashboard/CEC/CourseInSemesterExam";
+import Spin from "./Components/UI/Spin";
 function App() {
   const navigate = useNavigate();
 
@@ -85,13 +86,13 @@ function App() {
     }
 
     async function loadSemesterInfo(tableName, colName, colValue) {
-      console.log(tableName, colName, colValue);
+      // console.log(tableName, colName, colValue);
       const changes = {
         tableName: `${tableName}`,
         conditionCheck: `${colName} = ${colValue}`,
         operation: "load",
       };
-      console.log(changes);
+      // console.log(changes);
       const response = await fetch("http://localhost:3000/users/processData", {
         method: "POST",
         headers: {
@@ -115,7 +116,7 @@ function App() {
         .then((data) => {
           if (data.msg === "Correct Password") {
             // sessionStorage.clear();
-            console.log(isAuthenticated);
+            // console.log(isAuthenticated);
             setAuthenticated(true);
             sessionStorage.setItem("previouslyLogin", true);
             setLoading(false);
@@ -129,48 +130,51 @@ function App() {
               console.log("still accumulating tableInfo");
               console.log(tableInfo);
               sessionStorage.setItem("tableInfo", JSON.stringify(tableInfo));
-              setToLogin(false);
-            })();
+            })().then(() => {
+              if (logInfoRef.current.role == "Chairman") {
+                console.log("Here: ", sessionStorage.getItem("tableInfo"));
+                navigate("/dashboard/chairman");
+                setToLogin(false);
+              } else if (
+                logInfoRef.current.role == "Chairman of Exam Committee"
+              ) {
+                (async () => {
+                  let tableName = "Exam_Committee";
+                  let colName = "evaluator_id";
+                  let colValue = logInfoRef.current.evaluator_id;
+
+                  let semesterInfo = await loadSemesterInfo(
+                    tableName,
+                    colName,
+                    colValue
+                  );
+                  const { semester_no } = semesterInfo[0];
+                  //  console.log(semester_no);
+                  sessionStorage.setItem("semester_no", semester_no);
+                })();
+                navigate("/dashboard/cec");
+                setToLogin(false);
+              } else if (logInfoRef.current.role == "Evaluator") {
+                navigate("/dashboard/evaluator");
+                setToLogin(false);
+              }
+            });
             // } else {
             //   console.log("TableInfo is already in sessionStorage.");
             // }
-
-            if (logInfoRef.current.role == "Chairman") {
-              console.log("Here: ", sessionStorage.getItem("tableInfo"));
-              navigate("/dashboard/chairman");
-            } else if (
-              logInfoRef.current.role == "Chairman of Exam Committee"
-            ) {
-              (async () => {
-                let tableName = "Exam_Committee";
-                let colName = "evaluator_id";
-                let colValue = logInfoRef.current.evaluator_id;
-
-                let semesterInfo = await loadSemesterInfo(
-                  tableName,
-                  colName,
-                  colValue
-                );
-                const { semester_no } = semesterInfo[0];
-                //  console.log(semester_no);
-                sessionStorage.setItem("semester_no", semester_no);
-              })();
-              navigate("/dashboard/cec");
-            } else if (logInfoRef.current.role == "Evaluator") {
-              navigate("/dashboard/evaluator");
-            }
           } else {
             let error = data.msg;
+            setToLogin(false);
             setStatus(["d", error + ". Try again!"]);
           }
         })
         .catch((error) => {
           console.error(error);
         });
-      setToLogin(false);
     }
   }, [tologin]);
   function onLogin(e) {
+    setToLogin(true);
     setAuthenticated(sessionStorage.getItem("previouslyLogin"));
     console.log(sessionStorage.getItem("previouslyLogin"));
     sessionStorage.setItem("role", e.target[0].value);
@@ -182,17 +186,25 @@ function App() {
     logInfoRef.current.role = sessionStorage.getItem("role");
     logInfoRef.current.evaluator_id = sessionStorage.getItem("evaluator_id");
     logInfoRef.current.password = sessionStorage.getItem("password");
-    setToLogin(true);
   }
 
   return (
     <div className="bg-slate-100 flex flex-col h-screen relative overflow-hidden">
       <StatusContext.Provider
-        value={{ message: message, setStatus: setStatus }}
+        value={{
+          message: message,
+          setStatus: setStatus,
+          evaluator: sessionStorage.getItem("evaluator_id"),
+        }}
       >
         <div>
           <Navbar></Navbar>
         </div>
+        {tologin && (
+          <div className="mt-20 absolute w-full">
+            <Spin></Spin>
+          </div>
+        )}
         <Routes>
           <Route
             element={<Login onLogin={onLogin}></Login>}

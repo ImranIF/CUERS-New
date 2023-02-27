@@ -11,25 +11,9 @@ const tableCols = [
   {
     col: "evaluator_id",
     type: "number",
+    regex: "^\\d{4}$",
+    regexMessage: "e.g. 1013",
     required: true,
-    // type: "dropdown",
-    // values: [
-    //   "Dr. Rudra Pratap Devnath",
-    //   "Dr. Anwarul Azim",
-    //   "Dr. Abu Nowshad Chowdhury",
-    //   ,
-    //   "Mr. Nihad Karim Chowdhury",
-    //   "Dr. Mohammad Osiur Rahman",
-    //   "Dr. Rashed Mustafa",
-    //   "Dr. Mohammad Khairul Islam",
-    //   "Dr. Kazi Ashrafuzzaman",
-    //   "Mr. Mohammad Rokan UddinFaruque",
-    //   "Mrs. Nasrin Sultana",
-    //   "Dr. Asaduzzaman",
-    //   "Mr. H.S. Faruq Alam",
-    //   "Dr. Mohammed Hanif Siddique",
-    //   "Dr. Mohammed Abdur Rauf",
-    // ],
   },
   {
     col: "role",
@@ -52,6 +36,8 @@ const tableCols = [
   {
     col: "year",
     type: "number",
+    regex: "^\\d{4}$",
+    regexMessage: "e.g. 2023",
     required: true,
   },
   {
@@ -66,25 +52,17 @@ const tableCols = [
 const FormExamCommittee = () => {
   const programOptions = ["BSc", "MSc"];
   return (
-    <div className="flex h-full w-full justify-center text-center">
-      <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-        <div className="mb-8 mt-8">
-          {" "}
-          {/* committee information*/}
-          <div>
-            <span className="text-xl sm:text-2xl block">
-              Committee information
-            </span>
-          </div>
-        </div>
-        <div>
-          <Tablenew
-            tableCols={tableCols}
-            tableName={"Exam_Committee"}
-            loadCondition={[]}
-          ></Tablenew>
-        </div>
-      </form>
+    <div className="">
+      <div className="mb-8  mt-8">
+        <span className="text-xl sm:text-2xl block">Committee information</span>
+      </div>
+      <div>
+        <Tablenew
+          tableCols={tableCols}
+          tableName={"Exam_Committee"}
+          loadCondition={[]}
+        ></Tablenew>
+      </div>
     </div>
   );
 };

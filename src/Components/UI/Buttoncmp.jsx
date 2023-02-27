@@ -19,18 +19,21 @@ const buttonstyle = {
       default: "bg-cyan-900 text-cyan-50 active:bg-cyan-800",
       hover: "hover:bg-cyan-700",
       focus: "focus:ring focus:ring-cyan-900 ",
+      active: "text-cyan-900 bg-slate-300",
     },
     secondary: {
       icon: "text-cyan-700 active:bg-cyan-100",
       default: "border-2 border-cyan-700 text-cyan-700",
       hover: "hover:bg-cyan-50",
       focus: "focus:ring focus:ring-cyan-200",
+      active: "text-cyan-900 bg-slate-300",
     },
     simple: {
       icon: "",
       default: "text-cyan-900 shadow-none active:ring-cyan-800",
       hover: "hover:bg-slate-300",
       focus: "focus:bg-cyan-900 focus:text-cyan-100 focus:ring-cyan-900",
+      active: "text-cyan-900 bg-slate-300",
     },
   },
   dangerous: {
@@ -39,24 +42,27 @@ const buttonstyle = {
       default: "bg-red-900 text-red-50 active:bg-red-800",
       hover: "hover:bg-red-700",
       focus: "focus:ring focus:ring-red-900",
+      active: "text-cyan-900 bg-slate-300",
     },
     secondary: {
       icon: "text-red-700",
       default: "border-2 border-red-700 text-red-700 active:bg-red-100",
       hover: "hover:bg-red-50",
       focus: "focus:ring focus:ring-red-100",
+      active: "text-cyan-900 bg-slate-300",
     },
     simple: {
       icon: "",
       default: "text-red-900 shadow-none active:ring-red-800",
       hover: "hover:bg-red-900 hover:text-red-100",
       focus: "focus:bg-red-900 focus:text-red-100",
+      active: "text-cyan-900 bg-slate-300",
     },
   },
 };
 
 const Buttoncmp = (prop) => {
-  const { label, type, variant, size, onClick } = prop;
+  const { label, type, variant, size, onClick, isActive } = prop;
   let buttonVariant =
     buttonstyle.initial +
     " " +
@@ -78,6 +84,9 @@ const Buttoncmp = (prop) => {
   }
   iconVariant += " " + btv.icon;
   buttonVariant += " " + btv.default + " " + btv.hover + " " + btv.focus;
+  if (isActive) {
+    buttonVariant += " " + btv.active;
+  }
 
   // console.log(buttonVariant);
   return (

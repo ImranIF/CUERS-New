@@ -8,11 +8,15 @@ const tablecols = [
   {
     col: "evaluator_id",
     type: "number",
+    regex: "^\\d{4}$",
+    regexMessage: "e.g. 1013",
     required: true,
   },
   {
     col: "evaluator_name",
     type: "text",
+    regex: "^[A-Za-z .]+$",
+    regexMessage: "e.g. Dr. Rudra Pratap Deb Nath",
     required: true,
   },
   {
@@ -53,7 +57,8 @@ const tablecols = [
   {
     col: "phone_no",
     type: "tel",
-    // [0-9]
+    regex: "^\\d{11}$",
+    regexMessage: "e.g. 01234567892",
     required: true,
   },
   {
@@ -64,26 +69,21 @@ const tablecols = [
   },
 ];
 const ManageEvaluators = (prop) => {
-
   const dosomething = (e) => {
     e.preventDefault();
   };
   return (
-    <div className="flex h-full w-full justify-center text-center">
-      <form action="" className="w-9/12 min-w-fit max-w-4xl p-2 my-4">
-        <div className="mb-8 mt-8">
-          <span className="text-xl sm:text-2xl block">
-            Manage Evaluators
-          </span>
-        </div>
-        <Tablenew tableCols={tablecols} loadCondition={[]} tableName="Evaluator"></Tablenew>
-        {/* <Buttoncmp
-          type="submit"
-          label="Submit"
-          variant="stpr"
-          onClick={dosomething}
-        ></Buttoncmp> */}
-      </form>
+    <div>
+      <div className="mb-8 mt-8">
+        <span className="text-xl sm:text-2xl block">Manage Evaluators</span>
+      </div>
+      <div>
+        <Tablenew
+          tableCols={tablecols}
+          loadCondition={[]}
+          tableName="Evaluator"
+        ></Tablenew>
+      </div>
     </div>
   );
 };
