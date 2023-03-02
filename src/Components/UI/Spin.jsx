@@ -1,8 +1,12 @@
 import React from "react";
 
-const Spin = () => {
+const Spin = (prop) => {
+  const { text } = prop;
   return (
-    <div role="status" className="w-full flex justify-center items-center gap-2">
+    <div
+      role="status"
+      className="w-full flex justify-center items-center gap-2"
+    >
       <svg
         aria-hidden="true"
         className="inline w-8 h-8 mr-2 text-slate-300 animate-spin dark:text-slate-600 fill-cyan-700 dark:fill-gray-300"
@@ -19,7 +23,7 @@ const Spin = () => {
           fill="currentFill"
         />
       </svg>
-      <span className="text-cyan-700 text-lg">Loading</span>
+      <span className="text-cyan-700 text-lg">{text ? text : "Loading"}</span>
     </div>
   );
 };

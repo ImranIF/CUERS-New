@@ -9,7 +9,7 @@ import { StatusContext } from "./StatusContext";
 const TableCell = (prop) => {
   const { col, row, isActive, onActive, onDelete, id, pvalue, onUpdate } = prop;
   const { message, setStatus } = useContext(StatusContext);
-  const [value, setValue] = useState(pvalue ? pvalue : "");
+  const [value, setValue] = useState(pvalue !== undefined ? pvalue : "");
   const [input, showInput] = useState(false);
   const [valid, setValid] = useState(true);
   const regExp = new RegExp(col.regex && col.regex);

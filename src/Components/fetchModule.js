@@ -3,8 +3,10 @@ export const fetchData = async (tableName, url, cols, loadCondition, query) => {
   const getTableInfo = JSON.parse(sessionStorage.getItem("tableInfo"));
 
   if (loadCondition.length > 0) {
+    // console.log("At fetch loadCondition", loadCondition);
+    // console.log("At fetch getTableInfo: ", getTableInfo);
     let dataTypes = getTableInfo[tableName]["dataTypes"];
-    console.log("Data types: ", dataTypes);
+    // console.log("Data types: ", dataTypes);
     for (let i = 0; i < loadCondition.length; i++) {
       console.log("Load condition: ", Object.keys(loadCondition[i])[0]);
       let key = Object.keys(loadCondition[i])[0];

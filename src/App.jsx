@@ -33,7 +33,8 @@ import { StatusContext } from "./Components/UI/StatusContext";
 import ViewBillForm from "./Components/Dashboard/Evaluator/ViewBillForm";
 import CourseInSemesterExam from "./Components/Dashboard/CEC/CourseInSemesterExam";
 import Spin from "./Components/UI/Spin";
-import { GenerateActivityPDF } from "../../../../../../home/rohit/Doings/Web/CUERS-New/src/Components/Dashboard/CEC/GenerateActivityPDF";
+import { GenerateActivityPDF } from "../../../../../../home/rohit/Doings/Web/CUERS-New/src/Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF";
+import { fetchData } from "./Components/fetchModule";
 function App() {
   const navigate = useNavigate();
 
@@ -132,6 +133,23 @@ function App() {
               console.log(tableInfo);
               sessionStorage.setItem("tableInfo", JSON.stringify(tableInfo));
             })().then(() => {
+              (async () => {
+                let evaluatorInfo = await fetchData(
+                  "Evaluator",
+                  "processData",
+                  undefined,
+                  [
+                    {
+                      evaluator_id: sessionStorage.getItem("evaluator_id"),
+                    },
+                  ],
+                  undefined
+                );
+                sessionStorage.setItem(
+                  "evaluatorInfo",
+                  JSON.stringify(evaluatorInfo[0])
+                );
+              })();
               if (logInfoRef.current.role == "Chairman") {
                 console.log("Here: ", sessionStorage.getItem("tableInfo"));
                 navigate("/dashboard/chairman");
