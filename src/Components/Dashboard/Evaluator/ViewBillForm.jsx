@@ -10,8 +10,8 @@ const ViewBillForm = () => {
   let Bill = [
     {
       "activity_type_id": 1,
-      "sector_or_program": "Honours",
-      "factor": "Half/Full part",
+      "sector_or_program": "অনার্স",
+      "factor": "অর্ধ/পূর্ণ",
       "front": 1,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
@@ -19,24 +19,24 @@ const ViewBillForm = () => {
     },
     {
       "activity_type_id": 1,
-      "sector_or_program": "Lab",
-      "factor": "No of exams",
+      "sector_or_program": "ব্যবহারিক",
+      "factor": "পরীক্ষার সংখ্যা",
       "front": 1,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 1,
-      "sector_or_program": "Tutorial",
-      "factor": "No of exams",
+      "sector_or_program": "টিউটোরিয়াল",
+      "factor": "পরীক্ষার সংখ্যা",
       "front": 1,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 1,
-      "sector_or_program": "Terminal",
-      "factor": "No of exams",
+      "sector_or_program": "টার্মিনাল",
+      "factor": "পরীক্ষার সংখ্যা",
       "front": 1,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
@@ -44,229 +44,221 @@ const ViewBillForm = () => {
     },
     {
       "activity_type_id": 3,
-      "sector_or_program": "All programs",
-      "factor": "No of members",
+      "sector_or_program": "সব খাতসমূহ",
+      "factor": "সদস্য সংখ্যা",
       "front": 2, "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 2,
-      "sector_or_program": "Honours",
-      "factor": "Half/Full part",
+      "sector_or_program": "অনার্স",
+      "factor": "অর্ধ/পূর্ণ",
       "front": 3, "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 2,
-      "sector_or_program": "Lab",
-      "factor": "No of exams",
+      "sector_or_program": "ব্যবহারিক",
+      "factor": "পরীক্ষার সংখ্যা",
       "front": 3, "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 2,
-      "sector_or_program": "Tutorial",
-      "factor": "No of exams",
-      "front": 3,
-      "evaluator_id": sessionStorage.getItem("evaluator_id"),
-      "semester_no": sessionStorage.getItem("semester_no")
-    },
-    {
-      "activity_type_id": 2,
-      "sector_or_program": "Tutorial",
-      "factor": "No of exams",
+      "sector_or_program": "টিউটোরিয়াল",
+      "factor": "পরীক্ষার সংখ্যা",
       "front": 3,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 10,
-      "sector_or_program": "By computer",
-      "factor": "No of pages",
+      "sector_or_program": "কম্পিউটার",
+      "factor": "পৃষ্ঠার সংখ্যা",
       "front": 4,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 10,
-      "sector_or_program": "By hand",
-      "factor": "No of pages",
+      "sector_or_program": "হাতে লেখা",
+      "factor": "পৃষ্ঠার সংখ্যা",
       "front": 4,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 8,
-      "sector_or_program": "Honours",
-      "factor": "No of students",
+      "sector_or_program": "অনার্স",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 13,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 11,
-      "sector_or_program": "By computer",
-      "factor": "No of pages",
+      "sector_or_program": "কম্পিউটার",
+      "factor": "পৃষ্ঠার সংখ্যা",
       "front": 5,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 11,
-      "sector_or_program": "By hand",
-      "factor": "No of pages",
+      "sector_or_program": "হাতে লেখা",
+      "factor": "পৃষ্ঠার সংখ্যা",
       "front": 5,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 4,
-      "sector_or_program": "Honours",
-      "factor": ["No of students", "Half/full part"],
+      "sector_or_program": "অনার্স",
+      "factor": ["ছাত্রের সংখ্যা", "অর্ধ/পূর্ণ"],
       "front": 6,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 4,
-      "sector_or_program": "Lab",
-      "factor": "No of students",
+      "sector_or_program": "ব্যবহারিক",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 6,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 4,
-      "sector_or_program": "Tutorial",
-      "factor": ["No of students", "No of exams"],
+      "sector_or_program": "টিউটোরিয়াল",
+      "factor": ["ছাত্রের সংখ্যা", "পরীক্ষার সংখ্যা"],
       "front": 6,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 4,
-      "sector_or_program": "Terminal",
-      "factor": ["No of students", "No of exams"],
+      "sector_or_program": "টার্মিনাল",
+      "factor": ["ছাত্রের সংখ্যা", "পরীক্ষার সংখ্যা"],
       "front": 6,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 4,
-      "sector_or_program": "Presentation",
-      "factor": ["No of students", "No of exams"],
+      "sector_or_program": "প্রসেন্টেশন",
+      "factor": ["ছাত্রের সংখ্যা", "পরীক্ষার সংখ্যা"],
       "front": 6,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 4,
-      "sector_or_program": "Scrutiny",
-      "factor": "No of students",
+      "sector_or_program": "স্ক্রুটিনী",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 6,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 6,
-      "sector_or_program": "Honours",
-      "factor": "No of students",
+      "sector_or_program": "অনার্স",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 7,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 7,
-      "sector_or_program": "Industrial tour",
-      "factor": "No of students",
+      "sector_or_program": "ইন্ডাস্ট্রিয়াল ট্যুর",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 8,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 7,
-      "sector_or_program": "Notebook",
-      "factor": "No of students",
+      "sector_or_program": "ব্যবহারিক নোট বুক",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 8,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 7,
-      "sector_or_program": "Project report",
-      "factor": "No of students",
+      "sector_or_program": "প্রজেক্ট রিপোর্ট",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 8,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 9,
-      "sector_or_program": "Honours (1st year to 3rd year)",
-      "factor": "No of students",
+      "sector_or_program": "অনার্স (১ম-৩য় বর্ষ)",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 10,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 9,
-      "sector_or_program": "Honours (4th year)",
-      "factor": "No of students",
+      "sector_or_program": "অনার্স (৪র্থ বর্ষ)",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 10,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 12,
-      "sector_or_program": "Honours (1st year to 3rd year)",
-      "factor": "No of students",
+      "sector_or_program": "অনার্স (১ম-৩য় বর্ষ)",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 11,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 12,
-      "sector_or_program": "Honours (4th year)",
-      "factor": "No of Students",
+      "sector_or_program": "অনার্স (৪র্থ বর্ষ)",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 11,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 13,
-      "sector_or_program": "Honours (1st year to 3rd year)",
-      "factor": "No of students",
+      "sector_or_program": "অনার্স (১ম-৩য় বর্ষ)",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 12,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 13,
-      "sector_or_program": "Honours (4th year)",
-      "factor": "No of Students",
+      "sector_or_program": "অনার্স (৪র্থ বর্ষ)",
+      "factor": "ছাত্রের সংখ্যা",
       "front": 12,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 14,
-      "sector_or_program": "All Programs",
-      "factor": "No of members",
+      "sector_or_program": "সব খাতসমূহ",
+      "factor": "সদস্য সংখ্যা",
       "front": 14,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 15,
-      "sector_or_program": "All Programs",
-      "factor": "No of members",
+      "sector_or_program": "সব খাতসমূহ",
+      "factor": "সদস্য সংখ্যা",
       "front": 15,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
     },
     {
       "activity_type_id": 16,
-      "sector_or_program": "All Programs",
-      "factor": "No of exams",
+      "sector_or_program": "সব খাতসমূহ",
+      "factor": "পরীক্ষার সংখ্যা",
       "front": 16,
       "evaluator_id": sessionStorage.getItem("evaluator_id"),
       "semester_no": sessionStorage.getItem("semester_no")
@@ -314,4 +306,3 @@ const response = await fetch(
 };
 
 export default ViewBillForm;
-
