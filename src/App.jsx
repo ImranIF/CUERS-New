@@ -33,7 +33,7 @@ import { StatusContext } from "./Components/UI/StatusContext";
 import ViewBillForm from "./Components/Dashboard/Evaluator/ViewBillForm";
 import CourseInSemesterExam from "./Components/Dashboard/CEC/CourseInSemesterExam";
 import Spin from "./Components/UI/Spin";
-import { GenerateActivityPDF } from "../../../../../../home/rohit/Doings/Web/CUERS-New/src/Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF";
+import { GenerateActivityPDF } from "./Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF";
 import { fetchData } from "./Components/fetchModule";
 function App() {
   const navigate = useNavigate();
