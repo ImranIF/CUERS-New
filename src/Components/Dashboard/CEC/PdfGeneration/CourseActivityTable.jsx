@@ -37,7 +37,7 @@ const CourseActivityTable = (prop) => {
             <View style={styles.tableRow}>
               {Object.values(item).map((value) => (
                 <View style={[styles.tableCol, { width: colWidth }]}>
-                  <Text style={styles.tableCell}>{value}</Text>
+                  <Text style={styles.tableCell}>{`${value} `}</Text>
                 </View>
               ))}
             </View>

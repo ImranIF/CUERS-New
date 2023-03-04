@@ -15,6 +15,25 @@ import ManageEvaluators from "./Chairman/ManageEvaluators";
 import { Route, Routes, useNavigate } from "react-router";
 import { Outlet } from "react-router";
 import { DashboardContent } from "../Dashboard/DashboardContent";
+import i18n from "i18next";
+import { useTranslation, initReactI18next } from "react-i18next";
+import Backend from 'i18next-http-backend';
+i18n
+  .use(Backend) // passes i18n down to react-i18next
+  .use(initReactI18next)
+  .init({
+    // the translations
+    // (tip move them in a JSON file and import them,
+    // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
+    lng: 'bn', // if you're using a language detector, do not define the lng option
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+    },
+    backend: {
+      loadPath: "../../locales/{{lng}}/bn.json",
+    }
+  });
 const menus = [
   {
     person: "Chairman",
@@ -35,7 +54,7 @@ const menus = [
         menuText: "Manage semester activity",
         route: "manage-semester-activity",
       },
-      { menuText: "Course in Semester Exam", route: "course-in-semester-exam" },
+      // { menuText: "Course in Semester Exam", route: "course-in-semester-exam" },
       { menuText: "Manage edit requests", route: "manage-edit-requests" },
       { menuText: "Generate activity PDF", route: "generate-activity-pdf" },
     ],
@@ -47,6 +66,7 @@ const menus = [
 ];
 
 const Dashboard = (prop) => {
+ const { t } = useTranslation();
   const { userInfo, showStatus } = prop;
   const [active, setActive] = useState("");
   const onLogOut = () => {
@@ -92,10 +112,10 @@ const Dashboard = (prop) => {
                 return (
                   <div className="mb-3" key={pIndex + cindex}>
                     <Buttoncmp
-                      label={option.menuText}
+                      label={t(option.menuText.toLowerCase())}
                       variant="stsi"
                       size="full"
-                      value={option.menuText}
+                      value={t(option.menuText)}
                       onClick={() => clickme(option)}
                       isActive={active === option.route}
                     >

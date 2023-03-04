@@ -15,10 +15,16 @@ import { useState } from "react";
 import CourseActivityTable from "./CourseActivityTable";
 import Spin from "../../../UI/Spin";
 import SemesterActivityTable from "./SemesterActivityTable";
+import '../../../../Styles/fonts.css';
+import HindSiliguri from '../../../../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf'
 
 Font.registerHyphenationCallback((word) => {
   // Return entire word as unique part
   return [word];
+});
+Font.register({
+  family: 'HindSiliguri',
+  src: HindSiliguri,
 });
 const styles = StyleSheet.create({
   text: {
@@ -27,7 +33,7 @@ const styles = StyleSheet.create({
   pageCol: {
     flexDirection: "col",
     padding: "40px 40px 40px 40px",
-    fontFamily: "Helvetica",
+    fontFamily: "HindSiliguri",
     fontSize: "12px",
   },
   titleContainer: {
@@ -42,6 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: "10px",
   },
   table: {
+    fontFamily: 'HindSiliguri',
     display: "table",
     width: "auto",
     borderStyle: "solid",
@@ -103,7 +110,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: "50px",
-    height: "70px",
+    height: "65px",
   },
   spacer: {
     height: "30px",
@@ -178,7 +185,17 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
         }
       );
       const result = await response.json();
+result && result.map((item) => {
+                              for (const key in item) {
+                const englishInteger = item[key];
+                if(new RegExp("^\\d+(\\.\\d+)?$").test(englishInteger && englishInteger.toString())){
+const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
+                  return '০১২৩৪৫৬৭৮৯'[match];
+                });
+                item[key] = banglaInteger;
+                }}});
       if (to_get === "courseActivities") {
+
         setCourseData((prevData) => [
           ...prevData,
           { structure: activity, data: result },
@@ -218,7 +235,9 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
   }, [activities]);
   // console.log("Data here", data);
   const evaluatorInfo = JSON.parse(sessionStorage.getItem("evaluatorInfo"));
-  console.log("Activities: ", activities);
+  // console.log("Activities: ", activities);
+  console.log("Course data", courseData);
+  console.log("Semester data", semesterData);
   if (loading) {
     return (
       <div>
@@ -236,10 +255,9 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                 <View style={styles.topPart1}>
                   <View style={styles.leftAligned}>
                     <Text style={styles.text}>
-                      Dept. of Computer Science & Engineering {"\n"} University
-                      of Chittagong, Chittagong-4331{" \n"}
-                      Email: office.cse@cu.ac.bd {"\n"}
-                      Web : www.cu.ac.bd/cse/
+                      কম্পিউটার বিজ্ঞান ও প্রকৌশল বিভাগ {"\n"} চট্টগ্রাম বিশ্ববিদ্যালয়, চট্টগ্রাম-৪৩৩১{" \n"}
+                      ইমেইল: office.cse@cu.ac.bd {"\n"}
+                      ওয়েব : www.cu.ac.bd/cse/
                     </Text>
                   </View>
                   <View>
@@ -250,32 +268,33 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                   </View>
                   <View style={styles.rightAligned}>
                     <Text style={styles.text}>
-                      Phone: 88(031)716552,716558, {"\n"}{" "}
-                      2606001-10,726311-4,2606015-27 {"\n"}
-                      Extension: 4297(office) {"\n"}
-                      Fax: 2606014, 2606145
+                      ফোন: ৮৮(০৩১)৭১৬৫৫২,৭১৬৫৫৮, {"\n"}{" "}
+                      ২৬০৬০০১-১০,৭২৬৩১১-৪,২৬০৬০১৫-২৭ {"\n"}
+                      এক্সটেনশন: ৪২৯৭(অফিস) {"\n"}
+                      ফ্যাক্স: ২৬০৬০১৪,২৬০৬১৪৫
                     </Text>
                   </View>
                 </View>
                 <View style={styles.topPart2}>
                   <Text style={styles.leftAligned}>
-                    Memo: CSE/430430/264/1290/
+                    স্মারকঃ সিএসই/৪৩০৪৩০/২৬৪/১২৯০/
                   </Text>
                   <Text style={styles.rightAligned}>{formattedDate}</Text>
                 </View>
               </View>
               <View style={styles.applicationBody}>
                 <Text>
-                  To {"\n"}
-                  Exam Controller {"\n"}
-                  University of Chittagong {"\n"}
+                  বরাবর {"\n"}
+                  পরীক্ষা নিয়ন্ত্রক
+ {"\n"}
+                  চট্টগ্রাম বিশ্ববিদ্যালয় {"\n"}
                   {"\n"} {"\n"}
-                  Sir,
+                  জনাব,
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
-                  Thank you
+                  ধন্যবাদান্তে
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}({evaluatorInfo.evaluator_name}) {"\n"}
                   Chairman {"\n"}
@@ -284,11 +303,11 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                   committee {"\n"}
                   {evaluatorInfo.dept_name} {"\n"}
                   {evaluatorInfo.university_name} {"\n"}
-                  Phone: {evaluatorInfo.phone_no} {"\n"}
+                 ফোন: {evaluatorInfo.phone_no} {"\n"}
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
-                  Attachments: {"\n"}
-                  1. Examination Statement
+                  সংযুক্তি: {"\n"}
+                  ১. পরীক্ষার বিবৃতি
                 </Text>
               </View>
             </Page>
@@ -312,16 +331,16 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                   {examCommittee.map((item) => (
                     <View style={styles.tableRow}>
                       <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>{item.Name}</Text>
+                        <Text style={styles.tableCell}>{`${item.Name} `}</Text>
                       </View>
                       <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>{item.Designation}</Text>
+                        <Text style={styles.tableCell}>{`${item.Designation} `}</Text>
                       </View>
                       <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>{item.Address}</Text>
+                        <Text style={styles.tableCell}>{`${item.Address} `}</Text>
                       </View>
                       <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>{item.Role}</Text>
+                        <Text style={styles.tableCell}>{`${item.Role} `}</Text>
                       </View>
                     </View>
                   ))}
