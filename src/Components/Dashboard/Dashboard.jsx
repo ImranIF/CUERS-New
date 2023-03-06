@@ -17,7 +17,7 @@ import { Outlet } from "react-router";
 import { DashboardContent } from "../Dashboard/DashboardContent";
 import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
-import Backend from 'i18next-http-backend';
+import Backend from "i18next-http-backend";
 i18n
   .use(Backend) // passes i18n down to react-i18next
   .use(initReactI18next)
@@ -25,14 +25,14 @@ i18n
     // the translations
     // (tip move them in a JSON file and import them,
     // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
-    lng: 'bn', // if you're using a language detector, do not define the lng option
-    fallbackLng: 'en',
+    lng: "bn", // if you're using a language detector, do not define the lng option
+    fallbackLng: "en",
     interpolation: {
-      escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+      escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
     backend: {
       loadPath: "../../locales/{{lng}}/bn.json",
-    }
+    },
   });
 const menus = [
   {
@@ -54,19 +54,24 @@ const menus = [
         menuText: "Manage semester activity",
         route: "manage-semester-activity",
       },
-      // { menuText: "Course in Semester Exam", route: "course-in-semester-exam" },
       { menuText: "Manage edit requests", route: "manage-edit-requests" },
       { menuText: "Generate activity PDF", route: "generate-activity-pdf" },
     ],
   },
   {
     person: "Evaluator",
-    activity: [{ menuText: "View Bill forms", route: "view-bill-form" }],
+    activity: [
+      { menuText: "View Bill forms", route: "view-bill-form" },
+      {
+        menuText: "Generate bill pdf",
+        route: "generate-bill-pdf",
+      },
+    ],
   },
 ];
 
 const Dashboard = (prop) => {
- const { t } = useTranslation();
+  const { t } = useTranslation();
   const { userInfo, showStatus } = prop;
   const [active, setActive] = useState("");
   const onLogOut = () => {
@@ -112,7 +117,7 @@ const Dashboard = (prop) => {
                 return (
                   <div className="mb-3" key={pIndex + cindex}>
                     <Buttoncmp
-                      label={t(option.menuText.toLowerCase())}
+                      label={t(option.menuText)}
                       variant="stsi"
                       size="full"
                       value={t(option.menuText)}

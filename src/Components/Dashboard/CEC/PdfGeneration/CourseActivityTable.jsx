@@ -19,8 +19,7 @@ const CourseActivityTable = (prop) => {
     <View style={styles.aTable}>
       <View style={styles.titleContainer}>
         <Text style={styles.title1}>
-          {activity.structure.activity_name} -{" "}
-          {activity.structure.sector_or_program}
+          {`${activity.structure.activity_name} - ${activity.structure.sector_or_program} `}
         </Text>
       </View>
       <View style={styles.table}>

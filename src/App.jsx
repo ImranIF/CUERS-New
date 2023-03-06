@@ -35,6 +35,7 @@ import CourseInSemesterExam from "./Components/Dashboard/CEC/CourseInSemesterExa
 import Spin from "./Components/UI/Spin";
 import { GenerateActivityPDF } from "./Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF";
 import { fetchData } from "./Components/fetchModule";
+import BillPdf from "./Components/Dashboard/Evaluator/BillPdf";
 function App() {
   const navigate = useNavigate();
 
@@ -284,6 +285,10 @@ function App() {
               <Route
                 element={<ViewBillForm></ViewBillForm>}
                 path="view-bill-form"
+              ></Route>
+              <Route
+                element={<BillPdf></BillPdf>}
+                path="generate-bill-pdf"
               ></Route>
             </Route>
           </Route>

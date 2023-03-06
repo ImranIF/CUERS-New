@@ -1,37 +1,55 @@
-import React from 'react'
-import Spin from '../../UI/Spin';
+import React from "react";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Font,
+} from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
-import { StyleSheet } from '@react-pdf/renderer';
-import { Page } from '@react-pdf/renderer';
-import { View } from '@react-pdf/renderer';
-import { Text } from '@react-pdf/renderer';
-const tableCols = [
-	{
-		col: "activity_type_id",
-	},
-	{
-		col: "category",
-	},
-	{
-		col: "course_id",
-	},
-	{
-		col: "factor",
-	},
-	{
-		col: "quantity",
-	},
+import { fetchData } from "../../fetchModule";
+import { useEffect } from "react";
+import { useState } from "react";
+import Spin from "../../UI/Spin";
+import "../../../Styles/fonts.css";
+import HindSiliguriRegular from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf";
+import HindSiliguriBold from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Bold.ttf";
+import HindSiliguriSemi from "../../../assets/Fonts/HindSiliguri/HindSiliguri-SemiBold.ttf";
+import HindSiliguriMed from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Medium.ttf";
+import { toBanglaNumber } from "../../../Modules/toBanglaNumber";
+import activityList from "../../Resources/Data/ActivityList";
 
-	];
+Font.registerHyphenationCallback((word) => {
+  // Return entire word as unique part
+  return [word];
+});
+Font.register({
+  family: "HindSiliguriRegular",
+  src: HindSiliguriRegular,
+});
+Font.register({
+  family: "HindSiliguriBold",
+  src: HindSiliguriBold,
+});
+Font.register({
+  family: "HindSiliguriMed",
+  src: HindSiliguriMed,
+});
+Font.register({
+  family: "HindSiliguriSemi",
+  src: HindSiliguriSemi,
+});
 const styles = StyleSheet.create({
   text: {
     lineHeight: "1.5",
   },
   pageCol: {
     flexDirection: "col",
-    padding: "40px 40px 40px 40px",
-    fontFamily: "Helvetica",
-    fontSize: "12px",
+    padding: "20px 20px 20px 20px",
+    fontFamily: "HindSiliguriRegular",
+    fontSize: "6px",
   },
   titleContainer: {
     display: "flex",
@@ -45,12 +63,13 @@ const styles = StyleSheet.create({
     marginBottom: "10px",
   },
   table: {
+    fontFamily: "HindSiliguriRegular",
     display: "table",
     width: "auto",
     borderStyle: "solid",
     borderColor: "#000000",
-    borderWidth: 1,
-    fontSize: "10px",
+    borderWidth: 0.5,
+    fontSize: "5px",
     borderRightWidth: 0,
     borderBottomWidth: 0,
   },
@@ -69,7 +88,7 @@ const styles = StyleSheet.create({
     width: "25%",
     borderStyle: "solid",
     borderColor: "#000000",
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderLeftWidth: 0,
     borderTopWidth: 0,
   },
@@ -77,8 +96,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "4px",
-    fontSize: 12,
+    padding: "0.5px",
   },
   leftAligned: {
     textAlign: "left",
@@ -88,7 +106,9 @@ const styles = StyleSheet.create({
   },
   topPart: {
     display: "flex",
-    flexDirection: "column",
+    position: "relative",
+    flexDirection: "row",
+    justifyContent: "center",
   },
   topPart1: {
     display: "flex",
@@ -105,8 +125,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   logo: {
-    width: "50px",
-    height: "70px",
+    width: "30px",
+    height: "45px",
   },
   spacer: {
     height: "30px",
@@ -122,42 +142,191 @@ const styles = StyleSheet.create({
     marginBottom: "40px",
   },
 });
+
 const BillPdf = (prop) => {
-	let {billData} = prop;
+  const keys = [
+    ["ক্রমিক নং ", "8%"],
+    ["কাজের নাম ", "20%"],
+    ["কোর্স নং ", "12%"],
+    ["খাতা/ছাত্রের সংখ্যা ", "12%"],
+    ["কত ঘণ্টার পরীক্ষা ", "12%"],
+    ["মোট দিন/সদস্য সংখ্যা ", "12%"],
+    ["অর্ধ/পূর্ণ পত্র ", "12%"],
+    ["টাকার পরিমাণ ", "12%"],
+  ];
+  const billData = JSON.parse(sessionStorage.getItem("billItem"));
+  const evaluator = JSON.parse(sessionStorage.getItem("evaluatorInfo"));
+  return (
+    <div className="w-full border border-slate-900 h-full">
+      <PDFViewer className="w-full min-h-full">
+        <Document>
+          <Page size="A5" style={styles.pageCol}>
+            <View style={[styles.topPart, { marginBottom: "10px" }]}>
+              // for image
+              <View>
+                <Image
+                  style={styles.logo}
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/8/86/University_of_Chittagong_logo.svg/225px-University_of_Chittagong_logo.svg.png"
+                ></Image>
+              </View>
+              <View
+                style={{
+                  position: "absolute",
+                  right: "1px",
+                  width: "100%",
+                  textAlign: "right",
+                  margin: "auto",
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={[styles.text]}>
+                  রেজিস্টারের পৃষ্ঠা নংঃ {"\n"}
+                  পরীক্ষকের ক্রমিক নংঃ {toBanglaNumber(evaluator.evaluator_id)}
+                </Text>
+              </View>
+            </View>
+            <View style={{}}>
+              <Text
+                style={{
+                  fontSize: "12px",
+                  fontFamily: "HindSiliguriSemi",
+                  textAlign: "center",
+                }}
+              >
+                পরীক্ষা সংক্রান্ত কাজের পারিতোষিক বিল ফরম{" "}
+              </Text>
+              <Text style={{ fontSize: "6px" }}>
+                (বিল সংশ্লিষ্ট পরীক্ষা কমিটির চেয়ারম্যানের মাধ্যমে পরীক্ষা
+                অনুষ্ঠিত হওয়ার এক বছরের মধ্যে পরীক্ষা নিয়ন্ত্রণ দপ্তরে দাখিল
+                করতে হবে। প্রতি পরীক্ষার জন্য পৃথক পৃথকভাবে বিল দাখিল করতে হবে।)
+              </Text>
+            </View>
+            <View>
+              <View style={styles.table}>
+                <View style={styles.tableRow}>
+                  <View style={[styles.tableCol, { width: "50%" }]}>
+                    <Text style={styles.tableCell}>
+                      পরীক্ষকের নাম(বাংলায়) : {`${evaluator.evaluator_name} `}
+                    </Text>
+                  </View>
+                  <View style={[styles.tableCol, { width: "50%" }]}>
+                    <Text style={styles.tableCell}>বিষয় : {` `}</Text>
+                  </View>
+                </View>
+                <View style={styles.tableRow}>
+                  <View style={[styles.tableCol, { width: "50%" }]}>
+                    <Text style={styles.tableCell}>
+                      ইংরেজি(বড় অক্ষরে) : {`${evaluator.evaluator_name} `}
+                    </Text>
+                  </View>
+                  <View style={[styles.tableCol, { width: "50%" }]}>
+                    <Text style={styles.tableCell}>পরীক্ষার নাম : {` `}</Text>
+                  </View>
+                </View>
+                <View style={styles.tableRow}>
+                  <View style={[styles.tableCol, { width: "50%" }]}>
+                    <Text style={[styles.tableCell, {}]}>
+                      পদবী, পূর্ণ ঠিকানা ও মোবাইল নম্বর :{" "}
+                      {`${
+                        evaluator.designation +
+                        ", " +
+                        evaluator.dept_name +
+                        ", " +
+                        evaluator.university_name +
+                        ", " +
+                        evaluator.phone_no
+                      } `}
+                    </Text>
+                  </View>
+                  <View style={[styles.tableCol, { width: "50%" }]}>
+                    <View style={styles.tableRow}>
+                      <View
+                        style={[
+                          styles.tableCol,
+                          {
+                            width: "100%",
+                            border: "none",
+                            borderBottom: "0.5px",
+                          },
+                        ]}
+                      >
+                        <Text style={styles.tableCell}>
+                          পরীক্ষার বৎসর : {` `}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View
+                        style={[
+                          styles.tableCol,
+                          { width: "100%", border: "none" },
+                        ]}
+                      >
+                        <Text style={styles.tableCell}>
+                          পরীক্ষা অনুষ্ঠানের তারিখ : {` `}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            /// activity table
+            <View style={[styles.table, { marginTop: "5px" }]}>
+              // table headers
+              <View style={styles.tableRow}>
+                {keys.map((item, index) => (
+                  <View style={[styles.tableCol, { width: item[1] }]}>
+                    <Text style={styles.tableCell}>{item[0]}</Text>
+                  </View>
+                ))}
+              </View>
+              // table body
+              {activityList.map((item) => {
+                const matchedBill = billData.filter(
+                  (bill) => bill.front === item.no
+                );
+                return (
+                  <View style={styles.tableRow}>
+                    <View style={[styles.tableCol, { width: "8%" }]}>
+                      <Text style={styles.tableCell}>
+                        {new RegExp("^\\d+\\.\\d$").test(item.no)
+                          ? ""
+                          : toBanglaNumber(item.no)}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.tableCol,
+                        { width: item.noEntry ? "92%" : "20%" },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.tableCell,
+                          {
+                            paddingLeft:
+                              new RegExp("^\\d+\\.\\d$").test(item.no) &&
+                              "12px",
+                          },
+                        ]}
+                      >{`${item.row} `}</Text>
+                    </View>
+                    {/* {
+                      matchedBill && (
 
-	if(billData ===  null || billData === undefined|| billData.length == 0 ){
-		return <Spin text="hang on!"></Spin>
-	}
-	else{
-    let keys = Object.keys(billData[0]);
-    keys.sort();
-    return (
-	<div>
-		<div className='table w-full'>
-      <div className='table-header-group top-0 sticky bg-slate-300'>
-			{
-        <div className='table-row'>{
-
-				keys.map((key) => (
-          <div className=' table-cell p-2 border border-slate-900'>{key}</div>
-        ))
-        }
-        </div>
-			}
-      </div>
-          {
-  billData &&
-    billData.map((item) => (
-      <div className='table-row'>
-        {keys.map((key) => (
-          <div className='table-cell border p-2'>
-            <div>{item[key]}</div>
-          </div>
-        ))}
-      </div>
-    ))}
-	</div>
-  </div>
-);}}
-
+                      )
+                    } */}
+                  </View>
+                );
+              })}
+            </View>
+          </Page>
+        </Document>
+      </PDFViewer>
+    </div>
+  );
+};
 export default BillPdf;

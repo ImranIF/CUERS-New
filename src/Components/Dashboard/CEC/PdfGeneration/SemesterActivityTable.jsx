@@ -19,8 +19,7 @@ const SemesterActivityTable = (prop) => {
     <View style={styles.aTable}>
       <View style={styles.titleContainer}>
         <Text style={styles.title1}>
-          {activity.structure.activity_name} -{" "}
-          {activity.structure.sector_or_program}
+          {`${activity.structure.activity_name} - ${activity.structure.sector_or_program} `}
         </Text>
       </View>
       <View style={styles.table}>
@@ -28,7 +27,7 @@ const SemesterActivityTable = (prop) => {
           {activity &&
             Object.keys(activity.data[0]).map((key) => (
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{key}</Text>
+                <Text style={styles.tableCell}>{`${key} `}</Text>
               </View>
             ))}
         </View>
@@ -37,7 +36,7 @@ const SemesterActivityTable = (prop) => {
             <View style={styles.tableRow}>
               {Object.values(item).map((value) => (
                 <View style={[styles.tableCol, { width: colWidth }]}>
-                  <Text style={styles.tableCell}>{value}</Text>
+                  <Text style={styles.tableCell}>{`${value} `}</Text>
                 </View>
               ))}
             </View>
