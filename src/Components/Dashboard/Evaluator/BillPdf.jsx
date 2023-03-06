@@ -155,6 +155,7 @@ const BillPdf = (prop) => {
     ["টাকার পরিমাণ ", "12%"],
   ];
   const billData = JSON.parse(sessionStorage.getItem("billItem"));
+  console.log(billData);
   const evaluator = JSON.parse(sessionStorage.getItem("evaluatorInfo"));
   return (
     <div className="w-full border border-slate-900 h-full">
@@ -287,41 +288,144 @@ const BillPdf = (prop) => {
               {activityList.map((item) => {
                 const matchedBill = billData.filter(
                   (bill) => bill.front === item.no
-                );
-                return (
-                  <View style={styles.tableRow}>
-                    <View style={[styles.tableCol, { width: "8%" }]}>
-                      <Text style={styles.tableCell}>
-                        {new RegExp("^\\d+\\.\\d$").test(item.no)
-                          ? ""
-                          : toBanglaNumber(item.no)}
-                      </Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.tableCol,
-                        { width: item.noEntry ? "92%" : "20%" },
-                      ]}
-                    >
-                      <Text
+                )[0];
+                // const {
+                //   "কোর্স নং": courseNo,
+                //   "খাতা/ছাত্রের সংখ্যা": nks,
+                //   "কত ঘণ্টার পরীক্ষা": nh,
+                // } = matchedBill[0];
+                // const reduced = { courseNo, nks, nh };
+                //              const keys = [
+                //   ["ক্রমিক নং ", "8%"],
+                //   ["কাজের নাম ", "20%"],
+                //   ["কোর্স নং", "12%"],
+                //   ["খাতা/ছাত্রের সংখ্যা", "12%"],
+                //   ["কত ঘণ্টার পরীক্ষা", "12%"],
+                //   ["মোট দিন/সদস্য সংখ্যা", "12%"],
+                //   ["অর্ধ/পূর্ণ পত্র", "12%"],
+                //   ["টাকার পরিমাণ", "12%"],
+                // ];
+                if (item.noEntry) {
+                  return (
+                    <View style={styles.tableRow}>
+                      <View style={[styles.tableCol, { width: "8%" }]}>
+                        <Text style={styles.tableCell}>
+                          {new RegExp("^\\d+\\.\\d$").test(item.no)
+                            ? ""
+                            : toBanglaNumber(item.no)}
+                        </Text>
+                      </View>
+                      <View
                         style={[
-                          styles.tableCell,
-                          {
-                            paddingLeft:
-                              new RegExp("^\\d+\\.\\d$").test(item.no) &&
-                              "12px",
-                          },
+                          styles.tableCol,
+                          { width: item.noEntry ? "92%" : "20%" },
                         ]}
-                      >{`${item.row} `}</Text>
+                      >
+                        <Text
+                          style={[
+                            styles.tableCell,
+                            {
+                              paddingLeft:
+                                new RegExp("^\\d+\\.\\d$").test(item.no) &&
+                                "12px",
+                            },
+                          ]}
+                        >{`${item.row} `}</Text>
+                      </View>
                     </View>
-                    {/* {
-                      matchedBill && (
-
-                      )
-                    } */}
-                  </View>
-                );
+                  );
+                } else {
+                  return (
+                    <View style={styles.tableRow}>
+                      <View style={[styles.tableCol, { width: "8%" }]}>
+                        <Text style={styles.tableCell}>
+                          {new RegExp("^\\d+\\.\\d$").test(item.no)
+                            ? ""
+                            : toBanglaNumber(item.no)}
+                        </Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "20%" }]}>
+                        <Text
+                          style={[
+                            styles.tableCell,
+                            {
+                              paddingLeft:
+                                new RegExp("^\\d+\\.\\d$").test(item.no) &&
+                                "12px",
+                            },
+                          ]}
+                        >{`${item.row} `}</Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "12%" }]}>
+                        <Text style={styles.tableCell}>
+                          {matchedBill && matchedBill["Course no"]
+                            ? matchedBill["Course no"]
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "12%" }]}>
+                        <Text style={styles.tableCell}>
+                          {matchedBill &&
+                          matchedBill["খাতা/ছাত্রের সংখ্যা/পৃষ্ঠার সংখ্যা"]
+                            ? matchedBill["খাতা/ছাত্রের সংখ্যা/পৃষ্ঠার সংখ্যা"]
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "12%" }]}>
+                        <Text style={styles.tableCell}>
+                          {matchedBill && matchedBill["কত ঘণ্টার পরীক্ষা"]
+                            ? matchedBill["কত ঘণ্টার পরীক্ষা"]
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "12%" }]}>
+                        <Text style={styles.tableCell}>
+                          {matchedBill &&
+                          matchedBill["মোট দিন/সদস্য সংখ্যা/পরীক্ষার সংখ্যা"]
+                            ? matchedBill[
+                                "মোট দিন/সদস্য সংখ্যা/পরীক্ষার সংখ্যা"
+                              ]
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "12%" }]}>
+                        <Text style={styles.tableCell}>
+                          {matchedBill && matchedBill["অর্ধ/পূর্ণ পত্র"]
+                            ? matchedBill["অর্ধ/পূর্ণ পত্র"]
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={[styles.tableCol, { width: "12%" }]}>
+                        <Text style={styles.tableCell}>
+                          {matchedBill && matchedBill["টাকার পরিমাণ"]
+                            ? matchedBill["টাকার পরিমাণ"]
+                            : ""}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                }
               })}
+              <View style={styles.tableRow}>
+                <View
+                  style={[
+                    styles.tableCol,
+                    {
+                      width: "88%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    },
+                  ]}
+                >
+                  <Text style={styles.tableCell}>মোট টাকা কথায় =  </Text>
+                  <Text>মোট টাকা =  </Text>
+                </View>
+                <View style={[styles.tableCol, { width: "12%" }]}>
+                  <Text style={styles.tableCell}> </Text>
+                </View>
+              </View>
             </View>
           </Page>
         </Document>

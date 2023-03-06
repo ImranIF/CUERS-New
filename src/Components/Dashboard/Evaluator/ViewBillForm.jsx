@@ -296,18 +296,20 @@ const ViewBillForm = () => {
       data &&
         data.map((item) => {
           for (const key in item) {
-            const englishInteger = item[key];
-            if (
-              new RegExp("^\\d+(\\.\\d+)?$").test(
-                englishInteger && englishInteger.toString()
-              )
-            ) {
-              const banglaInteger = englishInteger
-                .toString()
-                .replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
-                  return "০১২৩৪৫৬৭৮৯"[match];
-                });
-              item[key] = banglaInteger;
+            if (key !== "front") {
+              const englishInteger = item[key];
+              if (
+                new RegExp("^\\d+(\\.\\d+)?$").test(
+                  englishInteger && englishInteger.toString()
+                )
+              ) {
+                const banglaInteger = englishInteger
+                  .toString()
+                  .replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
+                    return "০১২৩৪৫৬৭৮৯"[match];
+                  });
+                item[key] = banglaInteger;
+              }
             }
           }
         });
