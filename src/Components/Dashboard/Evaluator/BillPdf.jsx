@@ -14,10 +14,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Spin from "../../UI/Spin";
 import "../../../Styles/fonts.css";
-import HindSiliguriRegular from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf";
-import HindSiliguriBold from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Bold.ttf";
-import HindSiliguriSemi from "../../../assets/Fonts/HindSiliguri/HindSiliguri-SemiBold.ttf";
-import HindSiliguriMed from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Medium.ttf";
+import Kalpurush from "../../../assets/Fonts/Kalpurush/Kalpurush.ttf";
 import { toBanglaNumber } from "../../../Modules/toBanglaNumber";
 import activityList from "../../Resources/Data/ActivityList";
 
@@ -26,20 +23,8 @@ Font.registerHyphenationCallback((word) => {
   return [word];
 });
 Font.register({
-  family: "HindSiliguriRegular",
-  src: HindSiliguriRegular,
-});
-Font.register({
-  family: "HindSiliguriBold",
-  src: HindSiliguriBold,
-});
-Font.register({
-  family: "HindSiliguriMed",
-  src: HindSiliguriMed,
-});
-Font.register({
-  family: "HindSiliguriSemi",
-  src: HindSiliguriSemi,
+  family: "Kalpurush",
+  src: Kalpurush,
 });
 const styles = StyleSheet.create({
   text: {
@@ -48,7 +33,7 @@ const styles = StyleSheet.create({
   pageCol: {
     flexDirection: "col",
     padding: "20px 20px 20px 20px",
-    fontFamily: "HindSiliguriRegular",
+    fontFamily: "Kalpurush",
     fontSize: "6px",
   },
   titleContainer: {
@@ -63,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: "10px",
   },
   table: {
-    fontFamily: "HindSiliguriRegular",
+    fontFamily: "Kalpurush",
     display: "table",
     width: "auto",
     borderStyle: "solid",
@@ -192,7 +177,7 @@ const BillPdf = (prop) => {
               <Text
                 style={{
                   fontSize: "12px",
-                  fontFamily: "HindSiliguriSemi",
+                  fontWeight: "bold",
                   textAlign: "center",
                 }}
               >
@@ -280,7 +265,9 @@ const BillPdf = (prop) => {
               <View style={styles.tableRow}>
                 {keys.map((item, index) => (
                   <View style={[styles.tableCol, { width: item[1] }]}>
-                    <Text style={styles.tableCell}>{item[0]}</Text>
+                    <Text style={[styles.tableCell, { fontWeight: "bold" }]}>
+                      {item[0]}
+                    </Text>
                   </View>
                 ))}
               </View>
@@ -289,22 +276,6 @@ const BillPdf = (prop) => {
                 const matchedBill = billData.filter(
                   (bill) => bill.front === item.no
                 )[0];
-                // const {
-                //   "কোর্স নং": courseNo,
-                //   "খাতা/ছাত্রের সংখ্যা": nks,
-                //   "কত ঘণ্টার পরীক্ষা": nh,
-                // } = matchedBill[0];
-                // const reduced = { courseNo, nks, nh };
-                //              const keys = [
-                //   ["ক্রমিক নং ", "8%"],
-                //   ["কাজের নাম ", "20%"],
-                //   ["কোর্স নং", "12%"],
-                //   ["খাতা/ছাত্রের সংখ্যা", "12%"],
-                //   ["কত ঘণ্টার পরীক্ষা", "12%"],
-                //   ["মোট দিন/সদস্য সংখ্যা", "12%"],
-                //   ["অর্ধ/পূর্ণ পত্র", "12%"],
-                //   ["টাকার পরিমাণ", "12%"],
-                // ];
                 if (item.noEntry) {
                   return (
                     <View style={styles.tableRow}>
@@ -419,8 +390,8 @@ const BillPdf = (prop) => {
                     },
                   ]}
                 >
-                  <Text style={styles.tableCell}>মোট টাকা কথায় =  </Text>
-                  <Text>মোট টাকা =  </Text>
+                  <Text style={styles.tableCell}>মোট টাকা কথায় = </Text>
+                  <Text>মোট টাকা = </Text>
                 </View>
                 <View style={[styles.tableCol, { width: "12%" }]}>
                   <Text style={styles.tableCell}> </Text>

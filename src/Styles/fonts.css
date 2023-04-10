@@ -1,19 +1,24 @@
 @font-face {
-	font-family: 'HindSiliguri';
-	src: url('../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf');
+  font-family: "HindSiliguri";
+  src: url("../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf");
 }
 @font-face {
-	font-family: 'HindSiliguri';
-	src: url('../assets/Fonts/HindSiliguri/HindSiliguri-Bold.ttf');
-	font-weight: bolder;
+  font-family: "HindSiliguri";
+  src: url("../assets/Fonts/HindSiliguri/HindSiliguri-Bold.ttf");
+  font-weight: bolder;
 }
 @font-face {
-	font-family: 'HindSiliguri';
-	src: url('../assets/Fonts/HindSiliguri/HindSiliguri-SemiBold.ttf');
-	font-weight:bold;
+  font-family: "HindSiliguri";
+  src: url("../assets/Fonts/HindSiliguri/HindSiliguri-SemiBold.ttf");
+  font-weight: bold;
 }
 @font-face {
-	font-family: 'HindSiliguri';
-	src: url('../assets/Fonts/HindSiliguri/HindSiliguri-Light.ttf');
-	font-weight: lighter;
+  font-family: "HindSiliguri";
+  src: url("../assets/Fonts/HindSiliguri/HindSiliguri-Light.ttf");
+  font-weight: lighter;
+}
+@font-face {
+  font-family: "Kalpurush";
+  src: url("../assets/Fonts/Kalpurush/Kalpurush.ttf");
+  /* font-weight: ; */
 }

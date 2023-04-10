@@ -15,16 +15,17 @@ import { useState } from "react";
 import CourseActivityTable from "./CourseActivityTable";
 import Spin from "../../../UI/Spin";
 import SemesterActivityTable from "./SemesterActivityTable";
-import '../../../../Styles/fonts.css';
-import HindSiliguri from '../../../../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf'
+import "../../../../Styles/fonts.css";
+import HindSiliguri from "../../../../assets/Fonts/HindSiliguri/HindSiliguri-Regular.ttf";
+import Kalpurush from "../../../../assets/Fonts/Kalpurush/Kalpurush.ttf";
 
 Font.registerHyphenationCallback((word) => {
   // Return entire word as unique part
   return [word];
 });
 Font.register({
-  family: 'HindSiliguri',
-  src: HindSiliguri,
+  family: "Kalpurush",
+  src: Kalpurush,
 });
 const styles = StyleSheet.create({
   text: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   pageCol: {
     flexDirection: "col",
     padding: "40px 40px 40px 40px",
-    fontFamily: "HindSiliguri",
+    fontFamily: "Kalpurush",
     fontSize: "12px",
   },
   titleContainer: {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: "10px",
   },
   table: {
-    fontFamily: 'HindSiliguri',
+    fontFamily: "Kalpurush",
     display: "table",
     width: "auto",
     borderStyle: "solid",
@@ -185,17 +186,25 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
         }
       );
       const result = await response.json();
-result && result.map((item) => {
-                              for (const key in item) {
-                const englishInteger = item[key];
-                if(new RegExp("^\\d+(\\.\\d+)?$").test(englishInteger && englishInteger.toString())){
-const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
-                  return '০১২৩৪৫৬৭৮৯'[match];
+      result &&
+        result.map((item) => {
+          for (const key in item) {
+            const englishInteger = item[key];
+            if (
+              new RegExp("^\\d+(\\.\\d+)?$").test(
+                englishInteger && englishInteger.toString()
+              )
+            ) {
+              const banglaInteger = englishInteger
+                .toString()
+                .replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
+                  return "০১২৩৪৫৬৭৮৯"[match];
                 });
-                item[key] = banglaInteger;
-                }}});
+              item[key] = banglaInteger;
+            }
+          }
+        });
       if (to_get === "courseActivities") {
-
         setCourseData((prevData) => [
           ...prevData,
           { structure: activity, data: result },
@@ -255,7 +264,8 @@ const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, 
                 <View style={styles.topPart1}>
                   <View style={styles.leftAligned}>
                     <Text style={styles.text}>
-                      কম্পিউটার বিজ্ঞান ও প্রকৌশল বিভাগ {"\n"} চট্টগ্রাম বিশ্ববিদ্যালয়, চট্টগ্রাম-৪৩৩১{" \n"}
+                      কম্পিউটার বিজ্ঞান ও প্রকৌশল বিভাগ {"\n"} চট্টগ্রাম
+                      বিশ্ববিদ্যালয়, চট্টগ্রাম-৪৩৩১{" \n"}
                       ইমেইল: office.cse@cu.ac.bd {"\n"}
                       ওয়েব : www.cu.ac.bd/cse/
                     </Text>
@@ -286,7 +296,7 @@ const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, 
                 <Text>
                   বরাবর {"\n"}
                   পরীক্ষা নিয়ন্ত্রক
- {"\n"}
+                  {"\n"}
                   চট্টগ্রাম বিশ্ববিদ্যালয় {"\n"}
                   {"\n"} {"\n"}
                   জনাব,
@@ -303,7 +313,7 @@ const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, 
                   committee {"\n"}
                   {evaluatorInfo.dept_name} {"\n"}
                   {evaluatorInfo.university_name} {"\n"}
-                 ফোন: {evaluatorInfo.phone_no} {"\n"}
+                  ফোন: {evaluatorInfo.phone_no} {"\n"}
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
                   সংযুক্তি: {"\n"}
@@ -334,10 +344,14 @@ const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, 
                         <Text style={styles.tableCell}>{`${item.Name} `}</Text>
                       </View>
                       <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>{`${item.Designation} `}</Text>
+                        <Text
+                          style={styles.tableCell}
+                        >{`${item.Designation} `}</Text>
                       </View>
                       <View style={styles.tableCol}>
-                        <Text style={styles.tableCell}>{`${item.Address} `}</Text>
+                        <Text
+                          style={styles.tableCell}
+                        >{`${item.Address} `}</Text>
                       </View>
                       <View style={styles.tableCol}>
                         <Text style={styles.tableCell}>{`${item.Role} `}</Text>
