@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import Buttoncmp from "../../UI/Buttoncmp";
 import Tablenew from "../../UI/Tablenew";
+import patterns from "../../Resources/RegexPatterns";
 
 // Generating dynamically
 const tablecols = [
   {
     col: "evaluator_id",
     type: "number",
-    regex: "^\\d{4}$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 1013",
     required: true,
   },
   {
     col: "evaluator_name",
     type: "text",
-    regex: "^[A-Za-z .]+$",
+    regex: patterns.bengaliPattern.textWithSpace,
     regexMessage: "e.g. Dr. Rudra Pratap Deb Nath",
     required: true,
   },
@@ -57,7 +58,7 @@ const tablecols = [
   {
     col: "phone_no",
     type: "tel",
-    regex: "^\\d{11}$",
+    regex: patterns.bengaliPattern.phoneNo,
     regexMessage: "e.g. 01234567892",
     required: true,
   },

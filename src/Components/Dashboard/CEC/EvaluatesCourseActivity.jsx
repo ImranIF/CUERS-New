@@ -1,6 +1,7 @@
 import React from "react";
 import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
+import patterns from "../../Resources/RegexPatterns";
 
 const tablecols = [
   {
@@ -35,7 +36,7 @@ const tablecols = [
   {
     col: "evaluator_id",
     type: "number",
-    regex: "^\\d{4}$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 1013",
 
     required: true,
@@ -90,7 +91,7 @@ const tablecols = [
     col: "quantity",
     type: "number",
     required: true,
-    regex: "^\\d+(\\.\\d+)?$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 12",
   },
   {

@@ -6,12 +6,13 @@ import Table from "../../UI/Table";
 import { useState } from "react";
 import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
+import patterns from "../../Resources/RegexPatterns";
 const tableCols = [
   // { col: "No", type: "row", required: true, },
   {
     col: "evaluator_id",
     type: "number",
-    regex: "^\\d{4}$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 1013",
     required: true,
   },
@@ -36,7 +37,7 @@ const tableCols = [
   {
     col: "year",
     type: "number",
-    regex: "^\\d{4}$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 2023",
     required: true,
   },

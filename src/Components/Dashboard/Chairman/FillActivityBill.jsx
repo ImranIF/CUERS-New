@@ -2,6 +2,7 @@ import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 import Buttoncmp from "../../UI/Buttoncmp";
 import Tablenew from "../../UI/Tablenew";
+import patterns from "../../Resources/RegexPatterns";
 // import Inputcmp from "../../Inputcmp";
 // import Temptable from "../../UI/Temptable";
 
@@ -83,28 +84,28 @@ const tableCols = [
   {
     col: "quantity_initial",
     type: "number",
-    regex: "^\\d+(\\.\\d+)?$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 2 or 2.5",
     required: true,
   },
   {
     col: "quantity_final",
     type: "number",
-    regex: "^\\d+(\\.\\d+)?$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 2 or 2.5",
     required: true,
   },
   {
     col: "min_bill",
     type: "number",
-    regex: "^\\d+(\\.\\d+)?$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 1200",
     required: true,
   },
   {
     col: "bill",
     type: "number",
-    regex: "^\\d+(\\.\\d+)?$",
+    regex: patterns.bengaliPattern.number,
     regexMessage: "e.g. 1200",
     required: true,
   },

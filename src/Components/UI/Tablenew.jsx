@@ -77,13 +77,20 @@ const Tablenew = (prop) => {
             const banglaNums = data.map((item) => {
               for (const key in item) {
                 const englishInteger = item[key];
-                if(new RegExp("^\\d+(\\.\\d+)?$").test(englishInteger && englishInteger.toString())){
-const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
-                  return '০১২৩৪৫৬৭৮৯'[match];
-                });
-                item[key] = banglaInteger;
+                if (
+                  new RegExp("^\\d+(\\.\\d+)?$").test(
+                    englishInteger && englishInteger.toString()
+                  )
+                ) {
+                  const banglaInteger = englishInteger
+                    .toString()
+                    .replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
+                      return "০১২৩৪৫৬৭৮৯"[match];
+                    });
+                  item[key] = banglaInteger;
                 }
-                              }});
+              }
+            });
             const withKey = data.map((item, i) => ({ ...item, key: i }));
             setTableData(withKey);
           } else if (changes.operation === "update") {
@@ -273,7 +280,9 @@ const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, 
       <div className="table  w-full ">
         <div className="table-header-group bg-slate-200 sticky top-0 z-20">
           <div className="table-row ">
+            {/* Generating table headers */}
             {tableCols.map((data) => {
+              // Giving different styles of icons based on different data types
               let icon;
               if (data.type == "dropdown") {
                 icon = (
@@ -303,11 +312,13 @@ const banglaInteger = englishInteger.toString().replace(/0|1|2|3|4|5|6|7|8|9/g, 
             })}
           </div>
         </div>
+        {/* The main body of the table */}
         <div className="table-row-group">
           {tableData?.map((row, rowIndex) => (
             <div key={row.key} className={`table-row text-slate-700`}>
               {tableCols.map((col, colIndex) => {
                 return (
+                  // TableCell is each cell on the table that contains different data or input
                   <TableCell
                     key={colIndex + row.key}
                     row={row}
