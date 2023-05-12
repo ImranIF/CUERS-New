@@ -41,7 +41,7 @@ const TableCell = (prop) => {
         search={true}
         name={col.col}
         onSelect={handleSelect}
-        opened={true}
+        opened={false}
         preSelect={value}
         variant="table"
       ></Dropdown>
@@ -55,7 +55,6 @@ const TableCell = (prop) => {
   useEffect(() => {
     const unfocus = (e) => {
       if (!cellRef.current.contains(e.target)) {
-        // do something
         showInput(false);
       }
     };
@@ -71,12 +70,6 @@ const TableCell = (prop) => {
       ${!valid && 'bg-red-50 ring-2 ring-red-900'}
       border-r border-b border-slate-300 last-of-type:border-r-0 focus:shadow-xl focus:ring-cyan-700 focus:bg-slate-50 focus:outline-none  focus:ring-2 p-2 hover:bg-blue-100`}
       ref={cellRef}
-      onClick={(e) => {
-        setIsFocused(true);
-        if (col.type == 'dropdown') showInput(!input);
-        e.stopPropagation();
-        onActive(e);
-      }}
       onBlur={(e) => {
         setIsFocused(false);
         if (col.regex) {
@@ -91,16 +84,9 @@ const TableCell = (prop) => {
       suppressContentEditableWarning={true}
     >
       {col.type == 'dropdown' && (
-        <div className="flex items-center ">
-          {
-            <div className={`${input && isActive ? 'block' : 'hidden'}`}>
-              {inputBlock}
-            </div>
-          }
-        </div>
+        <div className="flex items-center ">{inputBlock}</div>
       )}
-      {/* {data.col == "No" && pvalue} */}
-      {!input && value}
+      {col.type != 'dropdown' && !input && value}
       {col.type == 'button' && (
         <Buttoncmp
           label={col.label ? col.label : 'null'}

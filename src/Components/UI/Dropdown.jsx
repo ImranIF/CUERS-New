@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   ArrowDownIcon,
   ChevronDownIcon,
@@ -8,6 +8,7 @@ import {
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { DashboardContext } from '../UI/DashboardContext.jsx';
 
 const Dropdown = (prop) => {
   const {
@@ -22,14 +23,35 @@ const Dropdown = (prop) => {
     variant,
   } = prop;
 
+  //const { setOverflow } = useContext(DashboardContext);
+  // useRefs
+  // This for inputBox
+  const inputRef = useRef(null);
+  // This for dropdown's parent div
+  const dropdownRef = useRef(null);
+  // This for the optionList div
+  const optionsRef = useRef(null);
+  // This for the last option of the list, this helps to scroll the view
+  const lastOptionRef = useRef(null);
+  let inputStyle;
+  if (variant && variant != 'table') {
+    inputStyle =
+      'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-slate-200 active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1 ';
+  } else if (variant && variant == 'table') {
+    inputStyle =
+      'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-transparent active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1';
+  }
+  // to track the input value while user types
+  const [inputValue, setInputValue] = useState('');
+
   // state for options
   const [open, setOpen] = useState(opened);
+
   // state for selected option, initially the preSelect value will be set if passed
   const [selected, setSelected] = useState(
     !preSelect ? 'Select ' + name : preSelect
   );
   // while options are open, clicking outside will close the option list
-  //
   // Showing dropdown options at top at the bottom portion of the page
   const [atTop, setAtTop] = useState(false);
   useEffect(() => {
@@ -42,29 +64,23 @@ const Dropdown = (prop) => {
     return () => document.body.removeEventListener('click', closeDropdown);
   }, []);
 
-  const inputRef = useRef(null);
-  const dropdownRef = useRef(null);
-  const optionsRef = useRef(null);
-  const inputStyle =
-    'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-slate-200 active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1 ';
-
-  const [inputValue, setInputValue] = useState('');
-
-  // To control where to open the list options
-  const openDropdown = (e) => {
-    const dropdown = dropdownRef.current;
-    const options = optionsRef.current;
-    const dropdownHeight = dropdown.offsetHeight;
-    const optionsHeight = options.offsetHeight;
-    console.log(dropdownHeight, optionsHeight);
-    const distanceFromBottom =
-      window.innerHeight - dropdown.getBoundingClientRect().bottom;
-    const spaceBottom = distanceFromBottom - 10;
-
-    if (dropdownHeight > spaceBottom + 100) {
-    } else {
+  // This will scroll the dropdown into view when any dropdown is selected from the bottom of the page ~ QOL
+  useEffect(() => {
+    if (dropdownRef.current) {
+      const optionDiv = optionsRef.current;
+      const distanceFromBottom =
+        window.innerHeight - optionDiv.getBoundingClientRect().bottom;
+      const spaceBottom = distanceFromBottom - 10;
+      const optionList = dropdownRef.current.querySelectorAll('option');
+      if (spaceBottom < 0) {
+        lastOptionRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+        });
+      }
     }
-  };
+  }, [open]);
+
   let inputBlock = (
     // It's the parent div that contains the currently selected option or the value from the div
     // and option list(hidden primarily)
@@ -72,15 +88,21 @@ const Dropdown = (prop) => {
       className={`relative flex w-full duration-200 ${open && 'z-10'}`}
       ref={dropdownRef}
       // if clicked, option list will display
-      onClick={(e) => {
-        e.stopPropagation();
-        openDropdown(e);
-        setOpen(!open);
-      }}
     >
       {/* Div that holds the currently selected value: contains an input and an icon*/}
       <div
         id={id}
+        onClick={(e) => {
+          //e.stopPropagation();
+          e.preventDefault();
+          setOpen(!open);
+          /* if (variant == 'table' && !open) {
+            setOverflow(false);
+          } else {
+            setOverflow(true);
+          }
+          console.log('ouch! here at dropdwon'); */
+        }}
         tabIndex={0}
         className={`${inputStyle} ${
           open && 'bg-white ring-1 ring-offset-1 ring-slate-500'
@@ -97,9 +119,11 @@ const Dropdown = (prop) => {
           readOnly
         ></input>
         {/* Icon that shows open or closed state of the option list*/}
-        <ChevronDownIcon
-          className={`${open && 'rotate-180'} w-4 h-4 duration-200`}
-        ></ChevronDownIcon>
+        {variant != 'table' && (
+          <ChevronDownIcon
+            className={`${open && 'rotate-180'} w-4 h-4 duration-200`}
+          ></ChevronDownIcon>
+        )}
       </div>
       {/*The parent div that contains the option list*/}
       <div
@@ -137,9 +161,9 @@ const Dropdown = (prop) => {
           {options.map((option, index) => (
             // Here matching the state saved at inputValue from the searchbox to generate result(hidden or show)
             <li
+              ref={lastOptionRef}
               key={index}
-              tabIndex={0}
-              className={`flex-auto w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
+              className={`flex-auto content-start w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
               ${
                 String(option).toLowerCase().match(inputValue)
                   ? 'block'
@@ -155,6 +179,7 @@ const Dropdown = (prop) => {
                 // When an option is clicked, the state for current value is modified, and closes the
                 // dropdown list and clears the searchbox
                 e.stopPropagation();
+                e.preventDefault();
                 setSelected(option);
                 onSelect && onSelect(option);
                 setInputValue('');
