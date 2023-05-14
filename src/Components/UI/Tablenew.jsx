@@ -278,7 +278,7 @@ const Tablenew = (prop) => {
   return (
     <div className="mt-0 min-w-min">
       <div className="table  w-full ">
-        <div className="table-header-group bg-slate-200 sticky top-0 z-20">
+        <div className="table-header-group bg-slate-200 sticky top-4 z-20">
           <div className="table-row ">
             {/* Generating table headers */}
             {tableCols.map((data) => {

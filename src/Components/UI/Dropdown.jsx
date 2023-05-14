@@ -73,7 +73,7 @@ const Dropdown = (prop) => {
       const spaceBottom = distanceFromBottom - 10;
       const optionList = dropdownRef.current.querySelectorAll('option');
       if (spaceBottom < 0) {
-        lastOptionRef.current.scrollIntoView({
+        optionsRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'end',
         });
@@ -85,7 +85,10 @@ const Dropdown = (prop) => {
     // It's the parent div that contains the currently selected option or the value from the div
     // and option list(hidden primarily)
     <div
-      className={`relative flex w-full duration-200 ${open && 'z-10'}`}
+      onClick={(e) => {
+        e.preventDefault();
+      }}
+      className={`relative flex w-40 duration-200 ${open && 'z-10'}`}
       ref={dropdownRef}
       // if clicked, option list will display
     >
@@ -129,7 +132,7 @@ const Dropdown = (prop) => {
       <div
         className={`${
           !open ? 'max-h-0 hidden' : 'max-h-64'
-        } duration-200 absolute bg-white w-fit text-slate-900 mt-12 px-2 ${
+        } duration-200 absolute bg-white min-w-max text-slate-900 mt-12 px-2 ${
           !search && 'py-2'
         } pb-2 rounded-lg border border-slate-300 overflow-y-auto`}
         ref={optionsRef}
