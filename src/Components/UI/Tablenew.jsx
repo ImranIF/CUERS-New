@@ -17,14 +17,22 @@ import TableCell from './TableCell';
 import { useContext } from 'react';
 import { StatusContext } from './StatusContext';
 import { faTableTennisPaddleBall } from '@fortawesome/free-solid-svg-icons';
+import DropdownOptions from '../../Modules/DropdownOptions';
 
 const Tablenew = (prop) => {
   const { tableName, tableCols, loadCondition } = prop; // tableName
+
+  const { doptions, addOptionToDropdown } = DropdownOptions();
+
+  // state for tableData
   const [tableData, setTableData] = useState([]); // to set the data after fetching
-  // const [indexi, setIndexi] = useState(1);
+
   const rowStatus = [0, 0];
+  // state to handle newRow
   const [newRow, setNewRow] = useState(rowStatus);
   const { message, setStatus, evaluator } = useContext(StatusContext);
+
+  // state to handle dataLoading state
   const [dataLoading, setDataLoading] = useState(false);
   // the initial state will load the table
 
@@ -277,9 +285,9 @@ const Tablenew = (prop) => {
 
   return (
     <div className="mt-0 min-w-min">
-      <div className="table  w-full ">
-        <div className="table-header-group bg-slate-200 sticky top-4 z-20">
-          <div className="table-row ">
+      <div className="table  w-full">
+        <div className="table-header-group bg-slate-200 sticky top-4 z-20 ">
+          <div className="table-row">
             {/* Generating table headers */}
             {tableCols.map((data) => {
               // Giving different styles of icons based on different data types
@@ -321,6 +329,11 @@ const Tablenew = (prop) => {
                   // TableCell is each cell on the table that contains different data or input
                   <TableCell
                     key={colIndex + row.key}
+                    cellOptions={
+                      col.type == 'dropdown'
+                        ? { doptions, addOptionToDropdown }
+                        : null
+                    }
                     row={row}
                     pvalue={col.col != 'No' && row[col.col]}
                     col={col}

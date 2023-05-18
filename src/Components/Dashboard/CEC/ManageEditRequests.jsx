@@ -1,20 +1,20 @@
-import React from "react";
-import Tablenew from "../../UI/Tablenew";
+import React from 'react';
+import Tablenew from '../../UI/Tablenew';
 
 const tableCol = [
   {
-    col: "evaluator id",
-    type: "number",
+    col: 'evaluator id',
+    type: 'number',
   },
   {
-    col: "view form",
-    type: "button",
-    label: "view",
+    col: 'view form',
+    type: 'button',
+    label: 'view',
   },
   {
-    col: "approve form",
-    type: "button",
-    label: "approve",
+    col: 'approve form',
+    type: 'button',
+    label: 'approve',
   },
 ];
 

@@ -8,7 +8,8 @@ import {
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { DashboardContext } from '../UI/DashboardContext.jsx';
+// import { DashboardContext } from '../UI/DashboardContext.jsx';
+import DropdownOptions from '../../Modules/DropdownOptions';
 
 const Dropdown = (prop) => {
   const {
@@ -23,7 +24,7 @@ const Dropdown = (prop) => {
     variant,
   } = prop;
 
-  //const { setOverflow } = useContext(DashboardContext);
+  // const { createdOp, setCreatedOp } = useContext(DashboardContext);
   // useRefs
   // This for inputBox
   const inputRef = useRef(null);
@@ -33,6 +34,8 @@ const Dropdown = (prop) => {
   const optionsRef = useRef(null);
   // This for the last option of the list, this helps to scroll the view
   const lastOptionRef = useRef(null);
+
+  // input stylte two variant of dropdown, general(used at forms) and table(used at tables)
   let inputStyle;
   if (variant && variant != 'table') {
     inputStyle =
@@ -44,6 +47,9 @@ const Dropdown = (prop) => {
   // to track the input value while user types
   const [inputValue, setInputValue] = useState('');
 
+  // to track if the input value is matched with the any option
+  const [matched, setMatched] = useState(null);
+
   // state for options
   const [open, setOpen] = useState(opened);
 
@@ -51,9 +57,17 @@ const Dropdown = (prop) => {
   const [selected, setSelected] = useState(
     !preSelect ? 'Select ' + name : preSelect
   );
+
+  // state for all options
+  const [availOptions, setAvailOptions] = useState([...options]);
+  // state for filtered options
+  const [filtered, setFiltered] = useState([...availOptions]);
+
+  // state for remembering creation of option
+  const [created, setCreated] = useState(false);
+
   // while options are open, clicking outside will close the option list
   // Showing dropdown options at top at the bottom portion of the page
-  const [atTop, setAtTop] = useState(false);
   useEffect(() => {
     const closeDropdown = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
@@ -80,6 +94,19 @@ const Dropdown = (prop) => {
       }
     }
   }, [open]);
+
+  // This is used to filter the options from given inputValue
+  useEffect(() => {
+    const filteredList = availOptions.filter((option) =>
+      String(option).toLowerCase().match(inputValue.toLowerCase())
+    );
+    setFiltered([...filteredList]);
+  }, [inputValue, availOptions]);
+
+  //   useEffect(() => {
+  //     console.log('Changed after: ', [...doptions[name]]);
+  //     setAvailOptions([...doptions[name]]);
+  //   }, [createdOp]);
 
   let inputBlock = (
     // It's the parent div that contains the currently selected option or the value from the div
@@ -152,7 +179,7 @@ const Dropdown = (prop) => {
               // when clicked we're searching by the state(onchange)
               onChange={(e) => {
                 // It's updating the value of the state letter by letter to display the matched result instantly
-                setInputValue(e.target.value.toLowerCase());
+                setInputValue(e.target.value);
               }}
               className={` pl-2 p-1 ring-1 bg-white duration-200 ring-slate-500 block w-full rounded-md active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1`}
             ></input>
@@ -161,39 +188,58 @@ const Dropdown = (prop) => {
 
         {/* The option list*/}
         <ul className="">
-          {options.map((option, index) => (
-            // Here matching the state saved at inputValue from the searchbox to generate result(hidden or show)
-            <li
-              ref={lastOptionRef}
-              key={index}
-              className={`flex-auto content-start w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
-              ${
-                String(option).toLowerCase().match(inputValue)
-                  ? 'block'
-                  : 'hidden'
-              } ${
-                String(selected)
-                  .toLowerCase()
-                  .localeCompare(String(option).toLowerCase()) == 0 &&
-                'bg-blue-200'
-              }
+          {filtered.map((option, index) => {
+            return (
+              // Here matching the state saved at inputValue from the searchbox to generate result(hidden or show)
+              <li
+                ref={lastOptionRef}
+                key={index}
+                className={`flex-auto content-start w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
+               ${
+                 String(selected)
+                   .toLowerCase()
+                   .localeCompare(String(option).toLowerCase()) == 0 &&
+                 'bg-blue-200'
+               }
               `}
-              onClick={(e) => {
-                // When an option is clicked, the state for current value is modified, and closes the
-                // dropdown list and clears the searchbox
-                e.stopPropagation();
-                e.preventDefault();
-                setSelected(option);
-                onSelect && onSelect(option);
-                setInputValue('');
-                setOpen(!open);
-              }}
-            >
-              {/* Each option from the option list*/}
-              {option}
-            </li>
-          ))}
+                onClick={(e) => {
+                  // When an option is clicked, the state for current value is modified, and closes the
+                  // dropdown list and clears the searchbox
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setSelected(option);
+                  onSelect && onSelect(option);
+                  setInputValue('');
+                  setOpen(!open);
+                }}
+              >
+                {/* Each option from the option list*/}
+                {option}
+              </li>
+            );
+          })}
         </ul>
+
+        {/* The create new button , only at table*/}
+        {variant == 'table' && filtered.length == 0 && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              if (!availOptions.includes(inputValue)) {
+                // setAvailOptions([...availOptions, inputValue]);
+                addOptionToDropdown(name, inputValue);
+                setCreatedOp(!createdOp);
+              }
+              // setFiltered([...filtered, inputValue]);
+            }}
+            className={`mt-1 duration-100 focus:outline-none focus:ring-offset-1 active:ring-1 flex-auto content-start w-full hover:bg-slate-200 focus:ring focus:ring-black-800 cursor-pointer p-2 rounded-md 
+          `}
+          >
+            Create{' '}
+            <span className="ml-1 px-2 py-1 bg-blue-200 rounded-md">{`${inputValue}`}</span>
+          </div>
+        )}
       </div>
     </div>
   );

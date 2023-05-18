@@ -8,8 +8,18 @@ import { StatusContext } from './StatusContext';
 import { DashboardContext } from './DashboardContext';
 
 const TableCell = (prop) => {
-  const { setOverflow } = useContext(DashboardContext);
-  const { col, row, isActive, onActive, onDelete, id, pvalue, onUpdate } = prop;
+  // const { setOverflow } = useContext(DashboardContext);
+  const {
+    col,
+    row,
+    cellOptions,
+    isActive,
+    onActive,
+    onDelete,
+    id,
+    pvalue,
+    onUpdate,
+  } = prop;
   const { message, setStatus } = useContext(StatusContext);
   // Initially, the value would be from the array or ''
   const [value, setValue] = useState(pvalue !== undefined ? pvalue : '');
@@ -37,7 +47,7 @@ const TableCell = (prop) => {
   if (col.type == 'dropdown') {
     inputBlock = (
       <Dropdown
-        options={col.values}
+        options={cellOptions.doptions[col.col]}
         search={true}
         name={col.col}
         onSelect={handleSelect}
