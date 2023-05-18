@@ -3,34 +3,25 @@ import Dropdown from "../../UI/Dropdown";
 import Tablenew from "../../UI/Tablenew";
 import patterns from "../../Resources/RegexPatterns";
 
+// const dropdownCols = ["activity_type_id", "sector_or_program", "course_id", "semester_number"];
+// dropdownCols.map((dropDownCol) => {
+//     console.log(dropDownCol);
+// });
+
+
+//code fetch the dd
+
 const tablecols = [
   {
     col: "activity_type_id",
     type: "dropdown",
-    values: [1, 2, 4, 5, 7, 8, 16, 17],
+    values: JSON.parse(sessionStorage.getItem("activity_type_id")),
     required: true,
   },
   {
     col: "sector_or_program",
     type: "dropdown",
-    values: [
-      "Honours",
-      "Masters",
-      "Tutorial",
-      "Terminal",
-      "Certificate course",
-      "Lab",
-      "Presentation",
-      "Scrutiny",
-      "Lab notebook",
-      "Masters thesis",
-      "M.Phil thesis",
-      "PhD thesis",
-      "Industrial tour",
-      "By computer",
-      "By hand",
-      "All programs",
-    ],
+    values: JSON.parse(sessionStorage.getItem("sector_or_program")),
     required: true,
   },
   {
@@ -45,46 +36,19 @@ const tablecols = [
     col: "course_id",
     type: "dropdown",
     //need to be dynamic
-    values: [
-      "CSE311",
-      "CSE312",
-      "CSE321",
-      "CSE322",
-      "CSE331",
-      "STA351",
-      "ECO381",
-      "CSE811",
-      "CSE812",
-      "CSE813",
-      "CSE814",
-      "CSE815",
-      "CSE816",
-      "CSE817",
-      "CSE818",
-      "CSE819",
-      "CSE821",
-      "CSE823",
-    ],
+    values: JSON.parse(sessionStorage.getItem("course_id")),
     required: true,
   },
   {
     col: "semester_no",
     type: "dropdown",
-    values: [1, 2, 3, 4, 5, 6, 7, 8],
+    values: JSON.parse(sessionStorage.getItem("semester_no")),
     required: true,
   },
   {
     col: "factor",
     type: "dropdown",
-    values: [
-      "Hours",
-      "Days",
-      "Half/Full part",
-      "No of students",
-      "No of exams",
-      "No of pages",
-      "No of questions",
-    ],
+    values: JSON.parse(sessionStorage.getItem("factor")),
     required: true,
   },
   {

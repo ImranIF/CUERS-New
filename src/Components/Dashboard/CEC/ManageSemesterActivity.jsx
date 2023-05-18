@@ -13,18 +13,7 @@ const tablecols = [
   {
     col: "sector_or_program",
     type: "dropdown",
-    values: [
-      "Honours",
-      "Masters",
-      "Tutorial",
-      "Lab",
-      "Honours (1st year to 3rd year)",
-      "Honours (4th year)",
-      "By computer",
-      "By hand",
-      "All programs",
-      "Others",
-    ],
+    values: JSON.parse(sessionStorage.getItem("sector_or_program")),
     required: true,
   },
   {
@@ -38,13 +27,13 @@ const tablecols = [
   {
     col: "semester_no",
     type: "dropdown",
-    values: [sessionStorage.getItem("semester_no")],
+    values: JSON.parse(sessionStorage.getItem("semester_no")),
     required: true,
   },
   {
     col: "factor",
     type: "dropdown",
-    values: ["No of members", "No of students", "No of pages"],
+    values: JSON.parse(sessionStorage.getItem("factor")),
     required: true,
   },
   {

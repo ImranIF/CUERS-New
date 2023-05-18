@@ -36,6 +36,8 @@ import Spin from './Components/UI/Spin';
 import { GenerateActivityPDF } from './Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF';
 import { fetchData } from './Components/fetchModule';
 import BillPdf from './Components/Dashboard/Evaluator/BillPdf';
+import axios from 'axios';
+
 function App() {
   const navigate = useNavigate();
 
@@ -66,6 +68,57 @@ function App() {
     'Exam_Committee',
     'Login_Info',
   ];
+  const dropDownCols = ["activity_type_id", "sector_or_program", "course_id", "semester_no", "factor"];
+  dropDownCols.map((dropDownCol) => {
+    if (sessionStorage.getItem(dropDownCol) === null) {
+      const postData = async () => {
+        try {
+
+          const params = {
+            tableName: "Activity", operation: "load",
+            colName: { dropDownCol }
+          };
+          console.log(params);
+          let response = await axios.post("http://localhost:3000/users/processDropDownData", { data: { params } })
+
+
+          console.log('Post response:', response.data);
+
+          sessionStorage.setItem(`${dropDownCol}`, response.data);
+
+        } catch (error) {
+          console.error('Error posting data:', error);
+        }
+      };
+      console.log(postData());
+    }
+  })
+  const dropDownCols2 = ["designation", "dept_name", "university_name"];
+  dropDownCols2.map((dropDownCol) => {
+    if (sessionStorage.getItem(dropDownCol) === null) {
+      const postData2 = async () => {
+        try {
+
+          const params = {
+            tableName: "Evaluator", operation: "load",
+            colName: { dropDownCol }
+          };
+          console.log(params);
+          let response = await axios.post("http://localhost:3000/users/processDropDownData", { data: { params } })
+
+
+          console.log('Post response:', response.data);
+
+          sessionStorage.setItem(`${dropDownCol}`, response.data);
+
+        } catch (error) {
+          console.error('Error posting data:', error);
+        }
+      };
+      console.log(postData2());
+    }
+  })
+
   const [isLoading, setLoading] = useState(true);
   const logInfoRef = useRef({
     role: '',
