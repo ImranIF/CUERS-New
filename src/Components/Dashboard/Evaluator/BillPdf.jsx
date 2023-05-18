@@ -19,7 +19,13 @@ import HindSiliguriBold from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Bo
 import HindSiliguriSemi from "../../../assets/Fonts/HindSiliguri/HindSiliguri-SemiBold.ttf";
 import HindSiliguriMed from "../../../assets/Fonts/HindSiliguri/HindSiliguri-Medium.ttf";
 import { toBanglaNumber } from "../../../Modules/toBanglaNumber";
+import { toEnglishNumber } from "../../../Modules/toEnglishNumber";
 import activityList from "../../Resources/Data/ActivityList";
+import numberToWords from "../../../Modules/numberToWords";
+import {Converter, bnBD} from 'any-number-to-words';
+// import translate from 'translate-google-api';
+// import {translate} from '@vitalets/google-translate-api';
+// import createHttpProxyAgent from 'http-proxy-agent';
 
 Font.registerHyphenationCallback((word) => {
   // Return entire word as unique part
@@ -156,6 +162,25 @@ const BillPdf = (prop) => {
   ];
   const billData = JSON.parse(sessionStorage.getItem("billItem"));
   console.log(billData);
+  let totalBill = 0;
+  billData.forEach((item) => {
+    totalBill += (+toEnglishNumber(item["টাকার পরিমাণ"]))
+  });
+  const billInWords = numberToWords.toWords(totalBill)
+  const converter = new Converter(bnBD)
+  const billInBanglaWords = converter.toWords(totalBill)
+  // const billInBanglaWords = numberToBengaliWords(totalBill)
+  totalBill = toBanglaNumber(totalBill)
+  // const billInBanglaWords = translate( billInWords,{to: 'bn', fetchOptions: {agent}} )
+  // const billInBanglaWords = translate (billInWords, {tld: "com", to: "bn",   proxy: {
+  //   host: '127.0.0.1',
+  //   port: 9000,
+  //   auth: {
+  //     username: 'mikeymike',
+  //     password: 'rapunz3l'
+  //   }
+  // }});
+  console.log(billInBanglaWords)
   const evaluator = JSON.parse(sessionStorage.getItem("evaluatorInfo"));
   return (
     <div className="w-full border border-slate-900 h-full">
@@ -213,17 +238,17 @@ const BillPdf = (prop) => {
                     </Text>
                   </View>
                   <View style={[styles.tableCol, { width: "50%" }]}>
-                    <Text style={styles.tableCell}>বিষয় : {` `}</Text>
+                    <Text style={styles.tableCell}>বিষয় : কম্পিউটার সায়েন্স এন্ড ইঞ্জিনিয়ারিং</Text>
                   </View>
                 </View>
                 <View style={styles.tableRow}>
                   <View style={[styles.tableCol, { width: "50%" }]}>
                     <Text style={styles.tableCell}>
-                      ইংরেজি(বড় অক্ষরে) : {`${evaluator.evaluator_name} `}
+                      ইংরেজি(বড় অক্ষরে) : {`${evaluator.evaluator_english_name} `}
                     </Text>
                   </View>
                   <View style={[styles.tableCol, { width: "50%" }]}>
-                    <Text style={styles.tableCell}>পরীক্ষার নাম : {` `}</Text>
+                    <Text style={styles.tableCell}>{`পরীক্ষার নাম : ${toBanglaNumber(JSON.parse(sessionStorage.getItem("semester_no")))}ম সেমিস্টার বি.এস.সি ইঞ্জিনিয়ারিং পরীক্ষা`}</Text>
                   </View>
                 </View>
                 <View style={styles.tableRow}>
@@ -254,7 +279,7 @@ const BillPdf = (prop) => {
                         ]}
                       >
                         <Text style={styles.tableCell}>
-                          পরীক্ষার বৎসর : {` `}
+                          পরীক্ষার বৎসর : {`${toBanglaNumber("2021")}`}
                         </Text>
                       </View>
                     </View>
@@ -419,11 +444,11 @@ const BillPdf = (prop) => {
                     },
                   ]}
                 >
-                  <Text style={styles.tableCell}>মোট টাকা কথায় =  </Text>
-                  <Text>মোট টাকা =  </Text>
+                  <Text style={styles.tableCell}>মোট টাকা কথায় = {billInBanglaWords} </Text>
+                  <Text>মোট টাকা = </Text>
                 </View>
                 <View style={[styles.tableCol, { width: "12%" }]}>
-                  <Text style={styles.tableCell}> </Text>
+                  <Text style={styles.tableCell}> {`${totalBill}`} </Text>
                 </View>
               </View>
             </View>

@@ -16,14 +16,19 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^2.0.14",
     "@react-pdf/renderer": "^3.1.6",
+    "@vitalets/google-translate-api": "^9.2.0",
+    "any-number-to-words": "^2.0.5",
     "babel-plugin-macros": "^3.1.0",
     "i18next": "^22.4.10",
     "i18next-http-backend": "^2.1.1",
+    "num-words": "^1.2.3",
+    "number-to-bengli-words": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",
     "react-router": "^6.8.1",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "translate-google-api": "^1.0.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
@@ -32,6 +37,7 @@
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
+    "require-npm": "^1.4.1",
     "tailwindcss": "^3.2.4",
     "vite": "^4.0.0"
   }
