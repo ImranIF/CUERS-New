@@ -36,6 +36,13 @@ import Spin from './Components/UI/Spin';
 import { GenerateActivityPDF } from './Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF';
 import { fetchData } from './Components/fetchModule';
 import BillPdf from './Components/Dashboard/Evaluator/BillPdf';
+import axios from 'axios';
+import { DashboardContext } from './Components/UI/DashboardContext';
+import {
+  DropdownOptionsContext,
+  DropdownOptionsProvider,
+} from './Components/DropdownOptionsContext';
+
 function App() {
   const navigate = useNavigate();
 
@@ -66,6 +73,64 @@ function App() {
     'Exam_Committee',
     'Login_Info',
   ];
+  const dropDownCols = [
+    'activity_type_id',
+    'sector_or_program',
+    'factor',
+    'category',
+  ];
+  dropDownCols.map((dropDownCol) => {
+    if (sessionStorage.getItem(dropDownCol) === null) {
+      const postData = async () => {
+        try {
+          const params = {
+            tableName: 'Activity',
+            operation: 'load',
+            colName: { dropDownCol },
+          };
+          console.log(params);
+          let response = await axios.post(
+            'http://localhost:3000/users/processDropDownData',
+            { data: { params } }
+          );
+
+          console.log('Post response:', response.data);
+
+          sessionStorage.setItem(`${dropDownCol}`, response.data);
+        } catch (error) {
+          console.error('Error posting data:', error);
+        }
+      };
+      console.log(postData());
+    }
+  });
+  const dropDownCols2 = ['designation', 'dept_name', 'university_name'];
+  dropDownCols2.map((dropDownCol) => {
+    if (sessionStorage.getItem(dropDownCol) === null) {
+      const postData2 = async () => {
+        try {
+          const params = {
+            tableName: 'Evaluator',
+            operation: 'load',
+            colName: { dropDownCol },
+          };
+          console.log(params);
+          let response = await axios.post(
+            'http://localhost:3000/users/processDropDownData',
+            { data: { params } }
+          );
+
+          console.log('Post response:', response.data);
+
+          sessionStorage.setItem(`${dropDownCol}`, response.data);
+        } catch (error) {
+          console.error('Error posting data:', error);
+        }
+      };
+      console.log(postData2());
+    }
+  });
+
   const [isLoading, setLoading] = useState(true);
   const logInfoRef = useRef({
     role: '',
@@ -227,74 +292,76 @@ function App() {
             <Spin></Spin>
           </div>
         )}
-        <Routes>
-          <Route
-            element={<Login onLogin={onLogin}></Login>}
-            path="/login"
-          ></Route>
-          <Route
-            path="/*"
-            element={<PrivateOutlet isAuthenticated={isAuthenticated} />}
-          >
+        <DropdownOptionsProvider>
+          <Routes>
             <Route
-              element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-              path="dashboard/chairman"
+              element={<Login onLogin={onLogin}></Login>}
+              path="/login"
+            ></Route>
+            <Route
+              path="/*"
+              element={<PrivateOutlet isAuthenticated={isAuthenticated} />}
             >
               <Route
-                element={<FillActivityBill></FillActivityBill>}
-                path="fill-activity-bill"
-              ></Route>
+                element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+                path="dashboard/chairman"
+              >
+                <Route
+                  element={<FillActivityBill></FillActivityBill>}
+                  path="fill-activity-bill"
+                ></Route>
+                <Route
+                  element={<FormExamCommittee></FormExamCommittee>}
+                  path="form-exam-committee"
+                ></Route>
+                <Route
+                  element={<ManageEvaluators></ManageEvaluators>}
+                  path="manage-evaluators"
+                ></Route>
+              </Route>
               <Route
-                element={<FormExamCommittee></FormExamCommittee>}
-                path="form-exam-committee"
-              ></Route>
+                element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+                path="dashboard/cec"
+              >
+                <Route
+                  element={<EvaluatesCourseActivity></EvaluatesCourseActivity>}
+                  path="evaluates-course-activity"
+                ></Route>
+                <Route
+                  element={<CourseInSemesterExam></CourseInSemesterExam>}
+                  path="course-in-semester-exam"
+                ></Route>
+                <Route
+                  element={<ManageSemesterActivity></ManageSemesterActivity>}
+                  path="manage-semester-activity"
+                ></Route>
+                <Route
+                  element={<ManageEditRequests></ManageEditRequests>}
+                  path="manage-edit-requests"
+                ></Route>
+                <Route
+                  element={<GenerateActivityPDF></GenerateActivityPDF>}
+                  path="generate-activity-pdf"
+                ></Route>
+              </Route>
               <Route
-                element={<ManageEvaluators></ManageEvaluators>}
-                path="manage-evaluators"
-              ></Route>
+                element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
+                path="dashboard/evaluator"
+              >
+                <Route
+                  element={<ViewBillForm></ViewBillForm>}
+                  path="view-bill-form"
+                ></Route>
+                <Route
+                  element={<BillPdf></BillPdf>}
+                  path="generate-bill-pdf"
+                ></Route>
+              </Route>
             </Route>
-            <Route
-              element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-              path="dashboard/cec"
-            >
-              <Route
-                element={<EvaluatesCourseActivity></EvaluatesCourseActivity>}
-                path="evaluates-course-activity"
-              ></Route>
-              <Route
-                element={<CourseInSemesterExam></CourseInSemesterExam>}
-                path="course-in-semester-exam"
-              ></Route>
-              <Route
-                element={<ManageSemesterActivity></ManageSemesterActivity>}
-                path="manage-semester-activity"
-              ></Route>
-              <Route
-                element={<ManageEditRequests></ManageEditRequests>}
-                path="manage-edit-requests"
-              ></Route>
-              <Route
-                element={<GenerateActivityPDF></GenerateActivityPDF>}
-                path="generate-activity-pdf"
-              ></Route>
-            </Route>
-            <Route
-              element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-              path="dashboard/evaluator"
-            >
-              <Route
-                element={<ViewBillForm></ViewBillForm>}
-                path="view-bill-form"
-              ></Route>
-              <Route
-                element={<BillPdf></BillPdf>}
-                path="generate-bill-pdf"
-              ></Route>
-            </Route>
-          </Route>
 
-          <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
-        </Routes>
+            <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
+          </Routes>
+        </DropdownOptionsProvider>
         {message && (
           <div className="absolute bottom-4 right-4">
             <Status variant={message[0]} onClick={(e) => setMessage(null)}>

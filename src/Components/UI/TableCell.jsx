@@ -47,7 +47,7 @@ const TableCell = (prop) => {
   if (col.type == 'dropdown') {
     inputBlock = (
       <Dropdown
-        options={cellOptions.doptions[col.col]}
+        options={cellOptions}
         search={true}
         name={col.col}
         onSelect={handleSelect}

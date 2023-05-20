@@ -5,59 +5,20 @@ import Tablenew from "../../UI/Tablenew";
 import patterns from "../../Resources/RegexPatterns";
 // import Inputcmp from "../../Inputcmp";
 // import Temptable from "../../UI/Temptable";
-
+console.log(sessionStorage.getItem("sector_or_program"));
+const x= sessionStorage.getItem("sector_or_program");
+console.log(JSON.parse(x));
 const tableCols = [
   {
     col: "activity_type_id",
     type: "dropdown",
-    values: [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-    ],
+    values: JSON.parse(sessionStorage.getItem("activity_type_id")),
     required: true,
   },
   {
     col: "sector_or_program",
     type: "dropdown",
-    values: [
-      "Honours/Masters",
-      "M.Phil",
-      "PhD",
-      "Terminal",
-      "Certificate course",
-      "M.Phil thesis",
-      "Masters thesis",
-      "PhD thesis",
-      "Tutorial",
-      "Lab",
-      "Scrutiny",
-      "Masters (Project/thesis)",
-      "Lab notebook",
-      "Industrial tour",
-      "Honours (1st year to 3rd year)",
-      "Honours (4th year)",
-      "Masters",
-      "By hand",
-      "By computer",
-      "All programs",
-      "Others",
-    ],
+    values: JSON.parse(sessionStorage.getItem("sector_or_program")),
     required: true,
   },
   {
@@ -69,16 +30,7 @@ const tableCols = [
   {
     col: "factor",
     type: "dropdown",
-    values: [
-      "Hours",
-      "No of questions",
-      "No of pages",
-      "No of members",
-      "No of students",
-      "No of exams",
-      "Course",
-      "Bill for question setting",
-    ],
+    values: JSON.parse(sessionStorage.getItem("factor")),
     required: true,
   },
   {

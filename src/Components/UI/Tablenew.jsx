@@ -17,12 +17,9 @@ import TableCell from './TableCell';
 import { useContext } from 'react';
 import { StatusContext } from './StatusContext';
 import { faTableTennisPaddleBall } from '@fortawesome/free-solid-svg-icons';
-import DropdownOptions from '../../Modules/DropdownOptions';
 
 const Tablenew = (prop) => {
   const { tableName, tableCols, loadCondition } = prop; // tableName
-
-  const { doptions, addOptionToDropdown } = DropdownOptions();
 
   // state for tableData
   const [tableData, setTableData] = useState([]); // to set the data after fetching
@@ -329,11 +326,7 @@ const Tablenew = (prop) => {
                   // TableCell is each cell on the table that contains different data or input
                   <TableCell
                     key={colIndex + row.key}
-                    cellOptions={
-                      col.type == 'dropdown'
-                        ? { doptions, addOptionToDropdown }
-                        : null
-                    }
+                    cellOptions={null}
                     row={row}
                     pvalue={col.col != 'No' && row[col.col]}
                     col={col}

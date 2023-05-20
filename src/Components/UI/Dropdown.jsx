@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { React, useContext } from 'react';
 import {
   ArrowDownIcon,
   ChevronDownIcon,
@@ -8,10 +8,16 @@ import {
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import {
+  DropdownOptionsContext,
+  DropdownOptionsProvider,
+} from '../DropdownOptionsContext';
 // import { DashboardContext } from '../UI/DashboardContext.jsx';
-import DropdownOptions from '../../Modules/DropdownOptions';
 
 const Dropdown = (prop) => {
+  const { dropdownOptions, updateDropdownOptions } = useContext(
+    DropdownOptionsContext
+  );
   const {
     options,
     name,
@@ -59,7 +65,9 @@ const Dropdown = (prop) => {
   );
 
   // state for all options
-  const [availOptions, setAvailOptions] = useState([...options]);
+  const [availOptions, setAvailOptions] = useState(
+    options ? [...options] : [...dropdownOptions[name]]
+  );
   // state for filtered options
   const [filtered, setFiltered] = useState([...availOptions]);
 
@@ -115,7 +123,7 @@ const Dropdown = (prop) => {
       onClick={(e) => {
         e.preventDefault();
       }}
-      className={`relative flex w-40 duration-200 ${open && 'z-10'}`}
+      className={`mt-1 relative flex w-40 duration-200 ${open && 'z-10'}`}
       ref={dropdownRef}
       // if clicked, option list will display
     >

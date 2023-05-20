@@ -1,5 +1,6 @@
 import React, { useState, useContext, createContext } from 'react';
 import { DashboardContext } from '../UI/DashboardContext.jsx';
+import { DropdownOptionsProvider } from '../DropdownOptionsContext';
 
 export const DashboardContent = (prop) => {
   const { children } = prop;
