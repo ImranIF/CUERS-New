@@ -11,4 +11,5 @@ export function toBanglaNumber(englishInteger) {
       });
     return banglaInteger;
   }
+  return englishInteger;
 }

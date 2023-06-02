@@ -116,7 +116,7 @@ const ViewBillForm = () => {
     {
       activity_type_id: 4,
       sector_or_program: "অনার্স",
-      factor: ["ছাত্রের সংখ্যা", "অর্ধ/পূর্ণ", "ঘণ্টা"],
+      factor: "ঘণ্টা",
       front: "6.1",
       evaluator_id: sessionStorage.getItem("evaluator_id"),
       semester_no: sessionStorage.getItem("semester_no"),
@@ -132,7 +132,7 @@ const ViewBillForm = () => {
     {
       activity_type_id: 4,
       sector_or_program: "টিউটোরিয়াল",
-      factor: ["ছাত্রের সংখ্যা", "পরীক্ষার সংখ্যা"],
+      factor: "পরীক্ষার সংখ্যা",
       front: "6.3",
       evaluator_id: sessionStorage.getItem("evaluator_id"),
       semester_no: sessionStorage.getItem("semester_no"),
@@ -314,6 +314,7 @@ const ViewBillForm = () => {
           }
         });
       setBillData(data);
+      console.log("Data here", data);
       sessionStorage.setItem("billItem", JSON.stringify(data));
     });
   }, []);
@@ -328,9 +329,6 @@ const ViewBillForm = () => {
           <div className="table-header-group top-0 sticky bg-slate-300">
             {
               <div className="table-row">
-                <div className=" table-cell p-2 border border-slate-900">
-                  কাজের নাম
-                </div>
                 {keys.map((key) => (
                   <div className=" table-cell p-2 border border-slate-900">
                     {key}

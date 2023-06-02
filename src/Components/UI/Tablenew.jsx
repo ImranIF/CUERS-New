@@ -17,6 +17,8 @@ import TableCell from './TableCell';
 import { useContext } from 'react';
 import { StatusContext } from './StatusContext';
 import { faTableTennisPaddleBall } from '@fortawesome/free-solid-svg-icons';
+import { toBanglaNumber } from '../../Modules/toBanglaNumber';
+import { toEnglishNumber } from '../../Modules/toEnglishNumber';
 
 const Tablenew = (prop) => {
   const { tableName, tableCols, loadCondition } = prop; // tableName
@@ -82,18 +84,7 @@ const Tablenew = (prop) => {
             const banglaNums = data.map((item) => {
               for (const key in item) {
                 const englishInteger = item[key];
-                if (
-                  new RegExp('^\\d+(\\.\\d+)?$').test(
-                    englishInteger && englishInteger.toString()
-                  )
-                ) {
-                  const banglaInteger = englishInteger
-                    .toString()
-                    .replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
-                      return '০১২৩৪৫৬৭৮৯'[match];
-                    });
-                  item[key] = banglaInteger;
-                }
+                item[key] = toBanglaNumber(englishInteger);
               }
             });
             const withKey = data.map((item, i) => ({ ...item, key: i }));
@@ -102,6 +93,7 @@ const Tablenew = (prop) => {
             console.log('update data here', data);
             if (data[0]) {
               const updatedTable = [...tableData];
+              console.log('Updated table: ', updatedTable);
               const ucol = changes.updatedData.colType;
               const uValue = changes.updatedData.value;
               updatedTable[changes.index][ucol] = uValue;
@@ -188,6 +180,10 @@ const Tablenew = (prop) => {
   const updateCell = (value, isValid, rowIndex, col) => {
     // Editing realtime except the last index(if it is not uploaded yet [0, 0] or [1,0])
     // console.log("TableLength while editing: ", tableData.length);
+    if (col.type == 'number') {
+      value = toEnglishNumber(value);
+    }
+    console.log('Value', value);
     console.log('validity checking', isValid);
     const colType = col.col;
     if (!isValid && isValid !== undefined) {
