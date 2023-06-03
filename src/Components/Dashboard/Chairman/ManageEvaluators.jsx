@@ -26,19 +26,16 @@ const ManageEvaluators = (prop) => {
     {
       col: 'designation',
       type: 'dropdown',
-      values: JSON.parse(sessionStorage.getItem('designation')),
       required: true,
     },
     {
       col: 'university_name',
       type: 'dropdown',
-      values: JSON.parse(sessionStorage.getItem('university_name')),
       required: true,
     },
     {
       col: 'dept_name',
       type: 'dropdown',
-      values: JSON.parse(sessionStorage.getItem('dept_name')),
       required: true,
     },
     {
@@ -64,7 +61,7 @@ const ManageEvaluators = (prop) => {
     const fetchOptions = async () => {
       console.log('Here nothing happens');
       try {
-        const response = await fetch('/Data/Evaluators.json');
+        const response = await fetch('/Data/dropdown_options.json');
         const data = await response.json();
         console.log('Data from json ', data);
         updateDropdownOptions(data);

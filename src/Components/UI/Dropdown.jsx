@@ -59,15 +59,28 @@ const Dropdown = (prop) => {
   // state for options
   const [open, setOpen] = useState(opened);
 
+  console.log('Options passed?:', name, ': ', options);
+
   // state for selected option, initially the preSelect value will be set if passed
   const [selected, setSelected] = useState(
     !preSelect ? 'Select ' + name : preSelect
   );
 
   // state for all options
-  const [availOptions, setAvailOptions] = useState(
-    options ? [...options] : [...dropdownOptions[name]]
-  );
+  const [availOptions, setAvailOptions] = useState([]);
+
+  useEffect(() => {
+    const fillData = () => {
+      if (options) {
+        setAvailOptions([...options]);
+      } else if (dropdownOptions && dropdownOptions[name]) {
+        setAvailOptions([...dropdownOptions[name]]);
+      }
+    };
+    if (availOptions.length == 0) {
+      fillData();
+    }
+  }, [sessionStorage.getItem(name), dropdownOptions[name], options]);
   // state for filtered options
   const [filtered, setFiltered] = useState([...availOptions]);
 
@@ -202,7 +215,7 @@ const Dropdown = (prop) => {
               <li
                 ref={lastOptionRef}
                 key={index}
-                className={`flex-auto content-start w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
+                className={`flex-auto text-left content-start w-full hover:bg-slate-200 cursor-pointer p-2 rounded-md
                ${
                  String(selected)
                    .toLowerCase()

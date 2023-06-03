@@ -180,9 +180,7 @@ const Tablenew = (prop) => {
   const updateCell = (value, isValid, rowIndex, col) => {
     // Editing realtime except the last index(if it is not uploaded yet [0, 0] or [1,0])
     // console.log("TableLength while editing: ", tableData.length);
-    if (col.type == 'number') {
-      value = toEnglishNumber(value);
-    }
+
     console.log('Value', value);
     console.log('validity checking', isValid);
     const colType = col.col;
@@ -200,6 +198,9 @@ const Tablenew = (prop) => {
           String(value) !== String(tableData[rowIndex][colType]) &&
           String(value) !== ''
         ) {
+          if (col.type == 'number') {
+            value = toEnglishNumber(value);
+          }
           console.log(String(value), String(tableData[rowIndex][colType]));
           const editedRow = { ...tableData[rowIndex] };
           delete editedRow.key;
@@ -223,7 +224,9 @@ const Tablenew = (prop) => {
         newRow[0] === 1 &&
         newRow[1] === 0
       ) {
-        // updating the lastRow as the user edits it
+        if (col.type == 'number') {
+          value = toEnglishNumber(value);
+        }
         console.log(tableData[rowIndex]);
         let newTableData = Object.assign([], tableData);
         newTableData[rowIndex][colType] = value;
@@ -243,12 +246,6 @@ const Tablenew = (prop) => {
             operation: 'insert',
             changeState: !newRow[0],
           });
-          // const addedStatus = processDB(tableName, rowIndex, "insert");
-          // if (addedStatus) {
-          //   setStatus(["s", "New row saved!"]);
-          //   setNewRow([0, 0]);
-          //   // user can add another row
-          // }
         }
       }
     }
@@ -322,7 +319,7 @@ const Tablenew = (prop) => {
                   // TableCell is each cell on the table that contains different data or input
                   <TableCell
                     key={colIndex + row.key}
-                    cellOptions={null}
+                    cellOptions={col.values ? col.values : null}
                     row={row}
                     pvalue={col.col != 'No' && row[col.col]}
                     col={col}

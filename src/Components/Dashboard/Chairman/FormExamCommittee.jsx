@@ -1,5 +1,5 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/solid';
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import Buttoncmp from '../../UI/Buttoncmp';
 import Inputcmp from '../../UI/Inputcmp';
 import Table from '../../UI/Table';
@@ -7,6 +7,8 @@ import { useState } from 'react';
 import Dropdown from '../../UI/Dropdown';
 import Tablenew from '../../UI/Tablenew';
 import patterns from '../../Resources/RegexPatterns';
+
+import { DropdownOptionsContext } from '../../DropdownOptionsContext';
 const tableCols = [
   // { col: "No", type: "row", required: true, },
   {
@@ -19,19 +21,16 @@ const tableCols = [
   {
     col: 'role',
     type: 'dropdown',
-    values: ['সদস্য', 'সভাপতি', 'বহিস্থঃ সদস্য'],
     required: true,
   },
   {
     col: 'program',
     type: 'dropdown',
-    values: ['Honours', 'Masters', 'M.Phil', 'PhD'],
     required: true,
   },
   {
     col: 'semester_no',
     type: 'dropdown',
-    values: [1, 2, 3, 4, 5, 6, 7, 8],
     required: true,
   },
   {
@@ -49,8 +48,26 @@ const tableCols = [
   },
 ];
 
-// const peoples = ["1","2", "3", "4", "5"];
 const FormExamCommittee = () => {
+  // const peoples = ["1","2", "3", "4", "5"];
+  const { dropdownOptions, updateDropdownOptions } = useContext(
+    DropdownOptionsContext
+  );
+  useEffect(() => {
+    const fetchOptions = async () => {
+      console.log('Here nothing happens');
+      try {
+        const response = await fetch('/Data/dropdown_options.json');
+        const data = await response.json();
+        console.log('Data from json ', data);
+        updateDropdownOptions(data);
+        console.log('Data from json to context: ', dropdownOptions);
+      } catch (error) {
+        console.error('Error fetching options:', error);
+      }
+    };
+    fetchOptions();
+  }, []);
   const programOptions = ['BSc', 'MSc'];
   return (
     <div className="">
