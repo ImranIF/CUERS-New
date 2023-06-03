@@ -6,7 +6,6 @@ const DropdownOptionsProvider = ({ children }) => {
   const [dropdownOptions, setDropdownOptions] = useState({});
 
   const updateDropdownOptions = (options) => {
-    console.log('Options are', options);
     setDropdownOptions(options);
   };
 

@@ -36,7 +36,6 @@ import Spin from './Components/UI/Spin';
 import { GenerateActivityPDF } from './Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF';
 import { fetchData } from './Components/fetchModule';
 import BillPdf from './Components/Dashboard/Evaluator/BillPdf';
-import axios from 'axios';
 import { DashboardContext } from './Components/UI/DashboardContext';
 import {
   DropdownOptionsContext,

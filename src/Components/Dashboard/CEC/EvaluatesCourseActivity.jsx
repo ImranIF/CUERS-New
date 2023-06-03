@@ -8,25 +8,24 @@ import patterns from '../../Resources/RegexPatterns';
 //     console.log(dropDownCol);
 // });
 
-
 //code fetch the dd
 
 const tablecols = [
   {
-    col: "activity_type_id",
-    type: "dropdown",
-    values: JSON.parse(sessionStorage.getItem("activity_type_id")),
+    col: 'activity_type_id',
+    type: 'dropdown',
+    mapping: true,
     required: true,
   },
   {
-    col: "sector_or_program",
-    type: "dropdown",
-    values: JSON.parse(sessionStorage.getItem("sector_or_program")),
+    col: 'sector_or_program',
+    type: 'dropdown',
     required: true,
   },
   {
     col: 'evaluator_id',
     type: 'number',
+    mapping: true,
     regex: patterns.bengaliPattern.number,
     regexMessage: 'e.g. 1013',
 
@@ -36,19 +35,16 @@ const tablecols = [
     col: 'course_id',
     type: 'dropdown',
     //need to be dynamic
-    values: JSON.parse(sessionStorage.getItem("course_id")),
     required: true,
   },
   {
-    col: "semester_no",
-    type: "dropdown",
-    values: JSON.parse(sessionStorage.getItem("semester_no")),
+    col: 'semester_no',
+    type: 'dropdown',
     required: true,
   },
   {
-    col: "factor",
-    type: "dropdown",
-    values: JSON.parse(sessionStorage.getItem("factor")),
+    col: 'factor',
+    type: 'dropdown',
     required: true,
   },
   {

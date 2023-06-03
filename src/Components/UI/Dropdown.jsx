@@ -12,6 +12,7 @@ import {
   DropdownOptionsContext,
   DropdownOptionsProvider,
 } from '../DropdownOptionsContext';
+import { toEnglishNumber } from '../../Modules/toEnglishNumber';
 // import { DashboardContext } from '../UI/DashboardContext.jsx';
 
 const Dropdown = (prop) => {
@@ -28,6 +29,7 @@ const Dropdown = (prop) => {
     opened,
     preSelect,
     variant,
+    col,
   } = prop;
 
   // const { createdOp, setCreatedOp } = useContext(DashboardContext);
@@ -48,7 +50,7 @@ const Dropdown = (prop) => {
       'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-slate-200 active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1 ';
   } else if (variant && variant == 'table') {
     inputStyle =
-      'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-transparent active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1';
+      'duration-200 mt-1  border-0 ring-0 ring-transparent block w-full rounded-md bg-transparent active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1';
   }
   // to track the input value while user types
   const [inputValue, setInputValue] = useState('');
@@ -58,8 +60,6 @@ const Dropdown = (prop) => {
 
   // state for options
   const [open, setOpen] = useState(opened);
-
-  console.log('Options passed?:', name, ': ', options);
 
   // state for selected option, initially the preSelect value will be set if passed
   const [selected, setSelected] = useState(
@@ -74,13 +74,22 @@ const Dropdown = (prop) => {
       if (options) {
         setAvailOptions([...options]);
       } else if (dropdownOptions && dropdownOptions[name]) {
-        setAvailOptions([...dropdownOptions[name]]);
+        if (
+          typeof dropdownOptions[name] === 'object' &&
+          dropdownOptions[name] !== null
+        ) {
+          const optionsArray = Object.values(dropdownOptions[name]);
+          setAvailOptions([...optionsArray]);
+          if (col && col.mapping) {
+            setSelected(dropdownOptions[name][toEnglishNumber(preSelect)]);
+          }
+        }
       }
     };
     if (availOptions.length == 0) {
       fillData();
     }
-  }, [sessionStorage.getItem(name), dropdownOptions[name], options]);
+  }, [dropdownOptions, name]);
   // state for filtered options
   const [filtered, setFiltered] = useState([...availOptions]);
 

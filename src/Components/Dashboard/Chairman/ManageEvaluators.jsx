@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useRef } from 'react';
 import Buttoncmp from '../../UI/Buttoncmp';
 import Tablenew from '../../UI/Tablenew';
+
+import axios from 'axios';
 import patterns from '../../Resources/RegexPatterns';
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
 
@@ -58,19 +60,36 @@ const ManageEvaluators = (prop) => {
   );
 
   useEffect(() => {
-    const fetchOptions = async () => {
-      console.log('Here nothing happens');
+    const postData = async () => {
       try {
-        const response = await fetch('/Data/dropdown_options.json');
-        const data = await response.json();
-        console.log('Data from json ', data);
-        updateDropdownOptions(data);
-        console.log('Data from json to context: ', dropdownOptions);
+        const params = {
+          dynamicOps: false,
+        };
+        let response = await fetch(
+          'http://localhost:3000/users/processDropDownData',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: { params } }),
+          }
+        );
+
+        if (response.ok) {
+          let data = await response.json();
+          let parsedData = JSON.parse(data);
+          updateDropdownOptions(parsedData);
+          // sessionStorage.setItem(storageLabel, data);
+        } else {
+          throw new Error('Error posting data');
+        }
       } catch (error) {
-        console.error('Error fetching options:', error);
+        console.error('Error posting data:', error);
       }
     };
-    fetchOptions();
+
+    postData();
   }, []);
 
   useEffect(() => {

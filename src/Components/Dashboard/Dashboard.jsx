@@ -82,7 +82,6 @@ const Dashboard = (prop) => {
 
   //Button added for Sidebar when you clicked the sidebar button. And Check the user.
   const clickme = (activity, e) => {
-    console.log(activity, window.location.pathname);
     // CEC
     setActive(`${activity.route}`);
     if (window.location.pathname.includes('cec')) {

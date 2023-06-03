@@ -6,6 +6,7 @@ import Table from '../../UI/Table';
 import { useState } from 'react';
 import Dropdown from '../../UI/Dropdown';
 import Tablenew from '../../UI/Tablenew';
+import axios from 'axios';
 import patterns from '../../Resources/RegexPatterns';
 
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
@@ -13,9 +14,8 @@ const tableCols = [
   // { col: "No", type: "row", required: true, },
   {
     col: 'evaluator_id',
-    type: 'number',
-    regex: patterns.bengaliPattern.number,
-    regexMessage: 'e.g. 1013',
+    type: 'dropdown',
+    mapping: true,
     required: true,
   },
   {
@@ -53,21 +53,45 @@ const FormExamCommittee = () => {
   const { dropdownOptions, updateDropdownOptions } = useContext(
     DropdownOptionsContext
   );
+
+  const dynamicCol = ['evaluator_id', 'evaluator_name'];
   useEffect(() => {
-    const fetchOptions = async () => {
-      console.log('Here nothing happens');
+    const postData = async () => {
       try {
-        const response = await fetch('/Data/dropdown_options.json');
-        const data = await response.json();
-        console.log('Data from json ', data);
-        updateDropdownOptions(data);
-        console.log('Data from json to context: ', dropdownOptions);
+        const params = {
+          dynamicOps: true,
+          tableName: 'Evaluator',
+          operation: 'load',
+          cols: [dynamicCol],
+          storageLabel: 'evaluator_id',
+        };
+        let response = await fetch(
+          'http://localhost:3000/users/processDropDownData',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: { params } }),
+          }
+        );
+
+        if (response.ok) {
+          let data = await response.json();
+          const parsedData = JSON.parse(data);
+          updateDropdownOptions(parsedData);
+          // sessionStorage.setItem(storageLabel, data);
+        } else {
+          throw new Error('Error posting data');
+        }
       } catch (error) {
-        console.error('Error fetching options:', error);
+        console.error('Error posting data:', error);
       }
     };
-    fetchOptions();
+
+    postData();
   }, []);
+
   const programOptions = ['BSc', 'MSc'];
   return (
     <div className="">
