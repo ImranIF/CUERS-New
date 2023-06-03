@@ -8,7 +8,7 @@
 - [Features](#features)
 - [Acknowledgements](#acknowledgements)
 ## Overview
-**CUERS** is a web-based digital exam remuneration system with a centralized database, containing all information about the evaluators (teachers) and exam-committee members of each department of University of Chittagong. In an effort to generate the remuneration forms and subsequently the bills of each evaluator correctly, the system significantly reduces the workload and time needed by digitizing the whole process.
+**CUERS** is a web-based digital exam remuneration system with a centralized database, containing all information about the evaluators (teachers) and exam-committee members of each department of the University of Chittagong. In an effort to generate the remuneration forms and subsequently the bills of each evaluator correctly, the system significantly reduces the workload and time needed by digitizing the whole process.
 
 ## Getting Started
 These instructions will provide you with a local copy of the project for deployment or testing purposes. Make sure to following the steps listed below:
@@ -48,21 +48,21 @@ npm run dev
 * Generate full-fledged remuneration bills, by automating bill calculations from provided data.
 
 <div class = "img-display">
-<img src = "src/assets/Bill Form.png" width="200px" height="400px">
+<img src = "src/assets/Bill Form.png" width="200px" height="400px" align = "center">
 </div>
 <div class="img-caption" align="center"><br>Bill Form of an Evaluator</div>
 
 * Allow insertion, deletion and/or updating data records dynamically and handling noisy data.
 
 ## Technologies Used
-<div class = "img-display">
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" ><img src = "src/assets/javascript.svg" id= "js" 
+<div class = "img-display" align = "center">
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" ><img src = "src/assets/javascript.svg" id= "js" height="60px" width="60px"
 /></a>
-<a href="https://tailwindcss.com/"><img src = "src/assets/tailwindcss.svg" id = "twcss"
+<a href="https://tailwindcss.com/"><img src = "src/assets/tailwindcss.svg" id = "twcss" height="60px" width="60px"
 /> </a>
-<a href = "https://react.dev/"><img src = "src/assets/react.svg" id="react"
+<a href = "https://react.dev/"><img src = "src/assets/react.svg" id="react" height="60px" width="60px"
 /> </a>
-<a href="https://vitejs.dev/"><img src = "src/assets/vitejs.svg" id="vite"
+<a href="https://vitejs.dev/"><img src = "src/assets/vitejs.svg" id="vite" height="60px" width="60px"
 /> </a>
 </div>
 

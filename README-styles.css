@@ -27,7 +27,7 @@
     flex: 1 1 0;
   }
 
-  #js, #twcss, #react, #vite{
+  #js, #react{
     padding: 0 20px;
     height: 60px;
     width: 60px;
