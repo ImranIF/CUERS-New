@@ -19,6 +19,7 @@ import i18n from 'i18next';
 import { useTranslation, initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import UserInfo from '../UI/UserInfo';
+import { useEffect } from 'react';
 i18n
   .use(Backend) // passes i18n down to react-i18next
   .use(initReactI18next)
@@ -35,43 +36,53 @@ i18n
       loadPath: '../../locales/{{lng}}/bn.json',
     },
   });
-const menus = [
-  {
-    person: 'Chairman',
-    activity: [
-      { menuText: 'Manage evaluators', route: 'manage-evaluators' },
-      { menuText: 'Exam committee info', route: 'form-exam-committee' },
-      { menuText: 'Manage activity bill', route: 'fill-activity-bill' },
-    ],
-  },
-  {
-    person: 'Chairman of exam committee',
-    activity: [
-      {
-        menuText: 'Manage course activity',
-        route: 'evaluates-course-activity',
-      },
-      {
-        menuText: 'Manage semester activity',
-        route: 'manage-semester-activity',
-      },
-      { menuText: 'Manage edit requests', route: 'manage-edit-requests' },
-      { menuText: 'Generate activity PDF', route: 'generate-activity-pdf' },
-    ],
-  },
-  {
-    person: 'Evaluator',
-    activity: [
-      { menuText: 'View Bill forms', route: 'view-bill-form' },
-      {
-        menuText: 'Generate bill pdf',
-        route: 'generate-bill-pdf',
-      },
-    ],
-  },
-];
-
 const Dashboard = (prop) => {
+  const [generateDisabled, setGenerateDisabled] = useState(true);
+  const menus = [
+    {
+      person: 'Chairman',
+      activity: [
+        { menuText: 'Manage evaluators', route: 'manage-evaluators' },
+        { menuText: 'Exam committee info', route: 'form-exam-committee' },
+        { menuText: 'Manage activity bill', route: 'fill-activity-bill' },
+      ],
+    },
+    {
+      person: 'Chairman of exam committee',
+      activity: [
+        {
+          menuText: 'Manage course activity',
+          route: 'evaluates-course-activity',
+        },
+        {
+          menuText: 'Manage semester activity',
+          route: 'manage-semester-activity',
+        },
+        { menuText: 'Manage edit requests', route: 'manage-edit-requests' },
+        { menuText: 'Generate activity PDF', route: 'generate-activity-pdf' },
+      ],
+    },
+    {
+      person: 'Evaluator',
+      activity: [
+        { menuText: 'View Bill forms', route: 'view-bill-form' },
+        {
+          menuText: 'Generate bill pdf',
+          route: 'generate-bill-pdf',
+          disabled: generateDisabled,
+        },
+      ],
+    },
+  ];
+
+  useEffect(() => {
+    if (sessionStorage.getItem('billItem')) {
+      setGenerateDisabled(false);
+    } else {
+      setGenerateDisabled(true);
+    }
+  }, [sessionStorage.getItem('billItem')]);
+
   const { t } = useTranslation();
   const { userInfo, showStatus } = prop;
   const [active, setActive] = useState('');
@@ -123,6 +134,11 @@ const Dashboard = (prop) => {
                       value={t(option.menuText)}
                       onClick={() => clickme(option)}
                       isActive={active === option.route}
+                      disabled={
+                        option.menuText == 'Generate bill pdf'
+                          ? generateDisabled
+                          : false
+                      }
                     >
                       <HashtagIcon></HashtagIcon>
                     </Buttoncmp>

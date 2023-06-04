@@ -14,6 +14,7 @@ const ManageEvaluators = (prop) => {
     {
       col: 'evaluator_id',
       type: 'number',
+      data_type: 'number',
       regex: patterns.bengaliPattern.number,
       regexMessage: 'e.g. 1013',
       required: true,
@@ -21,6 +22,7 @@ const ManageEvaluators = (prop) => {
     {
       col: 'evaluator_name',
       type: 'text',
+      data_type: 'text',
       regex: patterns.bengaliPattern.textWithSpace,
       regexMessage: 'e.g. Dr. Rudra Pratap Deb Nath',
       required: true,
@@ -29,16 +31,19 @@ const ManageEvaluators = (prop) => {
       col: 'designation',
       type: 'dropdown',
       required: true,
+      addNew: true,
     },
     {
       col: 'university_name',
       type: 'dropdown',
       required: true,
+      addNew: true,
     },
     {
       col: 'dept_name',
       type: 'dropdown',
       required: true,
+      addNew: true,
     },
     {
       col: 'phone_no',
@@ -54,10 +59,8 @@ const ManageEvaluators = (prop) => {
       variant: 'dasi',
     },
   ];
-  const [addStatus, setAddStatus] = useState({ type: null, optionValue: null });
-  const { dropdownOptions, updateDropdownOptions } = useContext(
-    DropdownOptionsContext
-  );
+  const { dropdownOptions, updateDropdownOptions, createdNew, setCreatedNew } =
+    useContext(DropdownOptionsContext);
 
   useEffect(() => {
     const postData = async () => {
@@ -90,26 +93,8 @@ const ManageEvaluators = (prop) => {
     };
 
     postData();
-  }, []);
+  }, [createdNew]);
 
-  useEffect(() => {
-    async function addNewOption(type, optionValue) {
-      const response = await fetch('http://localhost:3000/users/addNewOption', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ addStatus }),
-      });
-      const data = await response.json();
-      console.log(data);
-      //return data;
-    }
-  }, [addStatus]);
-
-  const handleNewOption = (newOption, type) => {
-    setAddStatus({ type: type, optionValue: newOption });
-  };
   const dosomething = (e) => {
     e.preventDefault();
   };

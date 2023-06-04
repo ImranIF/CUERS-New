@@ -15,6 +15,7 @@ const tableCols = [
   {
     col: 'evaluator_id',
     type: 'dropdown',
+    data_type: 'number',
     mapping: true,
     required: true,
   },
@@ -22,16 +23,19 @@ const tableCols = [
     col: 'role',
     type: 'dropdown',
     required: true,
+    addNew: true,
   },
   {
     col: 'program',
     type: 'dropdown',
     required: true,
+    addNew: true,
   },
   {
     col: 'semester_no',
     type: 'dropdown',
     required: true,
+    addNew: true,
   },
   {
     col: 'year',

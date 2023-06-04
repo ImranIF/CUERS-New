@@ -22,16 +22,19 @@ const tableCols = [
     col: 'sector_or_program',
     type: 'dropdown',
     required: true,
+    addNew: true,
   },
   {
     col: 'category',
     type: 'dropdown',
     required: true,
+    addNew: true,
   },
   {
     col: 'factor',
     type: 'dropdown',
     required: true,
+    addNew: true,
   },
   {
     col: 'quantity_initial',

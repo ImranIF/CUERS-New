@@ -16,7 +16,7 @@ import { toEnglishNumber } from '../../Modules/toEnglishNumber';
 // import { DashboardContext } from '../UI/DashboardContext.jsx';
 
 const Dropdown = (prop) => {
-  const { dropdownOptions, updateDropdownOptions } = useContext(
+  const { dropdownOptions, updateDropdownOptions, addNewOption } = useContext(
     DropdownOptionsContext
   );
   const {
@@ -50,7 +50,7 @@ const Dropdown = (prop) => {
       'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-slate-200 active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1 ';
   } else if (variant && variant == 'table') {
     inputStyle =
-      'duration-200 mt-1  border-0 ring-0 ring-transparent block w-full rounded-md bg-transparent active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1';
+      'duration-200 mt-1 border-0 ring-0 ring-transparent block w-full rounded-md bg-transparent active:ring-2 active:ring-slate-500  focus:ring-slate-500 focus:bg-white focus:outline-none focus:ring-offset-1 focus:ring-1';
   }
   // to track the input value while user types
   const [inputValue, setInputValue] = useState('');
@@ -66,8 +66,15 @@ const Dropdown = (prop) => {
     !preSelect ? 'Select ' + name : preSelect
   );
 
+  const [created, setCreated] = useState(false);
   // state for all options
   const [availOptions, setAvailOptions] = useState([]);
+
+  function addOptionToDropdown(name, inputValue) {
+    const added = addNewOption(name, inputValue);
+    setCreated(!created);
+  }
+  // state for remembering creation of option
 
   useEffect(() => {
     const fillData = () => {
@@ -89,12 +96,9 @@ const Dropdown = (prop) => {
     if (availOptions.length == 0) {
       fillData();
     }
-  }, [dropdownOptions, name]);
+  }, [dropdownOptions, name, created]);
   // state for filtered options
   const [filtered, setFiltered] = useState([...availOptions]);
-
-  // state for remembering creation of option
-  const [created, setCreated] = useState(false);
 
   // while options are open, clicking outside will close the option list
   // Showing dropdown options at top at the bottom portion of the page
@@ -145,7 +149,7 @@ const Dropdown = (prop) => {
       onClick={(e) => {
         e.preventDefault();
       }}
-      className={`mt-1 relative flex w-40 duration-200 ${open && 'z-10'}`}
+      className={`mt-1 relative flex w-full duration-200 ${open && 'z-10'}`}
       ref={dropdownRef}
       // if clicked, option list will display
     >
@@ -251,15 +255,13 @@ const Dropdown = (prop) => {
         </ul>
 
         {/* The create new button , only at table*/}
-        {variant == 'table' && filtered.length == 0 && (
+        {variant == 'table' && filtered.length == 0 && col.addNew == true && (
           <div
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
               if (!availOptions.includes(inputValue)) {
-                // setAvailOptions([...availOptions, inputValue]);
                 addOptionToDropdown(name, inputValue);
-                setCreatedOp(!createdOp);
               }
               // setFiltered([...filtered, inputValue]);
             }}

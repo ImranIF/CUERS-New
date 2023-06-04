@@ -43,7 +43,11 @@ const TableCell = (prop) => {
 
     console.log('To store: ', toStore);
     if (col.mapping && col.mapping == true) {
-      toStore = parseInt(toEnglishNumber(toStore.split('-')[0].trim()));
+      if (col.data_type && col.data_type == 'number')
+        toStore = parseInt(toEnglishNumber(toStore.split('-')[0].trim()));
+      else {
+        toStore = toEnglishNumber(toStore.split('-')[0].trim());
+      }
     }
     onUpdate(toStore);
     setValue(toStore);
