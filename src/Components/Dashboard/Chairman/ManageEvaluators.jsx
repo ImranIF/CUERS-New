@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useRef } from 'react';
 import Buttoncmp from '../../UI/Buttoncmp';
 import Tablenew from '../../UI/Tablenew';
+
+import axios from 'axios';
 import patterns from '../../Resources/RegexPatterns';
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
 
@@ -12,6 +14,7 @@ const ManageEvaluators = (prop) => {
     {
       col: 'evaluator_id',
       type: 'number',
+      data_type: 'number',
       regex: patterns.bengaliPattern.number,
       regexMessage: 'e.g. 1013',
       required: true,
@@ -19,6 +22,7 @@ const ManageEvaluators = (prop) => {
     {
       col: 'evaluator_name',
       type: 'text',
+      data_type: 'text',
       regex: patterns.bengaliPattern.textWithSpace,
       regexMessage: 'e.g. Dr. Rudra Pratap Deb Nath',
       required: true,
@@ -27,16 +31,19 @@ const ManageEvaluators = (prop) => {
       col: 'designation',
       type: 'dropdown',
       required: true,
+      addNew: true,
     },
     {
       col: 'university_name',
       type: 'dropdown',
       required: true,
+      addNew: true,
     },
     {
       col: 'dept_name',
       type: 'dropdown',
       required: true,
+      addNew: true,
     },
     {
       col: 'phone_no',
@@ -52,45 +59,42 @@ const ManageEvaluators = (prop) => {
       variant: 'dasi',
     },
   ];
-  const [addStatus, setAddStatus] = useState({ type: null, optionValue: null });
-  const { dropdownOptions, updateDropdownOptions } = useContext(
-    DropdownOptionsContext
-  );
+  const { dropdownOptions, updateDropdownOptions, createdNew, setCreatedNew } =
+    useContext(DropdownOptionsContext);
 
   useEffect(() => {
-    const fetchOptions = async () => {
-      console.log('Here nothing happens');
+    const postData = async () => {
       try {
-        const response = await fetch('/Data/dropdown_options.json');
-        const data = await response.json();
-        console.log('Data from json ', data);
-        updateDropdownOptions(data);
-        console.log('Data from json to context: ', dropdownOptions);
+        const params = {
+          dynamicOps: false,
+        };
+        let response = await fetch(
+          'http://localhost:3000/users/processDropDownData',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: { params } }),
+          }
+        );
+
+        if (response.ok) {
+          let data = await response.json();
+          let parsedData = JSON.parse(data);
+          updateDropdownOptions(parsedData);
+          // sessionStorage.setItem(storageLabel, data);
+        } else {
+          throw new Error('Error posting data');
+        }
       } catch (error) {
-        console.error('Error fetching options:', error);
+        console.error('Error posting data:', error);
       }
     };
-    fetchOptions();
-  }, []);
 
-  useEffect(() => {
-    async function addNewOption(type, optionValue) {
-      const response = await fetch('http://localhost:3000/users/addNewOption', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ addStatus }),
-      });
-      const data = await response.json();
-      console.log(data);
-      //return data;
-    }
-  }, [addStatus]);
+    postData();
+  }, [createdNew]);
 
-  const handleNewOption = (newOption, type) => {
-    setAddStatus({ type: type, optionValue: newOption });
-  };
   const dosomething = (e) => {
     e.preventDefault();
   };

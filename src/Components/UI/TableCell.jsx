@@ -6,8 +6,14 @@ import Dropdown from './Dropdown';
 import Inputcmp from './Inputcmp';
 import { StatusContext } from './StatusContext';
 import { DashboardContext } from './DashboardContext';
+import { DropdownOptionsContext } from '../DropdownOptionsContext';
+import { toEnglishNumber } from '../../Modules/toEnglishNumber';
 
 const TableCell = (prop) => {
+  const { dropdownOptions, updateDropdownOptions } = useContext(
+    DropdownOptionsContext
+  );
+
   // const { setOverflow } = useContext(DashboardContext);
   const {
     col,
@@ -33,8 +39,18 @@ const TableCell = (prop) => {
   // So, when any value is selected from the dropdownlist, we're doing
   // something here...
   function handleSelect(value) {
-    onUpdate(value);
-    setValue(value);
+    let toStore = value;
+
+    console.log('To store: ', toStore);
+    if (col.mapping && col.mapping == true) {
+      if (col.data_type && col.data_type == 'number')
+        toStore = parseInt(toEnglishNumber(toStore.split('-')[0].trim()));
+      else {
+        toStore = toEnglishNumber(toStore.split('-')[0].trim());
+      }
+    }
+    onUpdate(toStore);
+    setValue(toStore);
     showInput(false);
   }
   // For checking valid input
@@ -53,6 +69,7 @@ const TableCell = (prop) => {
         onSelect={handleSelect}
         opened={false}
         preSelect={value}
+        col={col}
         variant="table"
       ></Dropdown>
     );

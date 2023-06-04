@@ -12,10 +12,11 @@ import {
   DropdownOptionsContext,
   DropdownOptionsProvider,
 } from '../DropdownOptionsContext';
+import { toEnglishNumber } from '../../Modules/toEnglishNumber';
 // import { DashboardContext } from '../UI/DashboardContext.jsx';
 
 const Dropdown = (prop) => {
-  const { dropdownOptions, updateDropdownOptions } = useContext(
+  const { dropdownOptions, updateDropdownOptions, addNewOption } = useContext(
     DropdownOptionsContext
   );
   const {
@@ -28,6 +29,7 @@ const Dropdown = (prop) => {
     opened,
     preSelect,
     variant,
+    col,
   } = prop;
 
   // const { createdOp, setCreatedOp } = useContext(DashboardContext);
@@ -59,33 +61,44 @@ const Dropdown = (prop) => {
   // state for options
   const [open, setOpen] = useState(opened);
 
-  console.log('Options passed?:', name, ': ', options);
-
   // state for selected option, initially the preSelect value will be set if passed
   const [selected, setSelected] = useState(
     !preSelect ? 'Select ' + name : preSelect
   );
 
+  const [created, setCreated] = useState(false);
   // state for all options
   const [availOptions, setAvailOptions] = useState([]);
+
+  function addOptionToDropdown(name, inputValue) {
+    const added = addNewOption(name, inputValue);
+    setCreated(!created);
+  }
+  // state for remembering creation of option
 
   useEffect(() => {
     const fillData = () => {
       if (options) {
         setAvailOptions([...options]);
       } else if (dropdownOptions && dropdownOptions[name]) {
-        setAvailOptions([...dropdownOptions[name]]);
+        if (
+          typeof dropdownOptions[name] === 'object' &&
+          dropdownOptions[name] !== null
+        ) {
+          const optionsArray = Object.values(dropdownOptions[name]);
+          setAvailOptions([...optionsArray]);
+          if (col && col.mapping) {
+            setSelected(dropdownOptions[name][toEnglishNumber(preSelect)]);
+          }
+        }
       }
     };
     if (availOptions.length == 0) {
       fillData();
     }
-  }, [sessionStorage.getItem(name), dropdownOptions[name], options]);
+  }, [dropdownOptions, name, created]);
   // state for filtered options
   const [filtered, setFiltered] = useState([...availOptions]);
-
-  // state for remembering creation of option
-  const [created, setCreated] = useState(false);
 
   // while options are open, clicking outside will close the option list
   // Showing dropdown options at top at the bottom portion of the page
@@ -136,7 +149,7 @@ const Dropdown = (prop) => {
       onClick={(e) => {
         e.preventDefault();
       }}
-      className={`mt-1 relative flex w-40 duration-200 ${open && 'z-10'}`}
+      className={`mt-1 relative flex w-full duration-200 ${open && 'z-10'}`}
       ref={dropdownRef}
       // if clicked, option list will display
     >
@@ -242,15 +255,13 @@ const Dropdown = (prop) => {
         </ul>
 
         {/* The create new button , only at table*/}
-        {variant == 'table' && filtered.length == 0 && (
+        {variant == 'table' && filtered.length == 0 && col.addNew == true && (
           <div
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
               if (!availOptions.includes(inputValue)) {
-                // setAvailOptions([...availOptions, inputValue]);
                 addOptionToDropdown(name, inputValue);
-                setCreatedOp(!createdOp);
               }
               // setFiltered([...filtered, inputValue]);
             }}

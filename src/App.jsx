@@ -36,7 +36,6 @@ import Spin from './Components/UI/Spin';
 import { GenerateActivityPDF } from './Components/Dashboard/CEC/PdfGeneration/GenerateActivityPDF';
 import { fetchData } from './Components/fetchModule';
 import BillPdf from './Components/Dashboard/Evaluator/BillPdf';
-import axios from 'axios';
 import { DashboardContext } from './Components/UI/DashboardContext';
 import {
   DropdownOptionsContext,
@@ -79,57 +78,6 @@ function App() {
     'factor',
     'category',
   ];
-  // dropDownCols.map((dropDownCol) => {
-  //   if (sessionStorage.getItem(dropDownCol) === null) {
-  //     const postData = async () => {
-  //       try {
-  //         const params = {
-  //           tableName: 'Activity',
-  //           operation: 'load',
-  //           colName: { dropDownCol },
-  //         };
-  //         console.log(params);
-  //         let response = await axios.post(
-  //           'http://localhost:3000/users/processDropDownData',
-  //           { data: { params } }
-  //         );
-
-  //         console.log('Post response:', response.data);
-
-  //         sessionStorage.setItem(`${dropDownCol}`, response.data);
-  //       } catch (error) {
-  //         console.error('Error posting data:', error);
-  //       }
-  //     };
-  //     console.log(postData());
-  //   }
-  // });
-  // const dropDownCols2 = ['designation', 'dept_name', 'university_name'];
-  // dropDownCols2.map((dropDownCol) => {
-  //   if (sessionStorage.getItem(dropDownCol) === null) {
-  //     const postData2 = async () => {
-  //       try {
-  //         const params = {
-  //           tableName: 'Evaluator',
-  //           operation: 'load',
-  //           colName: { dropDownCol },
-  //         };
-  //         console.log(params);
-  //         let response = await axios.post(
-  //           'http://localhost:3000/users/processDropDownData',
-  //           { data: { params } }
-  //         );
-
-  //         console.log('Post response:', response.data);
-
-  //         sessionStorage.setItem(`${dropDownCol}`, response.data);
-  //       } catch (error) {
-  //         console.error('Error posting data:', error);
-  //       }
-  //     };
-  //     console.log(postData2());
-  //   }
-  // });
 
   const [isLoading, setLoading] = useState(true);
   const logInfoRef = useRef({
@@ -276,7 +224,7 @@ function App() {
   }
 
   return (
-    <div className="bg-slate-100 flex flex-col h-screen relative overflow-hidden">
+    <div className="bg-zinc-100 flex flex-col h-screen relative overflow-hidden">
       <StatusContext.Provider
         value={{
           message: message,

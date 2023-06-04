@@ -62,7 +62,7 @@ const buttonstyle = {
 };
 
 const Buttoncmp = (prop) => {
-  const { label, type, variant, size, onClick, isActive } = prop;
+  const { label, type, variant, size, onClick, isActive, disabled } = prop;
   let buttonVariant =
     buttonstyle.initial +
     ' ' +
@@ -97,6 +97,7 @@ const Buttoncmp = (prop) => {
           onClick ? onClick(e) : null;
         }}
         className={`${buttonVariant}`}
+        disabled={disabled ? disabled : false}
       >
         <div className="mx-4 flex">
           {prop.children ? (

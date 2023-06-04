@@ -56,7 +56,6 @@ const Tablenew = (prop) => {
       return { tableName: tableName, operation: 'load' };
     }
   });
-  console.log('Current evaluator is ', evaluator);
 
   useEffect(() => {
     function processDB() {
@@ -77,7 +76,7 @@ const Tablenew = (prop) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('At front: ', data);
+          // console.log('At front: ', data);
           if (changes.operation === 'load') {
             // when loading, setting a new key
             setDataLoading(false);
@@ -90,10 +89,9 @@ const Tablenew = (prop) => {
             const withKey = data.map((item, i) => ({ ...item, key: i }));
             setTableData(withKey);
           } else if (changes.operation === 'update') {
-            console.log('update data here', data);
             if (data[0]) {
               const updatedTable = [...tableData];
-              console.log('Updated table: ', updatedTable);
+              // console.log('Updated table: ', updatedTable);
               const ucol = changes.updatedData.colType;
               const uValue = changes.updatedData.value;
               updatedTable[changes.index][ucol] = uValue;
@@ -107,12 +105,10 @@ const Tablenew = (prop) => {
               setStatus(['s', `${data[0]} row added`]);
               setNewRow([0, 0]);
             } else {
-              console.log('Data[0]', data[0]);
               setStatus(['d', `${data[1]}`]);
               setNewRow([1, 0]);
             }
           } else if (changes.operation === 'delete') {
-            console.log('After deleting', data);
             if (data[0]) {
               setTableData(
                 tableData.filter((item) => item.key !== changes.key)
@@ -181,8 +177,8 @@ const Tablenew = (prop) => {
     // Editing realtime except the last index(if it is not uploaded yet [0, 0] or [1,0])
     // console.log("TableLength while editing: ", tableData.length);
 
-    console.log('Value', value);
-    console.log('validity checking', isValid);
+    // console.log('Value', value);
+    // console.log('validity checking', isValid);
     const colType = col.col;
     if (!isValid && isValid !== undefined) {
       setStatus(['d', `Please use a valid value! (${col.regexMessage})`]);
