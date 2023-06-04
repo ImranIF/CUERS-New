@@ -126,6 +126,11 @@ const styles = StyleSheet.create({
   aTable: {
     marginBottom: "40px",
   },
+  superscript: {
+    fontSize: "smaller",
+    verticalAlign: "super",
+    lineHeight: 0,
+  }
 });
 
 const queries = [];
@@ -147,6 +152,7 @@ const ActivityPDF = (prop) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
     currentDate
   );
+  let semesterSuperscript = {semester_no} == 1 ? "st" : (semester_no == 2 ? "nd" : (semester_no == 3 ? "rd" : "th"));
   useEffect(() => {
     // console.log("here");
     console.log("Activities inside useEffect: ", activities);
@@ -308,7 +314,7 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}({evaluatorInfo.evaluator_name}) {"\n"}
                   Chairman {"\n"}
-                  {sessionStorage.getItem("semester_no")}th Semester BSc
+                  {sessionStorage.getItem("semester_no")}{semesterSuperscript} Semester BSc
                   Engineering Examination-{sessionStorage.getItem("year")}{" "}
                   committee {"\n"}
                   {evaluatorInfo.dept_name} {"\n"}
@@ -325,7 +331,7 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
               <View style={styles.aTable}>
                 <View style={styles.titleContainer}>
                   <Text style={styles.title1}>
-                    {semester_no}th Semester BSc(Engineering) Examination {year}{" "}
+                    {semester_no}{semesterSuperscript} Semester BSc(Engineering) Examination {year}{" "}
                     Committee
                   </Text>
                 </View>
