@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'col',
     padding: '20px 20px 20px 20px',
     fontFamily: 'Kalpurush',
-    fontSize: '6px',
+    fontSize: '10px',
   },
   titleContainer: {
     display: 'flex',
@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title1: {
-    fontSize: '16px',
+    fontSize: '22px',
     fontWeight: 'bold',
     textDecoration: 'underline',
-    marginBottom: '10px',
+    marginBottom: '9.5px',
   },
   table: {
     fontFamily: 'Kalpurush',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#000000',
     borderWidth: 0.5,
-    fontSize: '5px',
+    fontSize: '9.5px',
     borderRightWidth: 0,
     borderBottomWidth: 0,
   },
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '0.5px',
+    padding: '0.5px 0.5px 0.5px 4px',
   },
   leftAligned: {
     textAlign: 'left',
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   logo: {
-    width: '30px',
-    height: '45px',
+    width: '50px',
+    height: '78px',
   },
   spacer: {
     height: '30px',
@@ -131,6 +131,27 @@ const styles = StyleSheet.create({
   },
   aTable: {
     marginBottom: '40px',
+  },
+  bottomPart: {
+    width: '100%',
+    paddingTop: '10px',
+  },
+  sign1: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
+  },
+  sign2: {
+    display: 'flex',
+    height: '70px',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  indSign: {},
+  writing: {
+    paddingTop: '10px',
   },
 });
 
@@ -171,9 +192,8 @@ const BillPdf = (prop) => {
     <div className="w-full border border-slate-900 h-full">
       <PDFViewer className="w-full min-h-full">
         <Document>
-          <Page size="A5" style={styles.pageCol}>
-            <View style={[styles.topPart, { marginBottom: '10px' }]}>
-              // for image
+          <Page size="TABLOID" style={styles.pageCol}>
+            <View style={[styles.topPart, { marginBottom: '0px' }]}>
               <View>
                 <Image
                   style={styles.logo}
@@ -193,7 +213,7 @@ const BillPdf = (prop) => {
                 }}
               >
                 <Text style={[styles.text]}>
-                  রেজিস্টারের পৃষ্ঠা নংঃ {'\n'}
+                  রেজিস্টারের পৃষ্ঠা নংঃ.......................... {'\n'}
                   পরীক্ষকের ক্রমিক নংঃ {toBanglaNumber(evaluator.evaluator_id)}
                 </Text>
               </View>
@@ -201,14 +221,14 @@ const BillPdf = (prop) => {
             <View style={{}}>
               <Text
                 style={{
-                  fontSize: '12px',
+                  fontSize: '22px',
                   fontWeight: 'bold',
                   textAlign: 'center',
                 }}
               >
                 পরীক্ষা সংক্রান্ত কাজের পারিতোষিক বিল ফরম{' '}
               </Text>
-              <Text style={{ fontSize: '6px' }}>
+              <Text style={{ fontSize: '12px' }}>
                 (বিল সংশ্লিষ্ট পরীক্ষা কমিটির চেয়ারম্যানের মাধ্যমে পরীক্ষা
                 অনুষ্ঠিত হওয়ার এক বছরের মধ্যে পরীক্ষা নিয়ন্ত্রণ দপ্তরে দাখিল
                 করতে হবে। প্রতি পরীক্ষার জন্য পৃথক পৃথকভাবে বিল দাখিল করতে হবে।)
@@ -430,6 +450,108 @@ const BillPdf = (prop) => {
                 <View style={[styles.tableCol, { width: '12%' }]}>
                   <Text style={styles.tableCell}> {`${totalBill}`} </Text>
                 </View>
+              </View>
+            </View>
+            <View style={styles.bottomPart}>
+              <View style={styles.sign1}>
+                <Text style={styles.indSign}>
+                  .......................................................
+                  {'\n'}
+                  প্রতি স্বাক্ষর, সভাপতি, পরীক্ষা কমিটি
+                </Text>
+                <Text style={styles.indSign}>
+                  .......................... {'\n'}
+                  পরীক্ষকের স্বাক্ষর
+                </Text>
+              </View>
+              <View style={styles.sign1}>
+                <Text
+                  style={[
+                    styles.indSign,
+                    {
+                      marginLeft: '-130px',
+                    },
+                  ]}
+                >
+                  (সীলমোহর))
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.writing}>
+                  বিষয়...............................................................{' '}
+                  {'\n'}
+                  পরীক্ষা............................................................................................{' '}
+                  {'\n'}
+                  প্রফেসর/ড./জনাব......................................................................................................................................................................................................................কে
+                  মোট =
+                  ...........................................................
+                  টাকা{' '}
+                </Text>
+                <Text style={[styles.indSign, { marginLeft: '40px' }]}>
+                  (কথায়)......................................................................................................................................................................................................................................................................মাত্র
+                  প্রদান করুন।
+                </Text>
+                <Text>বিল সংশ্লিষ্ট চেক বুঝে পেলাম।</Text>
+              </View>
+              <View
+                style={[
+                  styles.sign1,
+                  {
+                    marginTop: '10px',
+                  },
+                ]}
+              >
+                <Text style={styles.indSign}>
+                  ........................................... {'\n'}
+                  তারিখসহ গ্রহণকারীর স্বাক্ষর{' '}
+                </Text>
+                <Text style={styles.indSign}>
+                  ...................{'\n'}
+                  বিল সহকারী{' '}
+                </Text>
+                <Text style={styles.indSign}>
+                  .......................... {'\n'}
+                  সেকশন অফিসার
+                </Text>
+
+                <Text style={styles.indSign}>
+                  ...................................... {'\n'}
+                  উপ-পরীক্ষা নিয়ন্ত্রক, চ.বি.{' '}
+                </Text>
+              </View>
+              <View>
+                <Text>
+                  .....................................................................................................................................................................................................................................................................................................................................
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.sign1,
+                  {
+                    marginTop: '5px',
+                  },
+                ]}
+              >
+                <Text>পরীক্ষার পারিতোষিক বিল প্রাপ্তি স্বীকার</Text>
+              </View>
+              <View>
+                <Text style={styles.writing}>
+                  বিষয়...........................................................................................................................................................................পরীক্ষা.....................................................................................................................................................
+                </Text>
+                <Text>
+                  প্রফেসর/ড./জনাব.....................................................................................................................................................................................................................................................................................................................কে
+                </Text>
+                <Text>
+                  মোট=...................................................................................টাকা(কথায়.................................................................................................................................................................................................)
+                  প্রদান করা হল।{' '}
+                </Text>{' '}
+              </View>
+              <View style={styles.sign2}>
+                <Text>
+                  .....................................................
+                  {'\n'}
+                  হিসাব নিয়ামক/উপ-হিসাব নিয়ামক
+                </Text>
               </View>
             </View>
           </Page>
