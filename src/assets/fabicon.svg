@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="15.558792mm"
+   height="15.885376mm"
+   viewBox="0 0 15.558792 15.885376"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="fabicon.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="4.893516"
+     inkscape:cx="36.783368"
+     inkscape:cy="20.53738"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect2670"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect1544"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-64.050355,-114.98132)">
+    <rect
+       style="fill:#d5f6ff;stroke-width:0.307184;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       id="rect234"
+       width="15.558789"
+       height="15.558789"
+       x="64.050354"
+       y="115.30791"
+       ry="7.7793946"
+       rx="7.7793946" />
+    <path
+       style="fill:none;stroke:#afdde9;stroke-width:0.981355;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:markers stroke fill"
+       d="m 64.74185,119.93233 c 2.636666,0.73481 5.273017,1.46953 7.124145,3.11919 1.851128,1.64966 2.917172,4.21393 3.983103,6.77793"
+       id="path1542"
+       inkscape:path-effect="#path-effect1544"
+       inkscape:original-d="m 64.74185,119.93233 c 2.636615,0.73499 5.272966,1.46971 7.909052,2.20416 1.06635,2.56464 2.132394,5.12891 3.198196,7.69296" />
+    <path
+       style="fill:none;stroke:#afdde9;stroke-width:0.981355;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:markers stroke fill"
+       d="m 72.097869,115.47199 c 0.621983,2.66554 1.243893,5.33076 0.686149,7.74674 -0.557743,2.41598 -2.29478,4.5827 -4.031625,6.74918"
+       id="path2666"
+       inkscape:path-effect="#path-effect2670"
+       inkscape:original-d="m 72.097869,115.47199 c 0.621799,2.66558 1.243708,5.3308 1.865726,7.99565 -1.737211,2.16716 -3.474245,4.33388 -5.211202,6.50027" />
+    <g
+       aria-label="C"
+       id="text398"
+       style="font-size:11.104px;font-family:Handlee;-inkscape-font-specification:Handlee;fill:#f2f2f2;stroke-width:0.307184;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill">
+      <path
+         d="m 71.044074,128.67866 c 1.775619,-0.1718 3.708372,-1.73365 4.792599,-3.889 0.01571,-0.0468 0.03143,-0.0937 0.03143,-0.14052 0,-0.15618 -0.125705,-0.31237 -0.314269,-0.31237 -0.109997,0 -0.219988,0.0624 -0.282842,0.17181 -0.895666,1.76489 -2.702712,3.56102 -4.604038,3.56102 -1.602771,0 -2.247022,-1.39005 -2.247022,-3.13933 0,-1.3588 0.392836,-2.93627 1.00566,-4.23261 0.942807,-1.98355 1.948467,-2.59266 2.749852,-2.59266 0.848526,0 1.429923,0.70283 1.382783,1.15576 -0.01571,0.18742 0.125705,0.34361 0.314269,0.34361 0.157134,0 0.298555,-0.12491 0.314269,-0.28113 0.09427,-0.81217 -0.801386,-1.84298 -2.011321,-1.84298 -1.021373,0 -2.262735,0.73406 -3.315536,2.95189 -0.675678,1.40566 -1.068514,3.0456 -1.068514,4.48251 0,2.09288 0.832813,3.77968 2.844133,3.77968 0.141427,0 0.267129,0 0.40855,-0.0156 z"
+         style="font-family:Buffalo;-inkscape-font-specification:Buffalo;fill:#2ad4ff;stroke:#000000;stroke-width:0.981357"
+         id="path552" />
+    </g>
+  </g>
+</svg>

@@ -20,6 +20,7 @@ import { useTranslation, initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import UserInfo from '../UI/UserInfo';
 import { useEffect } from 'react';
+import { Filter } from '../UI/Filter';
 i18n
   .use(Backend) // passes i18n down to react-i18next
   .use(initReactI18next)

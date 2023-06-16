@@ -10,6 +10,8 @@ import axios from 'axios';
 import patterns from '../../Resources/RegexPatterns';
 
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
+import { FilterContext } from '../../UI/FilterContext';
+import { Filter } from '../../UI/Filter';
 const tableCols = [
   // { col: "No", type: "row", required: true, },
   {
@@ -17,24 +19,29 @@ const tableCols = [
     type: 'dropdown',
     data_type: 'number',
     mapping: true,
+    filter: 'dropdown',
     required: true,
   },
   {
     col: 'role',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
     addNew: true,
   },
   {
     col: 'program',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
     addNew: true,
   },
   {
     col: 'semester_no',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
+    data_type: 'number',
     addNew: true,
   },
   {
@@ -42,6 +49,7 @@ const tableCols = [
     type: 'number',
     regex: patterns.bengaliPattern.number,
     regexMessage: 'e.g. 2023',
+    filter: 'text',
     required: true,
   },
   {
@@ -58,7 +66,17 @@ const FormExamCommittee = () => {
     DropdownOptionsContext
   );
 
+  const { filterFields, updateFilterFields } = useContext(FilterContext);
+
+  useEffect(() => {
+    const tobeFilter = tableCols.filter((item) =>
+      item.hasOwnProperty('filter')
+    );
+    updateFilterFields(tobeFilter);
+  }, []);
+
   const dynamicCol = ['evaluator_id', 'evaluator_name'];
+
   useEffect(() => {
     const postData = async () => {
       try {
@@ -99,16 +117,14 @@ const FormExamCommittee = () => {
   const programOptions = ['BSc', 'MSc'];
   return (
     <div className="">
-      <div className="mb-8  mt-8">
-        <span className="text-xl sm:text-2xl block">Committee information</span>
+      <div className="mb-8">
+        <Filter></Filter>
       </div>
-      <div>
-        <Tablenew
-          tableCols={tableCols}
-          tableName={'Exam_Committee'}
-          loadCondition={[]}
-        ></Tablenew>
-      </div>
+      <Tablenew
+        tableCols={tableCols}
+        tableName={'Exam_Committee'}
+        loadCondition={[]}
+      ></Tablenew>
     </div>
   );
 };

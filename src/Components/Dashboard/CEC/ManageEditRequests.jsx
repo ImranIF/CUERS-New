@@ -21,7 +21,7 @@ const tableCol = [
 const ManageEditRequests = () => {
   return (
     <div>
-      <div className="mb-8 mt-8">
+      <div className="mb-8">
         <span className="text-xl sm:text-2xl block text-center">
           Manage Edit Requests
         </span>

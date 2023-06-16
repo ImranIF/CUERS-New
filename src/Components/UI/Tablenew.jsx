@@ -19,12 +19,16 @@ import { StatusContext } from './StatusContext';
 import { faTableTennisPaddleBall } from '@fortawesome/free-solid-svg-icons';
 import { toBanglaNumber } from '../../Modules/toBanglaNumber';
 import { toEnglishNumber } from '../../Modules/toEnglishNumber';
+import { FilterContext } from './FilterContext';
 
 const Tablenew = (prop) => {
+  const { filterFields, updateFilterFields, filterValues, updateFilterValues } =
+    useContext(FilterContext);
   const { tableName, tableCols, loadCondition } = prop; // tableName
 
   // state for tableData
   const [tableData, setTableData] = useState([]); // to set the data after fetching
+  const [filteredData, setFilteredData] = useState([]);
 
   const rowStatus = [0, 0];
   // state to handle newRow
@@ -57,6 +61,29 @@ const Tablenew = (prop) => {
     }
   });
 
+  // filtering data
+  useEffect(() => {
+    console.log('Filter values: ', filterValues);
+    const filteredResults = tableData.filter((item) =>
+      Object.keys(filterValues).every((key) => {
+        if (
+          filterValues[key][0] == 'dropdown' &&
+          filterValues[key][1] == item[key]
+        ) {
+          return true;
+        } else if (
+          filterValues[key][0] == 'text' &&
+          item[key].match(filterValues[key][1])
+        ) {
+          return true;
+        }
+        return false;
+      })
+    );
+    setFilteredData(filteredResults);
+    console.log('FilteredData: ', filteredResults);
+  }, [filterValues, tableData]);
+
   useEffect(() => {
     function processDB() {
       //obtain all table structures from session storage and parse into json
@@ -88,6 +115,7 @@ const Tablenew = (prop) => {
             });
             const withKey = data.map((item, i) => ({ ...item, key: i }));
             setTableData(withKey);
+            setFilteredData(withKey);
           } else if (changes.operation === 'update') {
             if (data[0]) {
               const updatedTable = [...tableData];
@@ -157,6 +185,12 @@ const Tablenew = (prop) => {
     const key =
       tableData.length === 0 ? 0 : tableData[tableData.length - 1].key + 1;
     const tempRow = createNewObject(key);
+    // initializing tempRow with the values provided with filters
+    Object.keys(filterValues).forEach((key) => {
+      const value = filterValues[key][1];
+      tempRow[key] = value;
+    });
+    console.log('We got a tempRow: ', tempRow);
     if (tableData.length === 0) {
       setTableData([tempRow]);
       setNewRow([1, 0]);
@@ -248,11 +282,11 @@ const Tablenew = (prop) => {
   };
 
   const handleDelete = (key, rowIndex) => {
-    const deletedRow = { ...tableData[rowIndex] };
+    const deletedRow = { ...tableData[key] };
     delete deletedRow.key;
     if (
-      rowIndex !== tableData.length - 1 ||
-      (rowIndex === tableData.length - 1 && newRow[0] === 0 && newRow[1] === 0)
+      key !== tableData.length - 1 ||
+      (key === tableData.length - 1 && newRow[0] === 0 && newRow[1] === 0)
     ) {
       console.log('Indirect action');
       setChanges({
@@ -308,7 +342,7 @@ const Tablenew = (prop) => {
         </div>
         {/* The main body of the table */}
         <div className="table-row-group">
-          {tableData?.map((row, rowIndex) => (
+          {filteredData?.map((row, rowIndex) => (
             <div key={row.key} className={`table-row text-slate-700`}>
               {tableCols.map((col, colIndex) => {
                 return (
@@ -325,7 +359,8 @@ const Tablenew = (prop) => {
                       e.stopPropagation();
                     }}
                     onUpdate={(value, isValid) =>
-                      updateCell(value, isValid, rowIndex, col)
+                      // 2.0
+                      updateCell(value, isValid, row.key, col)
                     }
                     onDelete={(e) => handleDelete(row.key, rowIndex)}
                   ></TableCell>

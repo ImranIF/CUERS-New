@@ -3,8 +3,10 @@ import Dropdown from '../../UI/Dropdown';
 import Tablenew from '../../UI/Tablenew';
 import patterns from '../../Resources/RegexPatterns';
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
+import { FilterContext } from '../../UI/FilterContext';
+import { Filter } from '../../UI/Filter';
 
-const tablecols = [
+const tableCols = [
   {
     col: 'activity_type_id',
     type: 'dropdown',
@@ -14,14 +16,15 @@ const tablecols = [
     optionInfo: {
       dynamicCol: ['id', 'activity_name'],
       tableName: 'Activity_Type',
-      // condition: 'category="সেমিস্টার কার্যকলাপ"',
     },
     storageLabel: 'activity_type_id',
+    filter: 'dropdown',
   },
   {
     col: 'sector_or_program',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
   },
   {
     col: 'evaluator_id',
@@ -34,16 +37,19 @@ const tablecols = [
       tableName: 'Evaluator',
     },
     storageLabel: 'evaluator_id',
+    filter: 'dropdown',
   },
   {
     col: 'semester_no',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
   },
   {
     col: 'factor',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
   },
   {
     col: 'quantity',
@@ -65,6 +71,14 @@ const ManageSemesterActivity = () => {
   const { dropdownOptions, updateDropdownOptions } = useContext(
     DropdownOptionsContext
   );
+
+  const { filterFields, updateFilterFields } = useContext(FilterContext);
+  useEffect(() => {
+    const tobeFilter = tableCols.filter((item) =>
+      item.hasOwnProperty('filter')
+    );
+    updateFilterFields(tobeFilter);
+  }, []);
 
   useEffect(() => {
     const postData = async (colInfo) => {
@@ -103,7 +117,7 @@ const ManageSemesterActivity = () => {
       }
     };
 
-    const dynamicCols = tablecols.filter((item) => item.mapping);
+    const dynamicCols = tableCols.filter((item) => item.mapping);
     console.log('dynamiccols: ', dynamicCols);
     const fetchSequentially = async (index) => {
       if (index < dynamicCols.length) {
@@ -120,14 +134,12 @@ const ManageSemesterActivity = () => {
   console.log('At semester: ', semester_no);
   return (
     <div>
-      <div className="mb-8 mt-8">
-        <span className="text-xl sm:text-2xl block text-center">
-          Manage Semester Activity
-        </span>
+      <div className="mb-8">
+        <Filter></Filter>
       </div>
 
       <Tablenew
-        tableCols={tablecols}
+        tableCols={tableCols}
         loadCondition={[{ semester_no: `${semester_no}` }]}
         tableName="Processes_Semester_Activity"
       ></Tablenew>

@@ -8,74 +8,87 @@ import { json } from 'react-router';
 import { toBanglaNumber } from '../../../Modules/toBanglaNumber';
 
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
-const tableCols = [
-  {
-    col: 'activity_type_id',
-    storageLabel: 'activity_type_id',
-    type: 'dropdown',
-    data_type: 'number',
-    mapping: true,
-    required: true,
-    addNew: false,
-  },
-  {
-    col: 'sector_or_program',
-    type: 'dropdown',
-    required: true,
-    addNew: true,
-  },
-  {
-    col: 'category',
-    type: 'dropdown',
-    required: true,
-    addNew: true,
-  },
-  {
-    col: 'factor',
-    type: 'dropdown',
-    required: true,
-    addNew: true,
-  },
-  {
-    col: 'quantity_initial',
-    type: 'number',
-    regex: patterns.bengaliPattern.number,
-    regexMessage: 'e.g. 2 or 2.5',
-    required: true,
-  },
-  {
-    col: 'quantity_final',
-    type: 'number',
-    regex: patterns.bengaliPattern.number,
-    regexMessage: 'e.g. 2 or 2.5',
-    required: true,
-  },
-  {
-    col: 'min_bill',
-    type: 'number',
-    regex: patterns.bengaliPattern.number,
-    regexMessage: 'e.g. 1200',
-    required: true,
-  },
-  {
-    col: 'bill',
-    type: 'number',
-    regex: patterns.bengaliPattern.number,
-    regexMessage: 'e.g. 1200',
-    required: true,
-  },
-  {
-    col: 'Delete',
-    type: 'button',
-    label: 'Delete',
-    variant: 'dasi',
-  },
-];
+import { FilterContext } from '../../UI/FilterContext';
+import { Filter } from '../../UI/Filter';
 
 const FillActivityBill = () => {
+  const tableCols = [
+    {
+      col: 'activity_type_id',
+      storageLabel: 'activity_type_id',
+      type: 'dropdown',
+      data_type: 'number',
+      mapping: true,
+      required: true,
+      filter: 'dropdown',
+      addNew: false,
+    },
+    {
+      col: 'sector_or_program',
+      type: 'dropdown',
+      required: true,
+      filter: 'dropdown',
+      addNew: true,
+    },
+    {
+      col: 'category',
+      type: 'dropdown',
+      required: true,
+      filter: 'dropdown',
+      addNew: true,
+    },
+    {
+      col: 'factor',
+      type: 'dropdown',
+      required: true,
+      filter: 'dropdown',
+      addNew: true,
+    },
+    {
+      col: 'quantity_initial',
+      type: 'number',
+      regex: patterns.bengaliPattern.number,
+      regexMessage: 'e.g. 2 or 2.5',
+      required: true,
+    },
+    {
+      col: 'quantity_final',
+      type: 'number',
+      regex: patterns.bengaliPattern.number,
+      regexMessage: 'e.g. 2 or 2.5',
+      required: true,
+    },
+    {
+      col: 'min_bill',
+      type: 'number',
+      regex: patterns.bengaliPattern.number,
+      regexMessage: 'e.g. 1200',
+      required: true,
+    },
+    {
+      col: 'bill',
+      type: 'number',
+      regex: patterns.bengaliPattern.number,
+      regexMessage: 'e.g. 1200',
+      required: true,
+    },
+    {
+      col: 'Delete',
+      type: 'button',
+      label: 'Delete',
+      variant: 'dasi',
+    },
+  ];
   const { dropdownOptions, updateDropdownOptions } = useContext(
     DropdownOptionsContext
   );
+  const { filterFields, updateFilterFields } = useContext(FilterContext);
+  useEffect(() => {
+    const tobeFilter = tableCols.filter((item) =>
+      item.hasOwnProperty('filter')
+    );
+    updateFilterFields(tobeFilter);
+  }, []);
 
   const dynamicCol = ['id', 'activity_name'];
   useEffect(() => {
@@ -119,19 +132,15 @@ const FillActivityBill = () => {
   }, []);
 
   return (
-    <div className="mb-8 mt-8">
-      <div>
-        <span className="text-xl sm:text-2xl block">
-          Activity Bill information
-        </span>
+    <div>
+      <div className="mb-8">
+        <Filter></Filter>
       </div>
-      <div className="mt-8">
-        <Tablenew
-          tableCols={tableCols}
-          tableName="Activity"
-          loadCondition={[]}
-        ></Tablenew>
-      </div>
+      <Tablenew
+        tableCols={tableCols}
+        tableName="Activity"
+        loadCondition={[]}
+      ></Tablenew>
     </div>
   );
 };

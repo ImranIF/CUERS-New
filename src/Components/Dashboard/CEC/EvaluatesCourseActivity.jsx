@@ -5,7 +5,10 @@ import patterns from '../../Resources/RegexPatterns';
 
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
 
-const tablecols = [
+import { FilterContext } from '../../UI/FilterContext';
+import { Filter } from '../../UI/Filter';
+
+const tableCols = [
   {
     col: 'activity_type_id',
     type: 'dropdown',
@@ -15,14 +18,15 @@ const tablecols = [
     optionInfo: {
       dynamicCol: ['id', 'activity_name'],
       tableName: 'Activity_Type',
-      // condition: 'category="কোর্স কার্যকলাপ"',
     },
     storageLabel: 'activity_type_id',
+    filter: 'dropdown',
   },
   {
     col: 'sector_or_program',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
   },
   {
     col: 'evaluator_id',
@@ -35,6 +39,7 @@ const tablecols = [
       tableName: 'Evaluator',
     },
     storageLabel: 'evaluator_id',
+    filter: 'dropdown',
   },
   {
     col: 'course_id',
@@ -48,11 +53,13 @@ const tablecols = [
     storageLabel: 'course_id',
     //need to be dynamic
     required: true,
+    filter: 'dropdown',
   },
   {
     col: 'semester_no',
     type: 'dropdown',
     required: true,
+    filter: 'dropdown',
   },
   {
     col: 'factor',
@@ -77,6 +84,13 @@ const EvaluatesCourseActivity = () => {
   const { dropdownOptions, updateDropdownOptions } = useContext(
     DropdownOptionsContext
   );
+  const { filterFields, updateFilterFields } = useContext(FilterContext);
+  useEffect(() => {
+    const tobeFilter = tableCols.filter((item) =>
+      item.hasOwnProperty('filter')
+    );
+    updateFilterFields(tobeFilter);
+  }, []);
 
   useEffect(() => {
     const postData = async (colInfo) => {
@@ -116,7 +130,7 @@ const EvaluatesCourseActivity = () => {
       }
     };
 
-    const dynamicCols = tablecols.filter((item) => item.mapping);
+    const dynamicCols = tableCols.filter((item) => item.mapping);
     console.log('dynamiccols: ', dynamicCols);
     const fetchSequentially = async (index) => {
       if (index < dynamicCols.length) {
@@ -134,14 +148,11 @@ const EvaluatesCourseActivity = () => {
   console.log('at course: ', semester_no);
   return (
     <div>
-      <div className="mb-8 mt-8">
-        <span className="text-xl sm:text-2xl block text-center">
-          Manage Course Activity
-        </span>
+      <div className="mb-8">
+        <Filter></Filter>
       </div>
-
       <Tablenew
-        tableCols={tablecols}
+        tableCols={tableCols}
         loadCondition={[{ semester_no: `${semester_no}` }]}
         tableName="Evaluates_Course_Activity"
       ></Tablenew>

@@ -9,6 +9,7 @@ For each either full / min
   4. dangerous-secondary: dase
   5. dangerous-simple: dasi
 */
+
 const buttonstyle = {
   initial:
     'duration-100 py-2 rounded-md shadow-md focus:outline-none focus:ring-offset-1 active:ring-1 ',

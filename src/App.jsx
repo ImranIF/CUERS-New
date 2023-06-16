@@ -41,6 +41,7 @@ import {
   DropdownOptionsContext,
   DropdownOptionsProvider,
 } from './Components/DropdownOptionsContext';
+import { FilterContextProvider } from './Components/UI/FilterContext';
 
 function App() {
   const navigate = useNavigate();
@@ -241,74 +242,87 @@ function App() {
           </div>
         )}
         <DropdownOptionsProvider>
-          <Routes>
-            <Route
-              element={<Login onLogin={onLogin}></Login>}
-              path="/login"
-            ></Route>
-            <Route
-              path="/*"
-              element={<PrivateOutlet isAuthenticated={isAuthenticated} />}
-            >
+          <FilterContextProvider>
+            <Routes>
               <Route
-                element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-                path="dashboard/chairman"
+                element={<Login onLogin={onLogin}></Login>}
+                path="/login"
+              ></Route>
+              <Route
+                path="/*"
+                element={<PrivateOutlet isAuthenticated={isAuthenticated} />}
               >
                 <Route
-                  element={<FillActivityBill></FillActivityBill>}
-                  path="fill-activity-bill"
-                ></Route>
+                  element={
+                    <Dashboard userInfo={logInfoRef.current}></Dashboard>
+                  }
+                  path="dashboard/chairman"
+                >
+                  <Route
+                    element={<FillActivityBill></FillActivityBill>}
+                    path="fill-activity-bill"
+                  ></Route>
+                  <Route
+                    element={<FormExamCommittee></FormExamCommittee>}
+                    path="form-exam-committee"
+                  ></Route>
+                  <Route
+                    element={<ManageEvaluators></ManageEvaluators>}
+                    path="manage-evaluators"
+                  ></Route>
+                </Route>
                 <Route
-                  element={<FormExamCommittee></FormExamCommittee>}
-                  path="form-exam-committee"
-                ></Route>
+                  element={
+                    <Dashboard userInfo={logInfoRef.current}></Dashboard>
+                  }
+                  path="dashboard/cec"
+                >
+                  <Route
+                    element={
+                      <EvaluatesCourseActivity></EvaluatesCourseActivity>
+                    }
+                    path="evaluates-course-activity"
+                  ></Route>
+                  <Route
+                    element={<CourseInSemesterExam></CourseInSemesterExam>}
+                    path="course-in-semester-exam"
+                  ></Route>
+                  <Route
+                    element={<ManageSemesterActivity></ManageSemesterActivity>}
+                    path="manage-semester-activity"
+                  ></Route>
+                  <Route
+                    element={<ManageEditRequests></ManageEditRequests>}
+                    path="manage-edit-requests"
+                  ></Route>
+                  <Route
+                    element={<GenerateActivityPDF></GenerateActivityPDF>}
+                    path="generate-activity-pdf"
+                  ></Route>
+                </Route>
                 <Route
-                  element={<ManageEvaluators></ManageEvaluators>}
-                  path="manage-evaluators"
-                ></Route>
+                  element={
+                    <Dashboard userInfo={logInfoRef.current}></Dashboard>
+                  }
+                  path="dashboard/evaluator"
+                >
+                  <Route
+                    element={<ViewBillForm></ViewBillForm>}
+                    path="view-bill-form"
+                  ></Route>
+                  <Route
+                    element={<BillPdf></BillPdf>}
+                    path="generate-bill-pdf"
+                  ></Route>
+                </Route>
               </Route>
-              <Route
-                element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-                path="dashboard/cec"
-              >
-                <Route
-                  element={<EvaluatesCourseActivity></EvaluatesCourseActivity>}
-                  path="evaluates-course-activity"
-                ></Route>
-                <Route
-                  element={<CourseInSemesterExam></CourseInSemesterExam>}
-                  path="course-in-semester-exam"
-                ></Route>
-                <Route
-                  element={<ManageSemesterActivity></ManageSemesterActivity>}
-                  path="manage-semester-activity"
-                ></Route>
-                <Route
-                  element={<ManageEditRequests></ManageEditRequests>}
-                  path="manage-edit-requests"
-                ></Route>
-                <Route
-                  element={<GenerateActivityPDF></GenerateActivityPDF>}
-                  path="generate-activity-pdf"
-                ></Route>
-              </Route>
-              <Route
-                element={<Dashboard userInfo={logInfoRef.current}></Dashboard>}
-                path="dashboard/evaluator"
-              >
-                <Route
-                  element={<ViewBillForm></ViewBillForm>}
-                  path="view-bill-form"
-                ></Route>
-                <Route
-                  element={<BillPdf></BillPdf>}
-                  path="generate-bill-pdf"
-                ></Route>
-              </Route>
-            </Route>
 
-            <Route element={<Login onLogin={onLogin}></Login>} path="/"></Route>
-          </Routes>
+              <Route
+                element={<Login onLogin={onLogin}></Login>}
+                path="/"
+              ></Route>
+            </Routes>
+          </FilterContextProvider>
         </DropdownOptionsProvider>
         {message && (
           <div className="absolute bottom-4 right-4">

@@ -6,17 +6,20 @@ import Tablenew from '../../UI/Tablenew';
 import axios from 'axios';
 import patterns from '../../Resources/RegexPatterns';
 import { DropdownOptionsContext } from '../../DropdownOptionsContext';
+import { FilterContext } from '../../UI/FilterContext';
+import { Filter } from '../../UI/Filter';
 
 const ManageEvaluators = (prop) => {
   // const [dropdownOptions, setDropdownOptions] = useState();
   // Generating dynamically
-  const tablecols = [
+  const tableCols = [
     {
       col: 'evaluator_id',
       type: 'number',
       data_type: 'number',
       regex: patterns.bengaliPattern.number,
       regexMessage: 'e.g. 1013',
+      filter: 'text',
       required: true,
     },
     {
@@ -24,25 +27,36 @@ const ManageEvaluators = (prop) => {
       type: 'text',
       data_type: 'text',
       regex: patterns.bengaliPattern.textWithSpace,
-      regexMessage: 'e.g. Dr. Rudra Pratap Deb Nath',
+      regexMessage: 'e.g. ড. রুদ্র প্রতাপ দেব নাথ',
+      filter: 'text',
       required: true,
+    },
+    {
+      col: 'evaluator_english_name',
+      type: 'text',
+      data_type: 'text',
+      regex: patterns.englishPattern.textWithSpace,
+      regexMessage: 'e.g. Dr. Rudra Pratap Deb Nath',
     },
     {
       col: 'designation',
       type: 'dropdown',
       required: true,
+      filter: 'dropdown',
       addNew: true,
     },
     {
       col: 'university_name',
       type: 'dropdown',
       required: true,
+      filter: 'dropdown',
       addNew: true,
     },
     {
       col: 'dept_name',
       type: 'dropdown',
       required: true,
+      filter: 'dropdown',
       addNew: true,
     },
     {
@@ -50,6 +64,7 @@ const ManageEvaluators = (prop) => {
       type: 'tel',
       regex: patterns.bengaliPattern.phoneNo,
       regexMessage: 'e.g. 01234567892',
+      filter: 'text',
       required: true,
     },
     {
@@ -61,7 +76,14 @@ const ManageEvaluators = (prop) => {
   ];
   const { dropdownOptions, updateDropdownOptions, createdNew, setCreatedNew } =
     useContext(DropdownOptionsContext);
+  const { filterFields, updateFilterFields } = useContext(FilterContext);
 
+  useEffect(() => {
+    const tobeFilter = tableCols.filter((item) =>
+      item.hasOwnProperty('filter')
+    );
+    updateFilterFields(tobeFilter);
+  }, []);
   useEffect(() => {
     const postData = async () => {
       try {
@@ -100,16 +122,15 @@ const ManageEvaluators = (prop) => {
   };
   return (
     <div>
-      <div className="mb-8 mt-8">
-        <span className="text-xl sm:text-2xl block">Manage Evaluators</span>
+      <div className="mb-8">
+        <Filter></Filter>
       </div>
-      <div>
-        <Tablenew
-          tableCols={tablecols}
-          loadCondition={[]}
-          tableName="Evaluator"
-        ></Tablenew>
-      </div>
+
+      <Tablenew
+        tableCols={tableCols}
+        loadCondition={[]}
+        tableName="Evaluator"
+      ></Tablenew>
     </div>
   );
 };

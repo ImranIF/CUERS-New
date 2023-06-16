@@ -40,8 +40,6 @@ const TableCell = (prop) => {
   // something here...
   function handleSelect(value) {
     let toStore = value;
-
-    console.log('To store: ', toStore);
     if (col.mapping && col.mapping == true) {
       if (col.data_type && col.data_type == 'number')
         toStore = parseInt(toEnglishNumber(toStore.split('-')[0].trim()));
@@ -49,6 +47,7 @@ const TableCell = (prop) => {
         toStore = toEnglishNumber(toStore.split('-')[0].trim());
       }
     }
+    console.log('To store: ', toStore);
     onUpdate(toStore);
     setValue(toStore);
     showInput(false);
@@ -95,7 +94,7 @@ const TableCell = (prop) => {
         col.type === 'button' && 'align-center text-center'
       }
       ${!valid && 'bg-red-50 ring-2 ring-red-900'}
-      border-r border-b border-slate-300 last-of-type:border-r-0 focus:shadow-xl focus:ring-cyan-700 focus:bg-slate-50 focus:outline-none  focus:ring-2 p-2 hover:bg-blue-100`}
+      border-r border-b border-slate-300 last-of-type:border-r-0 focus:shadow-xl focus:ring-cyan-700 focus:bg-slate-50 focus:outline-none  focus:ring-2 p-2 hover:bg-blue-100 text-left`}
       ref={cellRef}
       onBlur={(e) => {
         setIsFocused(false);

@@ -1,16 +1,15 @@
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
-import React from "react";
-import Buttoncmp from "../UI/Buttoncmp";
-import Dropdown from "../UI/Dropdown";
-import Inputcmp from "../UI/Inputcmp";
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
+import React from 'react';
+import Buttoncmp from '../UI/Buttoncmp';
+import Dropdown from '../UI/Dropdown';
+import Inputcmp from '../UI/Inputcmp';
 
 export const Login = (prop) => {
-
   const { onLogin } = prop;
-  const options = ["Chairman", "Evaluator", "Chairman of Exam Committee"];
+  const options = ['Chairman', 'Evaluator', 'Chairman of Exam Committee'];
   return (
-    <div className="h-full w-full flex justify-center items-center">
-      <div className="block h-min rounded-2xl  border bg-slate-50 border-slate-300  p-10 max-w-lg mx-8">
+    <div className="bg-login bg-cover h-full w-full flex justify-center items-center">
+      <div className="block h-min rounded-2xl  border shadow-lg shadow-indigo-100 bg-slate-100 border-slate-300  p-10 max-w-lg mx-8">
         <form
           className="grid sm:grid-cols-2 gap-x-8 gap-y-8"
           onSubmit={(e) => {
