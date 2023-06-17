@@ -202,13 +202,11 @@ const Dropdown = (prop) => {
           readOnly
         ></input>
         {/* Icon that shows open or closed state of the option list*/}
-        {variant != 'table' &&
-          variant != 'filter' &&
-          selected.match('Select') && (
-            <ChevronDownIcon
-              className={`${open && 'rotate-180'} w-4 h-4 duration-200`}
-            ></ChevronDownIcon>
-          )}
+        {variant != 'table' && variant != 'filter' && (
+          <ChevronDownIcon
+            className={`${open && 'rotate-180'} w-4 h-4 duration-200`}
+          ></ChevronDownIcon>
+        )}
 
         {variant == 'filter' && selected.match(name) && (
           <ChevronDownIcon

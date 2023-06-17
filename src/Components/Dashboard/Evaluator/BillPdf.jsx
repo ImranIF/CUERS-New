@@ -333,9 +333,7 @@ const BillPdf = (prop) => {
                     <View style={styles.tableRow}>
                       <View style={[styles.tableCol, { width: '8%' }]}>
                         <Text style={styles.tableCell}>
-                          {new RegExp('^\\d+\\.\\d$').test(item.no)
-                            ? ''
-                            : toBanglaNumber(item.no)}
+                          {toBanglaNumber(item.no)}
                         </Text>
                       </View>
                       <View
@@ -362,9 +360,7 @@ const BillPdf = (prop) => {
                     <View style={styles.tableRow}>
                       <View style={[styles.tableCol, { width: '8%' }]}>
                         <Text style={styles.tableCell}>
-                          {new RegExp('^\\d+\\.\\d$').test(item.no)
-                            ? ''
-                            : toBanglaNumber(item.no)}
+                          {toBanglaNumber(item.no)}
                         </Text>
                       </View>
                       <View style={[styles.tableCol, { width: '20%' }]}>

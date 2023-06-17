@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
+import { toBanglaNumber } from '../../../Modules/toBanglaNumber';
 import Buttoncmp from '../../UI/Buttoncmp';
 import Spin from '../../UI/Spin';
 import Tablenew from '../../UI/Tablenew';
@@ -304,20 +305,10 @@ const ViewBillForm = () => {
       data &&
         data.map((item) => {
           for (const key in item) {
-            if (key !== 'front') {
+            if (key !== 'front' && key !== 'Course no') {
               const englishInteger = item[key];
-              if (
-                new RegExp('^\\d+(\\.\\d+)?$').test(
-                  englishInteger && englishInteger.toString()
-                )
-              ) {
-                const banglaInteger = englishInteger
-                  .toString()
-                  .replace(/0|1|2|3|4|5|6|7|8|9/g, (match) => {
-                    return '০১২৩৪৫৬৭৮৯'[match];
-                  });
-                item[key] = banglaInteger;
-              }
+              const banglaInteger = toBanglaNumber(englishInteger);
+              item[key] = banglaInteger;
             }
           }
         });
