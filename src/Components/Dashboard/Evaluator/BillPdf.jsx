@@ -170,9 +170,12 @@ const BillPdf = (prop) => {
   console.log(billData);
   let totalBill = 0;
   billData.forEach((item) => {
-    totalBill += +toEnglishNumber(item['টাকার পরিমাণ']);
+  
+    if (item && item['টাকার পরিমাণ']){
+      totalBill += +toEnglishNumber( item['টাকার পরিমাণ']);
+    }  
   });
-  const billInWords = numberToWords.toWords(totalBill);
+  //const billInWords = numberToWords.toWords(totalBill);
   const converter = new Converter(bnBD);
   const billInBanglaWords = converter.toWords(totalBill);
   // const billInBanglaWords = numberToBengaliWords(totalBill)

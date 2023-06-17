@@ -3,6 +3,8 @@ import { Outlet, useNavigate } from "react-router";
 import Table from "../../UI/Table";
 import Dashboard from "../Dashboard";
 import ViewBillForm from "./ViewBillForm";
+import Dropdown from "../../UI/Dropdown";
+import BillFormDropdown from "../../UI/BillFormDropdown";
 const Bill = [
   {
     "activity_type_id" : 1,
@@ -41,6 +43,7 @@ const Evaluator = () => {
 
     {/* Somehow bad happens it works */}
     {/* <FillActivityBill /> */}
+    {/* <BillFormDropdown/> */}
   </div>;
 };
 
