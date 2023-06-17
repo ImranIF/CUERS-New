@@ -59,7 +59,7 @@ const Dashboard = (prop) => {
           menuText: 'Manage semester activity',
           route: 'manage-semester-activity',
         },
-        { menuText: 'Manage edit requests', route: 'manage-edit-requests' },
+        //{ menuText: 'Manage edit requests', route: 'manage-edit-requests' },
         { menuText: 'Generate activity PDF', route: 'generate-activity-pdf' },
       ],
     },
@@ -67,11 +67,11 @@ const Dashboard = (prop) => {
       person: 'Evaluator',
       activity: [
         { menuText: 'View Bill forms', route: 'view-bill-form' },
-        {
-          menuText: 'Generate bill pdf',
-          route: 'generate-bill-pdf',
-          disabled: generateDisabled,
-        },
+        // {
+        //   menuText: 'Generate bill pdf',
+        //   route: 'generate-bill-pdf',
+        //   disabled: generateDisabled,
+        // },
       ],
     },
   ];

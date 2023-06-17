@@ -170,25 +170,16 @@ const BillPdf = (prop) => {
   console.log(billData);
   let totalBill = 0;
   billData.forEach((item) => {
-  
-    if (item && item['টাকার পরিমাণ']){
-      totalBill += +toEnglishNumber( item['টাকার পরিমাণ']);
-    }  
+    if (item && item['টাকার পরিমাণ']) {
+      totalBill += +toEnglishNumber(item['টাকার পরিমাণ']);
+    }
   });
   //const billInWords = numberToWords.toWords(totalBill);
   const converter = new Converter(bnBD);
   const billInBanglaWords = converter.toWords(totalBill);
   // const billInBanglaWords = numberToBengaliWords(totalBill)
   totalBill = toBanglaNumber(totalBill);
-  // const billInBanglaWords = translate( billInWords,{to: 'bn', fetchOptions: {agent}} )
-  // const billInBanglaWords = translate (billInWords, {tld: "com", to: "bn",   proxy: {
-  //   host: '127.0.0.1',
-  //   port: 9000,
-  //   auth: {
-  //     username: 'mikeymike',
-  //     password: 'rapunz3l'
-  //   }
-  // }});
+
   console.log(billInBanglaWords);
   const evaluator = JSON.parse(sessionStorage.getItem('evaluatorInfo'));
   return (
@@ -263,7 +254,13 @@ const BillPdf = (prop) => {
                       style={styles.tableCell}
                     >{`পরীক্ষার নাম : ${toBanglaNumber(
                       JSON.parse(sessionStorage.getItem('semester_no'))
-                    )}ম সেমিস্টার বি.এস.সি ইঞ্জিনিয়ারিং পরীক্ষা`}</Text>
+                    )}${toBanglaNumber(
+                      ['ম', 'য়', 'য়', 'র্থ', 'ম', 'ষ্ঠ ', 'ম', 'ম'][
+                        parseInt(
+                          JSON.parse(sessionStorage.getItem('semester_no'))
+                        ) - 1
+                      ]
+                    )} সেমিস্টার বি.এস.সি ইঞ্জিনিয়ারিং পরীক্ষা`}</Text>
                   </View>
                 </View>
                 <View style={styles.tableRow}>
@@ -381,7 +378,10 @@ const BillPdf = (prop) => {
                       <View style={[styles.tableCol, { width: '12%' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill && matchedBill['Course no']
-                            ? matchedBill['Course no']
+                            ? matchedBill['Course no'].length > 22
+                              ? matchedBill['Course no'].slice(0, 22 - 3) +
+                                '...'
+                              : matchedBill['Course no']
                             : ''}
                         </Text>
                       </View>

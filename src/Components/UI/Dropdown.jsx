@@ -299,26 +299,23 @@ const Dropdown = (prop) => {
         </ul>
 
         {/* The create new button , only at table*/}
-        {variant == 'table' &&
-          !variant == 'filter' &&
-          filtered.length == 0 &&
-          col.addNew == true && (
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                if (!availOptions.includes(inputValue)) {
-                  addOptionToDropdown(name, inputValue);
-                }
-                // setFiltered([...filtered, inputValue]);
-              }}
-              className={`mt-1 duration-100 focus:outline-none focus:ring-offset-1 active:ring-1 flex-auto content-start w-full hover:bg-slate-200 focus:ring focus:ring-black-800 cursor-pointer p-2 rounded-md 
+        {variant == 'table' && filtered.length == 0 && col.addNew == true && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              if (!availOptions.includes(inputValue)) {
+                addOptionToDropdown(name, inputValue);
+              }
+              // setFiltered([...filtered, inputValue]);
+            }}
+            className={`mt-1 duration-100 focus:outline-none focus:ring-offset-1 active:ring-1 flex-auto content-start w-full hover:bg-slate-200 focus:ring focus:ring-black-800 cursor-pointer p-2 rounded-md 
           `}
-            >
-              Create{' '}
-              <span className="ml-1 px-2 py-1 bg-blue-200 rounded-md">{`${inputValue}`}</span>
-            </div>
-          )}
+          >
+            Create{' '}
+            <span className="ml-1 px-2 py-1 bg-blue-200 rounded-md">{`${inputValue}`}</span>
+          </div>
+        )}
       </div>
     </div>
   );

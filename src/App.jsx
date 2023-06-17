@@ -190,7 +190,6 @@ function App() {
                 navigate('/dashboard/cec');
                 setToLogin(false);
               } else if (logInfoRef.current.role == 'Evaluator') {
-                sessionStorage.setItem('semester_no', '8');
                 navigate('/dashboard/evaluator');
                 setToLogin(false);
               }
