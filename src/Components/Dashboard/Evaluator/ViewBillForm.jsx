@@ -1,18 +1,20 @@
 ///viewBIllForm,jsx
-import React, { useEffect, useState } from "react";
-import { useRef } from "react";
-import Buttoncmp from "../../UI/Buttoncmp";
-import Spin from "../../UI/Spin";
-import Tablenew from "../../UI/Tablenew";
-import BillPdf from "./BillPdf";
 import BillFormDropdown from "../../UI/BillFormDropdown";
 import { use } from "i18next";
+
+import React, { useEffect, useState } from 'react';
+import { useRef } from 'react';
+import { toBanglaNumber } from '../../../Modules/toBanglaNumber';
+import Buttoncmp from '../../UI/Buttoncmp';
+import Spin from '../../UI/Spin';
+import Tablenew from '../../UI/Tablenew';
+import BillPdf from './BillPdf';
 
 const ViewBillForm = () => {
   const [selectedSemester, setSelectedSemester] = useState("");
   const [semesters_they_in, setSemesters_they_in] = useState([]);
-  
-  
+
+
 
   const [temp, setTemp] = useState(''); // semester temporary saved for useeffect new bill generation
   function updateSemester(selectSemester){
@@ -349,7 +351,7 @@ const ViewBillForm = () => {
         sessionStorage.setItem("billItem", JSON.stringify(data));
       });
     }, [selectedSemester]);
-  
+
   if (billData === null || billData === undefined || billData.length == 0) {
     return <Spin text="Calculating!"></Spin>;
   } else {
@@ -360,7 +362,7 @@ const ViewBillForm = () => {
         <BillFormDropdown
           updateSemester={updateSemester}
         ></BillFormDropdown>
-          
+
         <div className="table w-full">
           <div className="table-header-group top-0 sticky bg-slate-300">
             {
