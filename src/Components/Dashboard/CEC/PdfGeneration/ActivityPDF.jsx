@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     backgroundColor: "#e2e8f0",
     flexDirection: "row",
+    textAlign: "center",
   },
   tableRow: {
     // padding: "5px",
@@ -196,7 +197,10 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
         result.map((item) => {
           for (const key in item) {
             const englishInteger = item[key];
-            if (
+            if(key == 'অর্ধ/পূর্ণ'){
+              item[key] = item[key] === 0.5 ? 'অর্ধ' : 'পূর্ণ';
+            }
+            else if (
               new RegExp("^\\d+(\\.\\d+)?$").test(
                 englishInteger && englishInteger.toString()
               )
@@ -263,7 +267,7 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
     return (
       <div className="w-full border border-slate-900 h-full">
         <PDFViewer className="w-full min-h-full">
-          <Document>
+          <Document title={`${sessionStorage.getItem("semester_no")}${semesterSuperscript} Semester Bill Statement`}>
             {/* Front page */}
             <Page size="A4" style={styles.pageCol}>
               <View style={styles.topPart}>
@@ -336,7 +340,7 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                   </Text>
                 </View>
                 <View style={styles.table}>
-                  <View style={styles.tableHeader}>
+                  <View style={[styles.tableHeader, {textAlign: 'center'}]}>
                     {examCommittee[0] &&
                       Object.keys(examCommittee[0]).map((item) => (
                         <View style={styles.tableCol}>

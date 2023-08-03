@@ -20,7 +20,6 @@ import { toEnglishNumber } from '../../../Modules/toEnglishNumber';
 import activityList from '../../Resources/Data/ActivityList';
 import numberToWords from '../../../Modules/numberToWords';
 import { Converter, bnBD } from 'any-number-to-words';
-// import translate from 'translate-google-api';
 // import {translate} from '@vitalets/google-translate-api';
 // import createHttpProxyAgent from 'http-proxy-agent';
 
@@ -175,18 +174,18 @@ const BillPdf = (prop) => {
       totalBill += +toEnglishNumber(item['টাকার পরিমাণ']);
     }
   });
-  //const billInWords = numberToWords.toWords(totalBill);
   const converter = new Converter(bnBD);
   const billInBanglaWords = converter.toWords(totalBill);
-  // const billInBanglaWords = numberToBengaliWords(totalBill)
   totalBill = toBanglaNumber(totalBill);
-
   console.log(billInBanglaWords);
+
+  const sem_no = sessionStorage.getItem('semester_no');
+  const sem_superscript = {sem_no} == 1 ? "st" : (sem_no == 2 ? "nd" : (sem_no == 3 ? "rd" : "th"));
   const evaluator = JSON.parse(sessionStorage.getItem('evaluatorInfo'));
   return (
     <div className="w-full border border-slate-900 h-full">
       <PDFViewer className="w-full min-h-full">
-        <Document>
+        <Document title = {`${sem_no}${sem_superscript} Semester Bill Form of ${evaluator.evaluator_english_name}`} fileName = 'bill-form.pdf'>
           <Page size={{ width: 612, height: 1008 }} style={styles.pageCol}>
             <View style={[styles.topPart, { marginBottom: '0px' }]}>
               <View>
@@ -373,7 +372,7 @@ const BillPdf = (prop) => {
                             {
                               paddingLeft: item.no.includes(`8.`) ? (
                                 new RegExp('^\\d+\\.\\d$').test(item.no) &&
-                                '4px' ): (new RegExp('^\\d+\\.\\d$').test(item.no) && '32px'),
+                                '4px' ): (new RegExp('^\\d+\\.\\d$').test(item.no) && '26px'),
                             },
                           ]}
                         >{item.no === `3` ? `${item.row}: ` : `${item.row} `}</Text>
