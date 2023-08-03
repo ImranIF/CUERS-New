@@ -323,7 +323,7 @@ order by Field (Role, 'Chairman', 'Member', 'External member');
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
                   সংযুক্তি: {"\n"}
-                  ১. পরীক্ষার বিবৃতি
+                  ১. পরীক্ষার বিবরণী (Examination statement)
                 </Text>
               </View>
             </Page>

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#000000',
     borderWidth: 0.5,
-    fontSize: '9.5px',
+    fontSize: '7.5px',
     borderRightWidth: 0,
     borderBottomWidth: 0,
   },
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   bottomPart: {
     width: '100%',
     paddingTop: '10px',
+    fontSize: '7px',
   },
   sign1: {
     display: 'flex',
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   },
   sign2: {
     display: 'flex',
-    height: '70px',
+    height: '55px',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
@@ -157,14 +158,14 @@ const styles = StyleSheet.create({
 
 const BillPdf = (prop) => {
   const keys = [
-    ['ক্রমিক নং ', '8%'],
-    ['কাজের নাম ', '20%'],
+    ['ক্রমিক\nনং ', '6%'],
+    ['কাজের নাম ', '21%'],
     ['কোর্স নং ', '12%'],
-    ['খাতা/ছাত্রের সংখ্যা ', '12%'],
-    ['কত ঘণ্টার পরীক্ষা ', '12%'],
-    ['মোট দিন/সদস্য সংখ্যা ', '12%'],
+    ['খাতা/ছাত্রের\n সংখ্যা ', '12%'],
+    ['কত ঘণ্টার\n পরীক্ষা ', '12%'],
+    ['মোট দিন/\nসদস্য সংখ্যা ', '12%'],
     ['অর্ধ/পূর্ণ পত্র ', '12%'],
-    ['টাকার পরিমাণ ', '12%'],
+    ['টাকার পরিমাণ ', '13%'],
   ];
   const billData = JSON.parse(sessionStorage.getItem('billItem'));
   console.log(billData);
@@ -186,7 +187,7 @@ const BillPdf = (prop) => {
     <div className="w-full border border-slate-900 h-full">
       <PDFViewer className="w-full min-h-full">
         <Document>
-          <Page size="TABLOID" style={styles.pageCol}>
+          <Page size={{ width: 612, height: 1008 }} style={styles.pageCol}>
             <View style={[styles.topPart, { marginBottom: '0px' }]}>
               <View>
                 <Image
@@ -206,9 +207,9 @@ const BillPdf = (prop) => {
                   justifyContent: 'center',
                 }}
               >
-                <Text style={[styles.text]}>
+                <Text style={[styles.text, {textAlign: 'right'}]}>
                   রেজিস্টারের পৃষ্ঠা নংঃ.......................... {'\n'}
-                  পরীক্ষকের ক্রমিক নংঃ {toBanglaNumber(evaluator.evaluator_id)}
+                  পরীক্ষকের ক্রমিক নংঃ {`${toBanglaNumber(evaluator.evaluator_id)}`}{' '.repeat(13 - evaluator.evaluator_id.toString().length)}{' '}
                 </Text>
               </View>
             </View>
@@ -222,7 +223,7 @@ const BillPdf = (prop) => {
               >
                 পরীক্ষা সংক্রান্ত কাজের পারিতোষিক বিল ফরম{' '}
               </Text>
-              <Text style={{ fontSize: '12px' }}>
+              <Text style={{ fontSize: '9.3px' }}>
                 (বিল সংশ্লিষ্ট পরীক্ষা কমিটির চেয়ারম্যানের মাধ্যমে পরীক্ষা
                 অনুষ্ঠিত হওয়ার এক বছরের মধ্যে পরীক্ষা নিয়ন্ত্রণ দপ্তরে দাখিল
                 করতে হবে। প্রতি পরীক্ষার জন্য পৃথক পৃথকভাবে বিল দাখিল করতে হবে।)
@@ -231,25 +232,25 @@ const BillPdf = (prop) => {
             <View>
               <View style={styles.table}>
                 <View style={styles.tableRow}>
-                  <View style={[styles.tableCol, { width: '50%' }]}>
+                  <View style={[styles.tableCol, { width: '65%' }]}>
                     <Text style={styles.tableCell}>
-                      পরীক্ষকের নাম(বাংলায়) : {`${evaluator.evaluator_name} `}
+                      পরীক্ষকের নাম (বাংলায়) : {`${evaluator.evaluator_name} `}
                     </Text>
                   </View>
-                  <View style={[styles.tableCol, { width: '50%' }]}>
+                  <View style={[styles.tableCol, { width: '35%' }]}>
                     <Text style={styles.tableCell}>
                       বিষয় : কম্পিউটার সায়েন্স এন্ড ইঞ্জিনিয়ারিং
                     </Text>
                   </View>
                 </View>
                 <View style={styles.tableRow}>
-                  <View style={[styles.tableCol, { width: '50%' }]}>
+                  <View style={[styles.tableCol, { width: '65%' }]}>
                     <Text style={styles.tableCell}>
-                      ইংরেজি(বড় অক্ষরে) :{' '}
-                      {`${evaluator.evaluator_english_name} `}
+                      ইংরেজি (বড় অক্ষরে)    :{' '}
+                      {`${evaluator.evaluator_english_name.toUpperCase()} `}
                     </Text>
                   </View>
-                  <View style={[styles.tableCol, { width: '50%' }]}>
+                  <View style={[styles.tableCol, { width: '35%' }]}>
                     <Text
                       style={styles.tableCell}
                     >{`পরীক্ষার নাম : ${toBanglaNumber(
@@ -264,21 +265,21 @@ const BillPdf = (prop) => {
                   </View>
                 </View>
                 <View style={styles.tableRow}>
-                  <View style={[styles.tableCol, { width: '50%' }]}>
+                  <View style={[styles.tableCol, { width: '65%' }]}>
                     <Text style={[styles.tableCell, {}]}>
-                      পদবী, পূর্ণ ঠিকানা ও মোবাইল নম্বর :{' '}
-                      {`${
+                      পদবী, পূর্ণ ঠিকানা ও {'   '}:{' '}{`${
                         evaluator.designation +
                         ', ' +
                         evaluator.dept_name +
                         ', ' +
                         evaluator.university_name +
-                        ', ' +
+                        ', '} `} {'\n'} মোবাইল নম্বর{'            '}
+                      {`${
                         evaluator.phone_no
                       } `}
                     </Text>
                   </View>
-                  <View style={[styles.tableCol, { width: '50%' }]}>
+                  <View style={[styles.tableCol, { width: '35%' }]}>
                     <View style={styles.tableRow}>
                       <View
                         style={[
@@ -317,7 +318,7 @@ const BillPdf = (prop) => {
               <View style={styles.tableRow}>
                 {keys.map((item, index) => (
                   <View style={[styles.tableCol, { width: item[1] }]}>
-                    <Text style={[styles.tableCell, { fontWeight: 'bold' }]}>
+                    <Text style={[styles.tableCell, { fontWeight: 'bold', textAlign: 'center' }]}>
                       {item[0]}
                     </Text>
                   </View>
@@ -331,15 +332,15 @@ const BillPdf = (prop) => {
                 if (item.noEntry) {
                   return (
                     <View style={styles.tableRow}>
-                      <View style={[styles.tableCol, { width: '8%' }]}>
+                      <View style={[styles.tableCol, { width: '6%', paddingLeft: '7.5px'}]}>
                         <Text style={styles.tableCell}>
-                          {toBanglaNumber(item.no)}
+                          {`${toBanglaNumber(item.no)}.`}
                         </Text>
                       </View>
                       <View
                         style={[
                           styles.tableCol,
-                          { width: item.noEntry ? '92%' : '20%' },
+                          { width: item.noEntry ? '94%' : '24%', fontWeight: 'bold' },
                         ]}
                       >
                         <Text
@@ -349,43 +350,45 @@ const BillPdf = (prop) => {
                               paddingLeft:
                                 new RegExp('^\\d+\\.\\d$').test(item.no) &&
                                 '12px',
+                                // opacity: item.no === `8.1` || item.no === `8.2` || item.no === `8.3` || item.no === `8.4` || item.no === `8.5` ? 0 : 1,
                             },
                           ]}
-                        >{`${item.row} `}</Text>
+                        >{`${item.row}: `}</Text>
                       </View>
                     </View>
                   );
                 } else {
                   return (
                     <View style={styles.tableRow}>
-                      <View style={[styles.tableCol, { width: '8%' }]}>
-                        <Text style={styles.tableCell}>
-                          {toBanglaNumber(item.no)}
+                      <View style={[styles.tableCol, { width: '6%', paddingLeft: '7.5px'}]}>
+                        <Text style={[styles.tableCell, {}]}>
+                          { item.no.includes(`.`) ? null : `${toBanglaNumber(item.no)}.`}
                         </Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '20%' }]}>
+                      // কাজের নাম
+                      <View style={[styles.tableCol, { width: '21%' }]}>
                         <Text
                           style={[
                             styles.tableCell,
                             {
-                              paddingLeft:
+                              paddingLeft: item.no.includes(`8.`) ? (
                                 new RegExp('^\\d+\\.\\d$').test(item.no) &&
-                                '12px',
+                                '4px' ): (new RegExp('^\\d+\\.\\d$').test(item.no) && '32px'),
                             },
                           ]}
-                        >{`${item.row} `}</Text>
+                        >{item.no === `3` ? `${item.row}: ` : `${item.row} `}</Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '12%' }]}>
+                      <View style={[styles.tableCol, { width: '12%', textAlign: 'center', fontSize: '6.5px' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill && matchedBill['Course no']
                             ? matchedBill['Course no'].length > 22
-                              ? matchedBill['Course no'].slice(0, 22 - 3) +
+                              ? matchedBill['Course no'].slice(0, 21) +
                                 '...'
                               : matchedBill['Course no']
                             : ''}
                         </Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '12%' }]}>
+                      <View style={[styles.tableCol, { width: '12%', textAlign: 'center' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill &&
                           matchedBill['খাতা/ছাত্রের সংখ্যা/পৃষ্ঠার সংখ্যা']
@@ -393,14 +396,14 @@ const BillPdf = (prop) => {
                             : ''}
                         </Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '12%' }]}>
+                      <View style={[styles.tableCol, { width: '12%', textAlign: 'center' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill && matchedBill['কত ঘণ্টার পরীক্ষা']
                             ? matchedBill['কত ঘণ্টার পরীক্ষা']
                             : ''}
                         </Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '12%' }]}>
+                      <View style={[styles.tableCol, { width: '12%', textAlign: 'center' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill &&
                           matchedBill['মোট দিন/সদস্য সংখ্যা/পরীক্ষার সংখ্যা']
@@ -410,14 +413,14 @@ const BillPdf = (prop) => {
                             : ''}
                         </Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '12%' }]}>
+                      <View style={[styles.tableCol, { width: '12%', textAlign: 'center' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill && matchedBill['অর্ধ/পূর্ণ পত্র']
                             ? matchedBill['অর্ধ/পূর্ণ পত্র']
                             : ''}
                         </Text>
                       </View>
-                      <View style={[styles.tableCol, { width: '12%' }]}>
+                      <View style={[styles.tableCol, { width: '13%', textAlign: 'center' }]}>
                         <Text style={styles.tableCell}>
                           {matchedBill && matchedBill['টাকার পরিমাণ']
                             ? matchedBill['টাকার পরিমাণ']
@@ -433,7 +436,7 @@ const BillPdf = (prop) => {
                   style={[
                     styles.tableCol,
                     {
-                      width: '88%',
+                      width: '87%',
                       display: 'flex',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
@@ -444,9 +447,9 @@ const BillPdf = (prop) => {
                   <Text style={styles.tableCell}>
                     মোট টাকা কথায় = {billInBanglaWords}{' '}
                   </Text>
-                  <Text>মোট টাকা = </Text>
+                  <Text>মোট টাকা ={' '}</Text>
                 </View>
-                <View style={[styles.tableCol, { width: '12%' }]}>
+                <View style={[styles.tableCol, { width: '13%', textAlign: 'center' }]}>
                   <Text style={styles.tableCell}> {`${totalBill}`} </Text>
                 </View>
               </View>
@@ -477,9 +480,9 @@ const BillPdf = (prop) => {
               </View>
               <View>
                 <Text style={styles.writing}>
-                  বিষয়...............................................................{' '}
+                  বিষয়.......................................................................................................................{' '}
                   {'\n'}
-                  পরীক্ষা............................................................................................{' '}
+                  পরীক্ষা................................................................................................................................................................{' '}
                   {'\n'}
                   প্রফেসর/ড./জনাব......................................................................................................................................................................................................................কে
                   মোট =
@@ -531,7 +534,7 @@ const BillPdf = (prop) => {
                   },
                 ]}
               >
-                <Text>পরীক্ষার পারিতোষিক বিল প্রাপ্তি স্বীকার</Text>
+                <Text>পরীক্ষার পারিতোষিক বিল প্রাপ্তি স্বীকার </Text>
               </View>
               <View>
                 <Text style={styles.writing}>
