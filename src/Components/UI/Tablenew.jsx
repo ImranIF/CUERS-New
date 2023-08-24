@@ -117,6 +117,7 @@ const Tablenew = (prop) => {
             setTableData(withKey);
             setFilteredData(withKey);
           } else if (changes.operation === 'update') {
+            console.log('This is data[0]: ', data[0])
             if (data[0]) {
               const updatedTable = [...tableData];
               // console.log('Updated table: ', updatedTable);

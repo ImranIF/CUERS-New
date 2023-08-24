@@ -117,6 +117,7 @@ const EvaluatesCourseActivity = () => {
         );
 
         if (response.ok) {
+          console.log('Response is here: ', response)
           let data = await response.json();
           const parsedData = JSON.parse(data);
           if (parsedData.length !== 0) {
