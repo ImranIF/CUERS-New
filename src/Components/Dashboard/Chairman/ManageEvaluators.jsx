@@ -1,77 +1,77 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useRef } from 'react';
-import Buttoncmp from '../../UI/Buttoncmp';
-import Tablenew from '../../UI/Tablenew';
+import React, { useEffect, useState, useContext } from "react";
+import { useRef } from "react";
+import Buttoncmp from "../../UI/Buttoncmp";
+import Tablenew from "../../UI/Tablenew";
 
-import axios from 'axios';
-import patterns from '../../Resources/RegexPatterns';
-import { DropdownOptionsContext } from '../../DropdownOptionsContext';
-import { FilterContext } from '../../UI/FilterContext';
-import { Filter } from '../../UI/Filter';
+import axios from "axios";
+import patterns from "../../Resources/RegexPatterns";
+import { DropdownOptionsContext } from "../../DropdownOptionsContext";
+import { FilterContext } from "../../UI/FilterContext";
+import { Filter } from "../../UI/Filter";
 
 const ManageEvaluators = (prop) => {
   // const [dropdownOptions, setDropdownOptions] = useState();
   // Generating dynamically
   const tableCols = [
     {
-      col: 'evaluator_id',
-      type: 'number',
-      data_type: 'number',
+      col: "evaluator_id",
+      type: "number",
+      data_type: "number",
       regex: patterns.bengaliPattern.number,
-      regexMessage: 'e.g. 1013',
-      filter: 'text',
+      regexMessage: "e.g. 1013",
+      filter: "text",
       required: true,
     },
     {
-      col: 'evaluator_name',
-      type: 'text',
-      data_type: 'text',
+      col: "evaluator_name",
+      type: "text",
+      data_type: "text",
       regex: patterns.bengaliPattern.textWithSpace,
-      regexMessage: 'e.g. ড. রুদ্র প্রতাপ দেব নাথ',
-      filter: 'text',
+      regexMessage: "e.g. ড. রুদ্র প্রতাপ দেব নাথ",
+      filter: "text",
       required: true,
     },
     {
-      col: 'evaluator_english_name',
-      type: 'text',
-      data_type: 'text',
+      col: "evaluator_english_name",
+      type: "text",
+      data_type: "text",
       regex: patterns.englishPattern.textWithSpace,
-      regexMessage: 'e.g. Dr. Rudra Pratap Deb Nath',
+      regexMessage: "e.g. Dr. Rudra Pratap Deb Nath",
     },
     {
-      col: 'designation',
-      type: 'dropdown',
+      col: "designation",
+      type: "dropdown",
       required: true,
-      filter: 'dropdown',
+      filter: "dropdown",
       addNew: true,
     },
     {
-      col: 'university_name',
-      type: 'dropdown',
+      col: "university_name",
+      type: "dropdown",
       required: true,
-      filter: 'dropdown',
+      filter: "dropdown",
       addNew: true,
     },
     {
-      col: 'dept_name',
-      type: 'dropdown',
+      col: "dept_name",
+      type: "dropdown",
       required: true,
-      filter: 'dropdown',
+      filter: "dropdown",
       addNew: true,
     },
     {
-      col: 'phone_no',
-      type: 'tel',
+      col: "phone_no",
+      type: "tel",
       regex: patterns.bengaliPattern.phoneNo,
-      regexMessage: 'e.g. 01234567892',
-      filter: 'text',
+      regexMessage: "e.g. 01234567892",
+      filter: "text",
       required: true,
     },
     {
-      col: 'Delete',
-      type: 'button',
-      label: 'Delete',
-      variant: 'dasi',
+      col: "Delete",
+      type: "button",
+      label: "Delete",
+      variant: "dasi",
     },
   ];
   const { dropdownOptions, updateDropdownOptions, createdNew, setCreatedNew } =
@@ -80,7 +80,7 @@ const ManageEvaluators = (prop) => {
 
   useEffect(() => {
     const tobeFilter = tableCols.filter((item) =>
-      item.hasOwnProperty('filter')
+      item.hasOwnProperty("filter")
     );
     updateFilterFields(tobeFilter);
   }, []);
@@ -91,11 +91,11 @@ const ManageEvaluators = (prop) => {
           dynamicOps: false,
         };
         let response = await fetch(
-          'http://localhost:3000/users/processDropDownData',
+          "http://localhost:3000/users/processDropDownData",
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({ data: { params } }),
           }
@@ -107,10 +107,10 @@ const ManageEvaluators = (prop) => {
           updateDropdownOptions(parsedData);
           // sessionStorage.setItem(storageLabel, data);
         } else {
-          throw new Error('Error posting data');
+          throw new Error("Error posting data");
         }
       } catch (error) {
-        console.error('Error posting data:', error);
+        console.error("Error posting data:", error);
       }
     };
 

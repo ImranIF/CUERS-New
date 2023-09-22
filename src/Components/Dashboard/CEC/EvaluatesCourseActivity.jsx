@@ -103,6 +103,12 @@ const tableCols = [
     regexMessage: "e.g. 12",
   },
   {
+    col: "year",
+    type: "dropdown",
+    required: true,
+    filter: "dropdown",
+  },
+  {
     col: "Delete",
     type: "button",
     label: "Delete",
@@ -113,7 +119,9 @@ const EvaluatesCourseActivity = () => {
   const { dropdownOptions, updateDropdownOptions } = useContext(
     DropdownOptionsContext
   );
-
+  const tableColNames = tableCols
+    .filter((obj) => obj.col != "Delete")
+    .map((item) => item.col);
   /*
    * filterFields is used to capture the fields of the current table. So If I
    * am now at Evaluates_Course_Activity table, then filterFields will have the
@@ -141,6 +149,7 @@ const EvaluatesCourseActivity = () => {
           // dynamicOps: true means we need to load these options from database and then format them and send them to front end
           dynamicOps: true,
           tableName: colInfo.optionInfo.tableName,
+          tableColNames: tableColNames,
           operation: "load",
           cols: [colInfo.optionInfo.dynamicCol],
           storageLabel: colInfo.storageLabel,
